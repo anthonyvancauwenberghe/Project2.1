@@ -11,7 +11,12 @@ public class ScoreComponent extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-       int circleSize = 13;
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+        int circleSize = 20;
         int gapSize = 26;
         int startingX = 70;
         int startingY = 10;
@@ -31,23 +36,27 @@ public class ScoreComponent extends JPanel {
 
         //score on score board
         for (int i = 0; i < 6; i++) {
-
+            g2d.setStroke(new BasicStroke(1));
             for (int j = 18; j >= 0; j--) {
                 if (myScore[i] == j) {
-                    g.setColor(colors.get(i));
-                    g.fillOval(currentX, currentY, circleSize, circleSize);
+                    g2d.setStroke(new BasicStroke(1));
+                    g2d.setColor(colors.get(i));
+                    g2d.fillOval(currentX, currentY, circleSize, circleSize);
                 } else {
-                    if (myScore[i] < j)
-                        g.setColor(Color.black);
-                    g.drawOval(currentX, currentY, circleSize, circleSize);
+                    if (myScore[i] < j) {
+                        g2d.setColor(Color.gray);
+                        g2d.drawOval(currentX, currentY, circleSize, circleSize);
+                    }
+                    g2d.setColor(new Color(g2d.getColor().getRed(), g2d.getColor().getGreen(), g2d.getColor().getBlue(), 50));
+                    g2d.fillOval(currentX, currentY, circleSize, circleSize);
                 }
 
                 currentY += gapSize;
 
                 //color indication at the bottom
                 if (j == 0) {
-                    g.setColor(colors.get(i));
-                    g.fillOval(currentX, currentY, circleSize, circleSize);
+                    g2d.setColor(colors.get(i));
+                    g2d.fillOval(currentX, currentY, circleSize, circleSize);
                 }
             }
             currentX += gapSize;
@@ -60,8 +69,8 @@ public class ScoreComponent extends JPanel {
         currentY = startingY + circleSize;
 
         for (int z = 18; z >= 0; z--) {
-            g.setColor(Color.black);
-            g.drawString(Integer.toString(z), currentX, currentY);
+            g2d.setColor(Color.black);
+            g2d.drawString(Integer.toString(z), currentX, currentY-6);
             currentY += gapSize;
         }
 
@@ -69,8 +78,8 @@ public class ScoreComponent extends JPanel {
         currentX = (int) (startingX - (gapSize * 0.5));
         currentY += (int) gapSize * 0.5;
 
-        g.setColor(Color.black);
-        g.drawRect(currentX,
+        g2d.setColor(Color.black);
+        g2d.drawRect(currentX,
                 currentY,
                 (int) (6 * circleSize + 3.5 * gapSize),
                 (int) (2 * (circleSize + (gapSize * 0.5))));
@@ -78,10 +87,10 @@ public class ScoreComponent extends JPanel {
         currentX = startingX;
         currentY += (int) gapSize * 0.25;
         for (int i = 0; i < 6; i++) {
-            g.setColor(colors.get(i));
-            g.fillOval(currentX, currentY, circleSize, circleSize);
-            g.setColor(Color.black);
-            g.drawString(Integer.toString(opponentScore[i]), currentX, (int) (currentY + (1.5 * gapSize)));
+            g2d.setColor(colors.get(i));
+            g2d.fillOval(currentX, currentY, circleSize, circleSize);
+            g2d.setColor(Color.black);
+            g2d.drawString(Integer.toString(opponentScore[i]), currentX, (int) (currentY + (1.5 * gapSize)));
             currentX += gapSize;
         }
     }
