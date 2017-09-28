@@ -34,7 +34,7 @@ public class ScoreComponent extends JPanel {
         int[] myScore = {1, 5, 14, 16, 7, 2};
         int[] opponentScore = {6, 9, 11, 10, 3, 15};
 
-        //score on score board
+        //score on score models.board
         for (int i = 0; i < 6; i++) {
             g2d.setStroke(new BasicStroke(1));
             for (int j = 18; j >= 0; j--) {

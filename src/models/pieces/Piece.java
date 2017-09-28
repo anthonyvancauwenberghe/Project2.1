@@ -1,4 +1,4 @@
-package board;
+package models.pieces;
 
 public class Piece {
 }

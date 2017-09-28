@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    public void initScoreComponent() {
+    private void initScoreComponent() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
@@ -36,7 +36,7 @@ public class MainFrame extends JFrame {
         this.scorePanel.add(scoreComponent, gbc);
     }
 
-    public void initBoardComponent() {
+    private void initBoardComponent() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
@@ -45,19 +45,30 @@ public class MainFrame extends JFrame {
         this.boardPanel.add(boardComponent, gbc);
     }
 
-    public void initRackComponent() {
+    private void initRackComponent() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
         Component rackComponent = new RackComponent();
         rackPanel.setBackground(Color.DARK_GRAY);
-        this.rackPanel.add(rackComponent,gbc);
+        this.rackPanel.add(rackComponent, gbc);
     }
 
+    public JPanel getRootPanel() {
+        return rootPanel;
+    }
 
-    public static void main(String[] args) {
-        new MainFrame();
+    public JPanel getBoardPanel() {
+        return boardPanel;
+    }
+
+    public JPanel getScorePanel() {
+        return scorePanel;
+    }
+
+    public JPanel getRackPanel() {
+        return rackPanel;
     }
 }
 

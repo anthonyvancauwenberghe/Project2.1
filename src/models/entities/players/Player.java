@@ -1,6 +1,6 @@
-package entities.players;
+package models.entities.players;
 
-import entities.Entity;
+import models.entities.Entity;
 
 public class Player extends Entity {
 
@@ -8,7 +8,5 @@ public class Player extends Entity {
         super(name);
     }
 
-    public void move(){
 
-    }
 }

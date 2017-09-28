@@ -1,7 +1,7 @@
-import gui.MainFrame;
+import providers.GameServiceProvider;
 
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game();
+        GameServiceProvider.boot();
     }
 }
