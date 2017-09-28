@@ -1,4 +1,4 @@
-package gui.board;
+package gui.components;
 
 import models.board.Board;
 import providers.GameServiceProvider;

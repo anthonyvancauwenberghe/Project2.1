@@ -1,8 +1,8 @@
 package gui;
 
-import gui.board.BoardComponent;
-import gui.rack.RackComponent;
-import gui.score.ScoreComponent;
+import gui.components.BoardComponent;
+import gui.components.RackComponent;
+import gui.components.ScoreComponent;
 
 import javax.swing.*;
 import java.awt.*;
