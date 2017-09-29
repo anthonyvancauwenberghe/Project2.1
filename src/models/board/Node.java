@@ -34,7 +34,8 @@ public class Node {
     }
 
     public int[] getCoord(){
-        return {x,y};
+        int [] coord = {x,y};
+        return coord;
     }
 
     public boolean isFixed() {
