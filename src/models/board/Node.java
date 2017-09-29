@@ -2,6 +2,9 @@ package models.board;
 
 import models.pieces.Piece;
 
+import java.awt.*;
+
+
 public class Node {
     public int x;
     public int y;
@@ -9,10 +12,12 @@ public class Node {
     private int id;
     private boolean fixed;
     private Piece piece;
+    private Color color;
 
-    public Node(int x, int y) {
+    public Node(int x, int y, Color color) {
         this.x = x;
         this.y = y;
+        this.color = color;
     }
 
     public Node(int id, int x, int y) {
@@ -26,6 +31,10 @@ public class Node {
 
     public int getY() {
         return y;
+    }
+
+    public int[] getCoord(){
+        return {x,y};
     }
 
     public boolean isFixed() {
@@ -42,5 +51,13 @@ public class Node {
 
     public Piece getPiece() {
         return piece;
+    }
+
+    public Color getColor(){
+        return this.color;
+    }
+
+    public void setColor(Color color){
+        this.color = color;
     }
 }
