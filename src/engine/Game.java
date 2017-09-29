@@ -34,12 +34,12 @@ public class Game {
     public void draw(Player player){
         for(int i=0; i<6; i++){
             Piece piece = bag.random_draw();
-            player.getRack().getRack().set(i, piece);
+            player.getRack().getContents().set(i, piece);
         }
     }
 
     public void refresh(){
-        current_player.getRack().getRack().add(bag.random_draw());
+        current_player.getRack().getContents().add(bag.random_draw());
     }
 
 
@@ -48,13 +48,13 @@ public class Game {
             if(bonus_play !=0){
                 bonus_play--;
             }
-            current_player.getRack().getRack().remove(piece);
+            current_player.getRack().getContents().remove(piece);
             board.addTile(piece.getHead(), node_1);
             board.addTile(piece.getTail(), node_2);
         }
         int newScore_1 = calculate_score(node_1, node_2);
         int newScore_2 = calculate_score(node_2, node_1);
-        if(current_player.getRack().getRack().isEmpty()){
+        if(current_player.getRack().getContents().isEmpty()){
             draw(current_player);
             turn();
         }
@@ -84,7 +84,7 @@ public class Game {
 
     public void swap(){
         for(int i=0; i<6; i++){
-            bag.add(current_player.getRack().getRack().get(i));
+            bag.add(current_player.getRack().getContents().get(i));
         }
         draw(current_player);
     }

@@ -13,9 +13,16 @@ public class Rack {
 
     public Rack(){
         this.rack = new ArrayList<Piece>();
+        initRack();
     }
 
-    public ArrayList<Piece> getRack(){
+    public void initRack(){
+        for(int i=0; i<6; i++){
+            this.rack.add(null);
+        }
+    }
+
+    public ArrayList<Piece> getContents(){
         return this.rack;
     }
 }
