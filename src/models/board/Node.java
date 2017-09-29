@@ -10,7 +10,7 @@ public class Node {
     private boolean fixed;
     private Piece piece;
 
-    public Node(int x, int y) {
+    public Node(int x, int y, Color color) {
         this.x = x;
         this.y = y;
     }
