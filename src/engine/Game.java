@@ -38,6 +38,7 @@ public class Game {
         }
     }
 
+    //at the end of each turn make sure you have 6 tiles
     public void refresh(){
         current_player.getRack().getContents().add(bag.random_draw());
     }
@@ -102,6 +103,9 @@ public class Game {
     public void turn(){
         if(won()){
             //endgame
+        }
+        while(current_player.getRack().getContents().size()<6){
+            refresh();
         }
         if(current_player.equals(player_1)){
             current_player = player_2;
