@@ -4,8 +4,8 @@ import models.entities.Entity;
 
 public class Player extends Entity {
 
-    public Player(String name) {
-        super(name);
+    public Player(String name, int player_ID) {
+        super(name, player_ID);
     }
 
 

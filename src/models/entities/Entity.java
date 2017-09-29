@@ -13,11 +13,13 @@ public abstract class Entity implements Moveable {
     private String name;
     private List<Integer> score;
     private Rack rack;
+    private int player_ID;
 
-    public Entity(String name) {
+    public Entity(String name, int player_ID) {
         this.name = name;
         this.rack = new Rack();
         this.initScore();
+        this.player_ID = player_ID;
     }
 
     public String getName() {

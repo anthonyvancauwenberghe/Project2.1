@@ -7,7 +7,7 @@ import models.entities.bots.Bot;
 public class ExampleBot extends Bot {
 
     public ExampleBot() {
-        super("example bot");
+        super("example bot",2);
     }
 
     @Override

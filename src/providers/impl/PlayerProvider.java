@@ -27,7 +27,7 @@ public class PlayerProvider extends Provider {
     }
 
     private Entity initFirstPlayer() {
-        return new Player("random_player_name");
+        return new Player("random_player_name",1);
     }
 
     private Entity initSecondPlayer() {
