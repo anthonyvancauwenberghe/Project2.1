@@ -2,6 +2,9 @@ package models.board; /**
  * Created by alexisguillot on 14/09/2017.
  */
 
+import models.pieces.Tile;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Board {
@@ -21,11 +24,11 @@ public class Board {
         {
             for (int j = board_width - 1; j >= tmp_top; j--) {
                 if (i == 0) {
-                    nodes.add(new Node(i, -j)); //Create nodes only once for the case when i is 0 because it is the center
+                    nodes.add(new Node(i, -j, Color.black)); //Create nodes only once for the case when i is 0 because it is the center
                     ++cnt;
                 } else {
-                    nodes.add(new Node(i, -j));
-                    nodes.add(new Node(-i, j)); // then creates 2 version of the node, its regular and mirrored version.
+                    nodes.add(new Node(i, -j, Color.black));
+                    nodes.add(new Node(-i, j, Color.black)); // then creates 2 version of the node, its regular and mirrored version.
                     cnt += 2;
                 }
             }
@@ -35,6 +38,35 @@ public class Board {
 
     public ArrayList<Node> getNodes() {
         return nodes;
+    }
+
+    public ArrayList<Node> neighbours(Node node){
+        ArrayList<Node> neighbours = new ArrayList<Node>();
+        int [] coordN = node.getCoord();
+        for(int i=0; i<neighbours.size(); i++){
+            int [] coord = neighbours.get(i).getCoord();
+            if((coord[0] == coordN[0] && coord[1]== coordN[1]-1) || (coord[0] == coordN[0]+1 && coord[1]== coordN[1]-1)
+                    ||(coord[0] == coordN[0] && coord[1]== coordN[1]+1) || (coord[0] == coordN[0]-1 && coord[1]== coordN[1]+1) ||
+                    (coord[0] == coordN[0]-1 && coord[1]== coordN[1]) || (coord[0] == coordN[0]+1 && coord[1]== coordN[1])){
+                neighbours.add(neighbours.get(i));
+            }
+        }
+        return neighbours;
+    }
+
+    public boolean occupied(Node node){
+        if(node.getColor() == Color.black){
+            return false;
+        }
+        return true;
+    }
+
+    public Color getColor(Node node){
+        return node.getColor();
+    }
+
+    public void addTile(Tile tile, Node node){
+        node.setColor(tile.getColor());
     }
 
 }

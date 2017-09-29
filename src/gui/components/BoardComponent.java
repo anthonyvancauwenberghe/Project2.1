@@ -4,8 +4,10 @@ import models.board.Board;
 import providers.GameServiceProvider;
 
 import javax.swing.*;
+import javax.xml.soap.Node;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 /**
  * Created by alexisguillot on 14/09/2017.
@@ -16,20 +18,78 @@ public class BoardComponent extends JComponent{
         this.setVisible(true);
     }
 
-    public void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        int xOffset = 300;
-        int yOffset = 120;
-        for (int i = 0; i < GameServiceProvider.getBoardProvider().getBoard().getNodes().size(); i++) {
-            int x = GameServiceProvider.getBoardProvider().getBoard().getNodes().get(i).x * 40 + xOffset;
-            int y = GameServiceProvider.getBoardProvider().getBoard().getNodes().get(i).y * 40 +yOffset;
-            int shift=100;
-             g2.draw(new Ellipse2D.Double(x+shift,y+shift, 30, 30));
+    public void paint(Graphics g)
+    {
+
+        int size = 30;
+        float width = size * 2;
+        float height =  width * 3/4;
+
+        int startingX = 270; // coordinates for node 0,0
+        int startingY = 270;
+
+        ArrayList<models.board.Node> nP = GameServiceProvider.getBoardProvider().getBoard().getNodes();
+		/*nP.add(new Nodes(-2,-2));
+		nP.add(new Nodes(-2,-1));
+		nP.add(new Nodes(-2,0));
+		nP.add(new Nodes(-2,1));
+		nP.add(new Nodes(-2,2));
+		nP.add(new Nodes(-1,-2));
+		nP.add(new Nodes(-1,-1));
+		nP.add(new Nodes(-1,0));
+		nP.add(new Nodes(-1,1));
+		nP.add(new Nodes(-1,2));
+		nP.add(new Nodes(0,-2));
+		nP.add(new Nodes(0,-1));
+		nP.add(new Nodes(0,0));
+		nP.add(new Nodes(0,1));
+		nP.add(new Nodes(0,2));
+		nP.add(new Nodes(1,-2));
+		nP.add(new Nodes(1,-1));
+		nP.add(new Nodes(1,0));
+		nP.add(new Nodes(1,1));
+		nP.add(new Nodes(1,2));
+		nP.add(new Nodes(2,-2));
+		nP.add(new Nodes(2,-1));
+		nP.add(new Nodes(2,0));
+		nP.add(new Nodes(2,1));
+		nP.add(new Nodes(2,2));*/
+
+        for(int i = 0; i < nP.size(); i++)
+        {
+            int[] xP = new int[6];
+            int[] yP = new int[6];
+            int nodeX;
+            int nodeY;
+
+            //adjust x and y of node to actual location
+            nodeX = (int) (startingX + (nP.get(i).x * (0.75 * width)));
+            nodeY =  (int) (startingY + (nP.get(i).y * height) + (nP.get(i).x * 0.5 * height));
+
+
+            //starting point is on the far left, clockwise
+            xP[0] = (int) (nodeX - (0.5 * width));	// -1/2w, y
+            yP[0] = nodeY;
+            xP[1] = (int) (nodeX - (0.25 * width));	// -1/4w, -1/2h
+            yP[1] = (int) (nodeY - (0.5 * height));
+            xP[2] = (int) (nodeX + (0.25 * width));	// +1/4w, -1/2h
+            yP[2] = (int) (nodeY - (0.5 * height));
+            xP[3] = (int) (nodeX + (0.5 * width));	// +1/2w, y
+            yP[3] = nodeY;
+            xP[4] = (int) (nodeX + (0.25 * width));	// +1/4w, +1/2h
+            yP[4] = (int) (nodeY + (0.5 * height));
+            xP[5] = (int) (nodeX - (0.25 * width));	// -1/4w, +1/2h
+            yP[5] = (int) (nodeY + (0.5 * height));
+
+
+
+            g.setColor(new Color(0,0,0));
+            g.fillPolygon(xP, yP, 6);
+
+            g.setColor(new Color(255,0,0));
+            g.drawPolygon(xP, yP, 6);
+
+            //g.drawString(nP.get(i).x + ", " + nP.get(i).y, nodeX, nodeY);
         }
-
-
     }
 }
