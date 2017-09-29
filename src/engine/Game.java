@@ -5,6 +5,7 @@ import models.board.Node;
 import models.entities.players.Player;
 import models.pieces.Bag;
 import models.pieces.Piece;
+import providers.GameServiceProvider;
 
 import java.util.ArrayList;
 
@@ -22,11 +23,11 @@ public class Game {
 
 
     public Game(){
-        this.board = new Board();
+        this.board = GameServiceProvider.getBoardProvider().getBoard();
         this.bag = new Bag();
-        this.player_1 = new Player("A");
+        this.player_1 = (Player) GameServiceProvider.getPlayerProvider().getPlayer(1);
         draw(player_1);
-        this.player_2 = new Player("B");
+        this.player_2 = (Player) GameServiceProvider.getPlayerProvider().getPlayer(2);
         draw(player_2);
         this.current_player = player_1;
     }
@@ -36,6 +37,13 @@ public class Game {
             Piece piece = bag.random_draw();
             player.getRack().getContents().set(i, piece);
         }
+    }
+
+    public void swap(){
+        for(int i=0; i<6; i++){
+            bag.add(current_player.getRack().getContents().get(i));
+        }
+        draw(current_player);
     }
 
     //at the end of each turn make sure you have 6 tiles
@@ -83,12 +91,7 @@ public class Game {
         return false;
     }
 
-    public void swap(){
-        for(int i=0; i<6; i++){
-            bag.add(current_player.getRack().getContents().get(i));
-        }
-        draw(current_player);
-    }
+
 
     public boolean won(){
         for(int i=0; i<6; i++){
