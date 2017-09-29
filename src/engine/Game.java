@@ -24,9 +24,9 @@ public class Game {
     public Game(){
         this.board = new Board();
         this.bag = new Bag();
-        this.player_1 = new Player("A",1);
+        this.player_1 = new Player("A");
         draw(player_1);
-        this.player_2 = new Player("B",2);
+        this.player_2 = new Player("B");
         draw(player_2);
         this.current_player = player_1;
     }
