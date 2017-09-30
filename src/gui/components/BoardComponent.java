@@ -83,7 +83,7 @@ public class BoardComponent extends JComponent{
 
 
 
-            g.setColor(new Color(0,0,0));
+            g.setColor(nP.get(i).getColor());
             g.fillPolygon(xP, yP, 6);
 
             g.setColor(new Color(255,0,0));
