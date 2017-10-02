@@ -8,8 +8,8 @@ import models.entities.Entity;
 public abstract class Bot extends Entity {
     private Algorithm algorithm;
 
-    public Bot(String name, int player_ID) {
-        super(name, player_ID);
+    public Bot(String name) {
+        super(name);
         this.algorithm = setAlgorithm();
         initialize();
     }

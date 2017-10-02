@@ -5,6 +5,7 @@ import models.board.Node;
 import models.entities.players.Player;
 import models.pieces.Bag;
 import models.pieces.Piece;
+import providers.GameServiceProvider;
 
 import java.util.ArrayList;
 
@@ -22,11 +23,11 @@ public class Game {
 
 
     public Game(){
-        this.board = new Board();
+        this.board = GameServiceProvider.getBoardProvider().getBoard();
         this.bag = new Bag();
-        this.player_1 = new Player("A",1);
+        this.player_1 = (Player) GameServiceProvider.getPlayerProvider().getPlayer(1);
         draw(player_1);
-        this.player_2 = new Player("B",2);
+        this.player_2 = (Player) GameServiceProvider.getPlayerProvider().getPlayer(2);
         draw(player_2);
         this.current_player = player_1;
     }
@@ -34,12 +35,20 @@ public class Game {
     public void draw(Player player){
         for(int i=0; i<6; i++){
             Piece piece = bag.random_draw();
-            player.getRack().getRack().set(i, piece);
+            player.getRack().getContents().set(i, piece);
         }
     }
 
+    public void swap(){
+        for(int i=0; i<6; i++){
+            bag.add(current_player.getRack().getContents().get(i));
+        }
+        draw(current_player);
+    }
+
+    //at the end of each turn make sure you have 6 tiles
     public void refresh(){
-        current_player.getRack().getRack().add(bag.random_draw());
+        current_player.getRack().getContents().add(bag.random_draw());
     }
 
 
@@ -48,13 +57,13 @@ public class Game {
             if(bonus_play !=0){
                 bonus_play--;
             }
-            current_player.getRack().getRack().remove(piece);
+            current_player.getRack().getContents().remove(piece);
             board.addTile(piece.getHead(), node_1);
             board.addTile(piece.getTail(), node_2);
         }
         int newScore_1 = calculate_score(node_1, node_2);
         int newScore_2 = calculate_score(node_2, node_1);
-        if(current_player.getRack().getRack().isEmpty()){
+        if(current_player.getRack().getContents().isEmpty()){
             draw(current_player);
             turn();
         }
@@ -82,12 +91,7 @@ public class Game {
         return false;
     }
 
-    public void swap(){
-        for(int i=0; i<6; i++){
-            bag.add(current_player.getRack().getRack().get(i));
-        }
-        draw(current_player);
-    }
+
 
     public boolean won(){
         for(int i=0; i<6; i++){
@@ -102,6 +106,9 @@ public class Game {
     public void turn(){
         if(won()){
             //endgame
+        }
+        while(current_player.getRack().getContents().size()<6){
+            refresh();
         }
         if(current_player.equals(player_1)){
             current_player = player_2;
