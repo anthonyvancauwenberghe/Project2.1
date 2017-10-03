@@ -1,5 +1,7 @@
 package gui.components;
 
+import providers.GameServiceProvider;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,16 +17,15 @@ public class RackComponent extends JComponent {
 
     public void paintComponent(Graphics g)
     {
-        //g.setColor(Color.white);
-        //g.drawString("RACK COMES HERE",300,50);
 
         super.paintComponent(g);
-        g.setColor(Color.RED);
         coordinateX = 25;
         coordinateY = 25;
 
         for(int i = 0; i < 6; i++)
         {
+            g.setColor(GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(i).getHead().getColor());
+
             Hexagon hexagon = new Hexagon(new Point(coordinateX,coordinateY), radius);
 
             g.fillPolygon(hexagon.getHexagon());
@@ -36,6 +37,8 @@ public class RackComponent extends JComponent {
 
         for(int i = 0; i < 6; i++)
         {
+            g.setColor(GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(i).getTail().getColor());
+
             Hexagon hexagon2 = new Hexagon(new Point(coordinateX,coordinateY), radius);
 
             g.fillPolygon(hexagon2.getHexagon());

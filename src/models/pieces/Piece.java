@@ -53,7 +53,7 @@ public class Piece {
         else if(head.getColor() == Color.yellow){
             head_color = "yellow";
         }
-        else if(head.getColor() == Color.pink){
+        else if(head.getColor() == new Color(160, 32, 240)){
             head_color = "pink";
         }
 
@@ -72,7 +72,7 @@ public class Piece {
         else if(tail.getColor() == Color.yellow){
             tail_color = "yellow";
         }
-        else if(tail.getColor() == Color.pink){
+        else if(tail.getColor() == new Color(160, 32, 240)){
             tail_color = "pink";
         }
         String name = head_color +" "+ tail_color;

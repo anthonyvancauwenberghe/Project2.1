@@ -13,9 +13,10 @@ public class Bag {
     private static ArrayList<Piece> piece_types;
     private static Map<Piece, Integer> pieces;
     //purple = pink
-    private Color[] colors = {Color.red, Color.green, Color.blue, Color.orange, Color.yellow, Color.pink};
+    private Color[] colors = {Color.red, Color.green, Color.blue, Color.orange, Color.yellow, new Color(160, 32, 240)};
 
-    public Bag(){
+    public Bag()
+    {
         this.piece_types = new ArrayList<Piece>();
         this.pieces = new HashMap<Piece, Integer>();
         color_combos();
