@@ -3,9 +3,8 @@ package engine;
 import models.board.Board;
 import models.board.Node;
 import models.players.Player;
-import models.pieces.Bag;
+import models.bag.Bag;
 import models.pieces.Piece;
-import providers.GameServiceProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +22,14 @@ public class Game {
     public int bonus_play = 0;
 
 
-    public Game() {
-        this.board = GameServiceProvider.getBoardProvider().getBoard();
-        this.players = GameServiceProvider.getPlayerProvider().getPlayers();
-        this.bag = new Bag();
+    public Game(Board board, List<Player> players, Bag bag) {
+        this.board = board;
+        this.players = players;
+        this.bag = bag;
         this.current_player_index = 0;
-
-        initGame();
-
     }
 
-    public void initGame() {
+    public void startGame() {
         for (Player player : players) {
             draw(player);
         }

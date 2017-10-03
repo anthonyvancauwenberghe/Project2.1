@@ -36,4 +36,8 @@ public class Piece {
     public boolean hasEqualColors() {
         return head.equals(tail);
     }
+
+    public boolean isSamePieceAs(Piece piece) {
+        return this.getUniqueCode() == piece.getUniqueCode();
+    }
 }

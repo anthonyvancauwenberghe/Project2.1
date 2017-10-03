@@ -1,12 +1,9 @@
 package gui.components;
 
-import models.board.Board;
-import providers.GameServiceProvider;
+import providers.impl.GameServiceProvider;
 
 import javax.swing.*;
-import javax.xml.soap.Node;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +26,7 @@ public class BoardComponent extends JComponent{
 
     public void paint(Graphics g)
     {
-        ArrayList<models.board.Node> nP = GameServiceProvider.getBoardProvider().getBoard().getNodes();
+        ArrayList<models.board.Node> nP = GameServiceProvider.board().getNodes();
 
         for(int i = 0; i < nP.size(); i++)
         {

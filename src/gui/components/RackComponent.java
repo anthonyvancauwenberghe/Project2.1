@@ -1,7 +1,7 @@
 package gui.components;
 
 import models.pieces.Piece;
-import providers.GameServiceProvider;
+import providers.impl.GameServiceProvider;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +25,7 @@ public class RackComponent extends JComponent {
         coordinateY = 25;
 
         for (int i = 0; i < 6; i++) {
-            g.setColor(GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(i).getHead());
+            g.setColor(GameServiceProvider.players().getPlayer(1).getRack().getContents().get(i).getHead());
 
             Hexagon hexagon = new Hexagon(new Point(coordinateX, coordinateY), radius);
 
@@ -37,7 +37,7 @@ public class RackComponent extends JComponent {
         coordinateY = 60;
 
         for (int i = 0; i < 6; i++) {
-            g.setColor(GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(i).getTail());
+            g.setColor(GameServiceProvider.players().getPlayer(1).getRack().getContents().get(i).getTail());
 
             Hexagon hexagon2 = new Hexagon(new Point(coordinateX, coordinateY), radius);
 
@@ -57,22 +57,22 @@ public class RackComponent extends JComponent {
             Piece clicked = null;
             float x = e.getX();
             if (x <= 100) {
-                clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(0);
+                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(0);
             }
             if (x > 100 && x <= 200) {
-                clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(1);
+                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(1);
             }
             if (x > 200 && x <= 300) {
-                clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(2);
+                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(2);
             }
             if (x > 300 && x <= 400) {
-                clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(3);
+                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(3);
             }
             if (x > 400 && x <= 500) {
-                clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(4);
+                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(4);
             }
             if (x > 500 && x <= 600) {
-                clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(5);
+                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(5);
             }
             System.out.print(clicked.getHead().toString() + " " + clicked.getTail().toString());
         }

@@ -1,7 +1,7 @@
 package models.rack;
 
 
-import models.pieces.Bag;
+import models.bag.Bag;
 import models.pieces.Piece;
 
 
@@ -13,7 +13,6 @@ public class Rack {
     private Bag bag;
 
     public Rack(Bag bag) {
-        System.out.println("pieces constructor called");
         this.pieces = new ArrayList<Piece>();
         this.bag = bag;
         initRack();
