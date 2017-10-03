@@ -1,9 +1,6 @@
 package models.board; /**
  * Created by alexisguillot on 14/09/2017.
  */
-
-import models.pieces.Tile;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -67,8 +64,8 @@ public class Board {
         return node.getColor();
     }
 
-    public void addTile(Tile tile, Node node){
-        node.setColor(tile.getColor());
+    public void addTile(Color color, Node node){
+        node.setColor(color);
     }
 
 }

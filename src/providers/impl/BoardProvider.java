@@ -8,7 +8,7 @@ public class BoardProvider extends Provider {
 
     @Override
     protected void initialize() {
-        this.board= new Board();
+        this.board = new Board();
     }
 
     public Board getBoard() {

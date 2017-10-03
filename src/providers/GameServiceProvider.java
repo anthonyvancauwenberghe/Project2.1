@@ -1,32 +1,27 @@
 package providers;
 
-import engine.Game;
-import models.pieces.Bag;
-import providers.impl.BoardProvider;
-import providers.impl.GuiProvider;
-import providers.impl.PlayerProvider;
-import providers.impl.RackProvider;
+import providers.impl.*;
 
 public class GameServiceProvider extends Provider {
 
-    private static GameServiceProvider singleton;
+    private static GameServiceProvider instance;
+
     private BoardProvider boardProvider;
     private PlayerProvider playerProvider;
-    private RackProvider rackProvider;
+    private BagProvider bagProvider;
     private GuiProvider guiProvider;
 
     protected void initialize() {
-        Bag b = new Bag();
         boardProvider = new BoardProvider();
-        playerProvider = new PlayerProvider();
-        rackProvider = new RackProvider();
+        bagProvider = new BagProvider();
+        playerProvider = new PlayerProvider(bagProvider.getBag());
         guiProvider = new GuiProvider();
     }
 
     public static void boot() {
         try {
-            if (singleton == null)
-                singleton = new GameServiceProvider();
+            if (instance == null)
+                instance = new GameServiceProvider();
             else
                 throw new IllegalStateException();
         } catch (IllegalStateException exception) {
@@ -36,37 +31,38 @@ public class GameServiceProvider extends Provider {
 
     private static void verifyInitialization() {
         try {
-            if (singleton == null)
+            if (instance == null)
                 throw new IllegalStateException();
         } catch (IllegalStateException exception) {
+            exception.printStackTrace();
             System.out.println("Critical error application was not booted.");
             System.exit(1);
         }
     }
 
     public static GuiProvider getGuiProvider() {
-        verifyInitialization();
-        return singleton.guiProvider;
+          verifyInitialization();
+        return instance.guiProvider;
     }
 
     public static BoardProvider getBoardProvider() {
-        verifyInitialization();
-        return singleton.boardProvider;
+           verifyInitialization();
+        return instance.boardProvider;
     }
 
     public static PlayerProvider getPlayerProvider() {
-        verifyInitialization();
-        return singleton.playerProvider;
+         verifyInitialization();
+        return instance.playerProvider;
     }
 
-    public static RackProvider getRackProvider() {
-        verifyInitialization();
-        return singleton.rackProvider;
+    public static BagProvider getBagProvider() {
+           verifyInitialization();
+        return instance.bagProvider;
     }
 
     public static void restart() {
         GameServiceProvider.getGuiProvider().getGui().dispose();
-        singleton = new GameServiceProvider();
+        instance = new GameServiceProvider();
     }
 
 }

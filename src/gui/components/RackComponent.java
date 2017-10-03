@@ -18,18 +18,16 @@ public class RackComponent extends JComponent {
     int coordinateY;
     int radius = 20;
 
-    public void paintComponent(Graphics g)
-    {
+    public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
         coordinateX = 25;
         coordinateY = 25;
 
-        for(int i = 0; i < 6; i++)
-        {
-            g.setColor(GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(i).getHead().getColor());
+        for (int i = 0; i < 6; i++) {
+            g.setColor(GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(i).getHead());
 
-            Hexagon hexagon = new Hexagon(new Point(coordinateX,coordinateY), radius);
+            Hexagon hexagon = new Hexagon(new Point(coordinateX, coordinateY), radius);
 
             g.fillPolygon(hexagon.getHexagon());
 
@@ -38,11 +36,10 @@ public class RackComponent extends JComponent {
         coordinateX = 25;
         coordinateY = 60;
 
-        for(int i = 0; i < 6; i++)
-        {
-            g.setColor(GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(i).getTail().getColor());
+        for (int i = 0; i < 6; i++) {
+            g.setColor(GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(i).getTail());
 
-            Hexagon hexagon2 = new Hexagon(new Point(coordinateX,coordinateY), radius);
+            Hexagon hexagon2 = new Hexagon(new Point(coordinateX, coordinateY), radius);
 
             g.fillPolygon(hexagon2.getHexagon());
 
@@ -53,29 +50,31 @@ public class RackComponent extends JComponent {
         addMouseListener(listener);
 
     }
-    class MouseSpy implements MouseListener
-    {
+
+    class MouseSpy implements MouseListener {
         @Override
-        public void mouseClicked(MouseEvent e)
-        {
+        public void mouseClicked(MouseEvent e) {
             Piece clicked = null;
             float x = e.getX();
-            //float y = e.getY();
-            if(x<=100){
-               clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(0);
-
-            }if(x > 100 && x <= 200 ){
+            if (x <= 100) {
+                clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(0);
+            }
+            if (x > 100 && x <= 200) {
                 clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(1);
-            }if(x > 200 && x <= 300){
+            }
+            if (x > 200 && x <= 300) {
                 clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(2);
-            }if(x > 300 && x <= 400){
+            }
+            if (x > 300 && x <= 400) {
                 clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(3);
-            }if(x > 400 && x <= 500){
+            }
+            if (x > 400 && x <= 500) {
                 clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(4);
-            }if(x > 500 && x <= 600){
+            }
+            if (x > 500 && x <= 600) {
                 clicked = GameServiceProvider.getPlayerProvider().getPlayer(1).getRack().getContents().get(5);
             }
-            System.out.print(clicked.getHead().getColor() +" "+ clicked.getTail().getColor());
+            System.out.print(clicked.getHead().toString() + " " + clicked.getTail().toString());
         }
 
         @Override

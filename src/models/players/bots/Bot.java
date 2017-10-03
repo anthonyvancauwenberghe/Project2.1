@@ -1,11 +1,9 @@
-package models.entities.bots;
+package models.players.bots;
 
 import algorithms.Algorithm;
-import algorithms.Executable;
-import models.board.Node;
-import models.entities.Entity;
+import models.players.Player;
 
-public abstract class Bot extends Entity {
+public abstract class Bot extends Player {
     private Algorithm algorithm;
 
     public Bot(String name) {
