@@ -18,42 +18,18 @@ public class BoardComponent extends JComponent{
         this.setVisible(true);
     }
 
-    public void paint(Graphics g)
-    {
-
-        int size = 30;
-        float width = size * 2;
-        float height =  width * 3/4;
+    int size = 30;
+    float width = size * 2;
+    float height =  width * 3/4;
 
         int startingX = 350; // coordinates for node 0,0
         int startingY = 250;
 
+    int[] testnodecoord = {-1,2};
+
+    public void paint(Graphics g)
+    {
         ArrayList<models.board.Node> nP = GameServiceProvider.getBoardProvider().getBoard().getNodes();
-		/*nP.add(new Nodes(-2,-2));
-		nP.add(new Nodes(-2,-1));
-		nP.add(new Nodes(-2,0));
-		nP.add(new Nodes(-2,1));
-		nP.add(new Nodes(-2,2));
-		nP.add(new Nodes(-1,-2));
-		nP.add(new Nodes(-1,-1));
-		nP.add(new Nodes(-1,0));
-		nP.add(new Nodes(-1,1));
-		nP.add(new Nodes(-1,2));
-		nP.add(new Nodes(0,-2));
-		nP.add(new Nodes(0,-1));
-		nP.add(new Nodes(0,0));
-		nP.add(new Nodes(0,1));
-		nP.add(new Nodes(0,2));
-		nP.add(new Nodes(1,-2));
-		nP.add(new Nodes(1,-1));
-		nP.add(new Nodes(1,0));
-		nP.add(new Nodes(1,1));
-		nP.add(new Nodes(1,2));
-		nP.add(new Nodes(2,-2));
-		nP.add(new Nodes(2,-1));
-		nP.add(new Nodes(2,0));
-		nP.add(new Nodes(2,1));
-		nP.add(new Nodes(2,2));*/
 
         for(int i = 0; i < nP.size(); i++)
         {
@@ -66,6 +42,11 @@ public class BoardComponent extends JComponent{
             nodeX = (int) (startingX + (nP.get(i).x * (0.75 * width)));
             nodeY =  (int) (startingY + (nP.get(i).y * height) + (nP.get(i).x * 0.5 * height));
 
+            if(nP.get(i).x == testnodecoord[0] && nP.get(i).y == testnodecoord[1])
+            {
+                testnodecoord[0] = nodeX;
+                testnodecoord[1] = nodeY;
+            }
 
             //starting point is on the far left, clockwise
             xP[0] = (int) (nodeX - (0.5 * width));	// -1/2w, y
@@ -81,8 +62,6 @@ public class BoardComponent extends JComponent{
             xP[5] = (int) (nodeX - (0.25 * width));	// -1/4w, +1/2h
             yP[5] = (int) (nodeY + (0.5 * height));
 
-
-
             g.setColor(new Color(0,0,0));
             g.fillPolygon(xP, yP, 6);
 
@@ -91,5 +70,26 @@ public class BoardComponent extends JComponent{
 
             //g.drawString(nP.get(i).x + ", " + nP.get(i).y, nodeX, nodeY);
         }
+
+        int[] hex = point_to_hex( testnodecoord[0], testnodecoord[1]);
+        System.out.println("Center point: " + testnodecoord[0] + ", " + testnodecoord[1]);
+        System.out.println(hex[0] + ", " + hex[1]);
+    }
+
+    /*public int[] pixel_to_hex(int x, int y)
+    {
+        int q = x * 2/3 / size;
+        int r = (int) Math.round((-x / 3 + Math.sqrt(3) / 3 * y) / size);
+        int[] n = {q,r};
+        return n;
+    }*/
+
+    public int[] point_to_hex(int x, int y)
+    {
+        int q = (int) Math.round((x - startingX) / (0.75 * width));
+        int r = (int) Math.round((y - startingY - (q * 0.5 * height)) / height);
+
+        int[] n = {q,r};
+        return n;
     }
 }
