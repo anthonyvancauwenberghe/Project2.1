@@ -10,15 +10,14 @@ import java.util.ArrayList;
 public class Board {
 
     private ArrayList<Node> nodes = new ArrayList<Node>(); //This is the list containing the nodes
-    private Node[][] nodeCoord;
+   private Node [][] nodeCoord = new Node[96][96];
+
 
     public Board() {
         initBoard();
     }
 
     public void initBoard() {
-        this.nodeCoord = new Node[11][11];
-        Node node;
         int cnt = 0; //This counter keeps track of the number of nodes that were created
         int board_width = 6; // this is the radius of nodes from the center to the end of the models.board (incl. center)
         int tmp_top = -(board_width - 1);//reference to keep track of the decrease in the number of hexes to be created
@@ -26,17 +25,11 @@ public class Board {
         {
             for (int j = board_width - 1; j >= tmp_top; j--) {
                 if (i == 0) {
-                    node = new Node(i, -j, Color.black);
-                    insertNode(node);
-                    nodes.add(node); //Create nodes only once for the case when i is 0 because it is the center
+                    nodes.add(new Node(i,-j, Color.black)); //Create nodes only once for the case when i is 0 because it is the center
                     ++cnt;
                 } else {
-                    node = new Node(i, -j, Color.black);
-                    insertNode(node);
-                    nodes.add(node);
-                    node = new Node(-i, j, Color.black);
-                    insertNode(node);
-                    nodes.add(node); // then creates 2 version of the node, its regular and mirrored version.
+                    nodes.add(new Node(i, -j, Color.black));
+                    nodes.add(new Node(-i, j, Color.black)); // then creates 2 version of the node, its regular and mirrored version.
                     cnt += 2;
                 }
             }
@@ -76,31 +69,6 @@ public class Board {
 
     public void addTile(Tile tile, Node node){
         node.setColor(tile.getColor());
-    }
-
-    public Node getNode(int x, int y){
-        if(x<-5 || x>5 || y<-5 || y>5){
-            return null;
-        }
-        if(x<0){
-            x = 5 - x;
-        }
-        if(y<0){
-            y = 5 - y;
-        }
-        return nodeCoord[x][y];
-    }
-
-    public void insertNode(Node node){
-        int x = node.getX();
-        int y = node.getY();
-        if(x<0){
-            x = 5 - x;
-        }
-        if(y<0){
-            y = 5 - y;
-        }
-        this.nodeCoord[x][y] = node;
     }
 
 }
