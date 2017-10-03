@@ -1,4 +1,4 @@
-package models.players.players;
+package models.players.impl.human;
 
 import models.players.Player;
 
@@ -8,5 +8,8 @@ public class Human extends Player {
         super(name);
     }
 
+    @Override
+    public void executeMove() {
 
+    }
 }

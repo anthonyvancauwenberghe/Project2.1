@@ -3,6 +3,7 @@ package models.players;
 import models.board.Node;
 import models.rack.Rack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player implements Moveable {
@@ -14,6 +15,7 @@ public abstract class Player implements Moveable {
 
     public Player(String name) {
         this.name = name;
+        score = new ArrayList<>();
     }
 
     public String getName() {

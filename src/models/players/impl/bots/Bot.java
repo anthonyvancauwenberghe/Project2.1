@@ -1,14 +1,14 @@
-package models.players.bots;
+package models.players.impl.bots;
 
 import algorithms.Algorithm;
 import models.players.Player;
 
 public abstract class Bot extends Player {
-    private Algorithm algorithm;
+    protected Algorithm algorithm;
 
-    public Bot(String name) {
+    public Bot(String name, Algorithm algorithm) {
         super(name);
-        this.algorithm = setAlgorithm();
+        this.algorithm = algorithm;
         initialize();
     }
 
@@ -23,9 +23,8 @@ public abstract class Bot extends Player {
         }
     }
 
-    public void move() {
+    public void executeMove() {
         this.algorithm.execute();
     }
 
-    protected abstract Algorithm setAlgorithm();
 }

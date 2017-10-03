@@ -1,5 +1,4 @@
-import engine.Game;
-import providers.GameServiceProvider;
+import providers.impl.GameServiceProvider;
 
 public class Main {
     public static void main(String[] args) {
