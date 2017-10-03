@@ -1,5 +1,7 @@
 package providers;
 
+import engine.Game;
+import models.pieces.Bag;
 import providers.impl.BoardProvider;
 import providers.impl.GuiProvider;
 import providers.impl.PlayerProvider;
@@ -14,6 +16,7 @@ public class GameServiceProvider extends Provider {
     private GuiProvider guiProvider;
 
     protected void initialize() {
+        Bag b = new Bag();
         boardProvider = new BoardProvider();
         playerProvider = new PlayerProvider();
         rackProvider = new RackProvider();

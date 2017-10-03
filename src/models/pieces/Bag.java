@@ -10,8 +10,8 @@ import java.util.Map;
  */
 public class Bag {
 
-    private ArrayList<Piece> piece_types;
-    private Map<Piece, Integer> pieces;
+    private static ArrayList<Piece> piece_types;
+    private static Map<Piece, Integer> pieces;
     //purple = pink
     private Color[] colors = {Color.red, Color.green, Color.blue, Color.orange, Color.yellow, Color.pink};
 
@@ -21,7 +21,7 @@ public class Bag {
         color_combos();
     }
 
-    public void remove(Piece piece){
+    public static void remove(Piece piece){
         int oldValue = pieces.get(piece);
         if(oldValue == 1){
             pieces.remove(piece);
@@ -50,10 +50,12 @@ public class Bag {
         for(int i=0; i<colors.length; i++){
             for(int j=i; j<colors.length; j++){
                 Piece piece = new Piece(new Tile(colors[i]), new Tile(colors[j]));
+                System.out.println(piece.toString());
                 this.piece_types.add(piece);
                 this.pieces.put(piece, piece.n_available());
             }
         }
+        System.out.println(piece_types.size());
         return pieces;
     }
 
@@ -65,11 +67,12 @@ public class Bag {
         return size;
     }
 
-    public Piece random_draw(){
-        int r = (int) (Math.random()*21);
+    public static Piece random_draw(){
+        int r = (int) (Math.random()*piece_types.size());
         Piece piece = piece_types.get(r);
         if(pieces.containsKey(piece_types.get(r))){
             remove(piece);
+            System.out.println("I have added the following piece to your rack: "+ piece.toString());
             return piece;
         }
         else{
