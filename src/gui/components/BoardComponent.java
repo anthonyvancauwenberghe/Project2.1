@@ -25,8 +25,8 @@ public class BoardComponent extends JComponent{
         float width = size * 2;
         float height =  width * 3/4;
 
-        int startingX = 270; // coordinates for node 0,0
-        int startingY = 270;
+        int startingX = 350; // coordinates for node 0,0
+        int startingY = 250;
 
         ArrayList<models.board.Node> nP = GameServiceProvider.getBoardProvider().getBoard().getNodes();
 		/*nP.add(new Nodes(-2,-2));

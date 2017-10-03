@@ -30,7 +30,7 @@ public class RackComponent extends JComponent {
 
             g.fillPolygon(hexagon.getHexagon());
 
-            coordinateX += 150;
+            coordinateX += 100;
         }
         coordinateX = 25;
         coordinateY = 60;
@@ -43,7 +43,7 @@ public class RackComponent extends JComponent {
 
             g.fillPolygon(hexagon2.getHexagon());
 
-            coordinateX += 150;
+            coordinateX += 100;
         }
 
 
