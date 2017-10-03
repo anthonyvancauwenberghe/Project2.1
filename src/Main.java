@@ -1,3 +1,4 @@
+import engine.Game;
 import providers.GameServiceProvider;
 
 public class Main {

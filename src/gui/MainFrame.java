@@ -51,7 +51,7 @@ public class MainFrame extends JFrame {
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
         Component rackComponent = new RackComponent();
-        rackPanel.setBackground(Color.DARK_GRAY);
+        //rackPanel.setBackground(Color.WHITE);
         this.rackPanel.add(rackComponent, gbc);
     }
 

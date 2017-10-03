@@ -1,15 +1,13 @@
 package models.board; /**
  * Created by alexisguillot on 14/09/2017.
  */
-
-import models.pieces.Tile;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Board {
 
     private ArrayList<Node> nodes = new ArrayList<Node>(); //This is the list containing the nodes
+   private Node [][] nodeCoord = new Node[96][96];
 
 
     public Board() {
@@ -24,7 +22,7 @@ public class Board {
         {
             for (int j = board_width - 1; j >= tmp_top; j--) {
                 if (i == 0) {
-                    nodes.add(new Node(i, -j, Color.black)); //Create nodes only once for the case when i is 0 because it is the center
+                    nodes.add(new Node(i,-j, Color.black)); //Create nodes only once for the case when i is 0 because it is the center
                     ++cnt;
                 } else {
                     nodes.add(new Node(i, -j, Color.black));
@@ -37,6 +35,7 @@ public class Board {
     }
 
     public ArrayList<Node> getNodes() {
+
         return nodes;
     }
 
@@ -65,8 +64,8 @@ public class Board {
         return node.getColor();
     }
 
-    public void addTile(Tile tile, Node node){
-        node.setColor(tile.getColor());
+    public void addTile(Color color, Node node){
+        node.setColor(color);
     }
 
 }

@@ -1,8 +1,8 @@
-package models.entities.bots.impl;
+package models.players.bots.impl;
 
 import algorithms.Algorithm;
 import algorithms.impl.ExampleAlgorithm;
-import models.entities.bots.Bot;
+import models.players.bots.Bot;
 
 public class ExampleBot extends Bot {
 

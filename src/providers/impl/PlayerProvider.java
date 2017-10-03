@@ -1,36 +1,58 @@
 package providers.impl;
 
-import models.entities.Entity;
-import models.entities.bots.impl.ExampleBot;
-import models.entities.players.Player;
-import providers.Provider;
+import models.pieces.Bag;
+import models.players.Player;
+import models.players.bots.impl.ExampleBot;
+import models.players.players.Human;
+import models.rack.Rack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerProvider extends Provider {
+public class PlayerProvider {
 
-    private List<Entity> players;
+    private List<Player> players;
+    private Bag bag;
+
+    public PlayerProvider(Bag bag) {
+        this.bag = bag;
+        this.initialize();
+    }
 
     protected void initialize() {
         players = new ArrayList<>();
-        this.players.add(initFirstPlayer());
-        this.players.add(initSecondPlayer());
+        this.initPlayers();
+        this.initScores();
+        this.initRacks();
     }
 
-    public Entity getPlayer(int index) {
+    public Player getPlayer(int index) {
         return players.get(index);
     }
 
-    public List<Entity> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
-    private Entity initFirstPlayer() {
-        return new Player("random_player_name");
+
+    public void initPlayers() {
+        this.players.add(new Human("random_player_name"));
+        this.players.add(new ExampleBot());
     }
 
-    private Entity initSecondPlayer() {
-        return new ExampleBot();
+    private void initScores() {
+        for (Player player : players) {
+            player.score = new ArrayList<>();
+            for (int i = 0; i < 6; i++) {
+                player.score.add(0);
+            }
+        }
+    }
+
+    private void initRacks() {
+        for (Player player : players) {
+            player.rack = new Rack(bag);
+        }
+
     }
 }

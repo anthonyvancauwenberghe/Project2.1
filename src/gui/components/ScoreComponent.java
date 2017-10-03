@@ -26,7 +26,7 @@ public class ScoreComponent extends JPanel {
         colors.add(Color.red);
         colors.add(Color.green);
         colors.add(Color.blue);
-        colors.add(Color.orange);
+        colors.add(new Color(255, 140, 0));
         colors.add(Color.yellow);
         colors.add(new Color(160, 32, 240));
 
@@ -50,21 +50,13 @@ public class ScoreComponent extends JPanel {
                     g2d.setColor(new Color(g2d.getColor().getRed(), g2d.getColor().getGreen(), g2d.getColor().getBlue(), 50));
                     g2d.fillOval(currentX, currentY, circleSize, circleSize);
                 }
-
                 currentY += gapSize;
-
-                //color indication at the bottom
-                if (j == 0) {
-                    g2d.setColor(colors.get(i));
-                    g2d.fillOval(currentX, currentY, circleSize, circleSize);
-                }
             }
             currentX += gapSize;
             currentY = startingY;
         }
 
-
-        //score labels to the size
+        //score labels to the side
         currentX = startingX - gapSize;
         currentY = startingY + circleSize;
 
@@ -76,13 +68,13 @@ public class ScoreComponent extends JPanel {
 
         //opponent's score
         currentX = (int) (startingX - (gapSize * 0.5));
-        currentY += (int) gapSize * 0.5;
+        currentY -= (int) gapSize * 0.5;
 
         g2d.setColor(Color.black);
         g2d.drawRect(currentX,
                 currentY,
-                (int) (6 * circleSize + 3.5 * gapSize),
-                (int) (2 * (circleSize + (gapSize * 0.5))));
+                (int) (6.5 * gapSize),
+                (int) ((2 * circleSize) + (0.5 * gapSize)));
 
         currentX = startingX;
         currentY += (int) gapSize * 0.25;
@@ -90,7 +82,8 @@ public class ScoreComponent extends JPanel {
             g2d.setColor(colors.get(i));
             g2d.fillOval(currentX, currentY, circleSize, circleSize);
             g2d.setColor(Color.black);
-            g2d.drawString(Integer.toString(opponentScore[i]), currentX, (int) (currentY + (1.5 * gapSize)));
+            g2d.drawString(Integer.toString(opponentScore[i]),
+                    (int) (currentX + (0.25 * circleSize)), (int) (currentY + (1.5 * gapSize)));
             currentX += gapSize;
         }
     }
