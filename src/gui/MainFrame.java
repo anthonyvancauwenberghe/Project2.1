@@ -25,6 +25,7 @@ public class MainFrame extends JFrame {
         setResizable(false);
         pack();
         setVisible(true);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     private void initScoreComponent() {
@@ -54,6 +55,15 @@ public class MainFrame extends JFrame {
         //rackPanel.setBackground(Color.WHITE);
         this.rackPanel.add(rackComponent, gbc);
     }
+
+    public void repaintAll() {
+        this.getBoardPanel().repaint();
+        this.getRackPanel().repaint();
+        this.getRootPanel().repaint();
+        this.getScorePanel().repaint();
+        this.repaint();
+    }
+
 
     public JPanel getRootPanel() {
         return rootPanel;

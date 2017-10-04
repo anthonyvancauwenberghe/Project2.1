@@ -20,6 +20,10 @@ abstract public class Provider {
         }
     }
 
+    protected static void reboot(){
+        instance = new GameServiceProvider();
+    }
+
     protected static void verifyInitialization() {
         try {
             if (instance == null)
@@ -29,6 +33,11 @@ abstract public class Provider {
             System.out.println("Critical error component has not been booted yet. You probably need to pass things by reference at the GameServiceProvider initialization method");
             System.exit(1);
         }
+    }
+
+    protected static GameServiceProvider getInstance(){
+        verifyInitialization();
+        return instance;
     }
 
     protected abstract void initialize();

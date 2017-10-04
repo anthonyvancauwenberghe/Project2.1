@@ -20,8 +20,13 @@ public class RackComponent extends JComponent {
 
     public void paintComponent(Graphics g) {
 
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
         super.paintComponent(g);
-        coordinateX = 25;
+        coordinateX = 100;
         coordinateY = 25;
 
         for (int i = 0; i < 6; i++) {
@@ -33,7 +38,7 @@ public class RackComponent extends JComponent {
 
             coordinateX += 100;
         }
-        coordinateX = 25;
+        coordinateX = 100;
         coordinateY = 60;
 
         for (int i = 0; i < 6; i++) {

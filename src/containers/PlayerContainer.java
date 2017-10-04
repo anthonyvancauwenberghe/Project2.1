@@ -20,12 +20,13 @@ public class PlayerContainer {
         this.initPlayers();
     }
 
-    public void initPlayers() {
+    /* ADD PLAYERS OR BOTS HERE */
+    protected void initPlayers() {
         this.addPlayer(new Human("random_player_name"));
         this.addPlayer(new ExampleBot());
     }
 
-    public void addPlayer(Player player) {
+    private void addPlayer(Player player) {
         initRack(player);
         initScore(player);
         this.players.add(player);
@@ -41,7 +42,7 @@ public class PlayerContainer {
 
     private void initScore(Player player) {
         for (int i = 0; i < 6; i++) {
-            player.score.add(0);
+            player.score[i]=0;
         }
     }
 
