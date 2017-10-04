@@ -1,5 +1,7 @@
 package gui.components;
 
+import providers.impl.GameServiceProvider;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,8 +33,8 @@ public class ScoreComponent extends JPanel {
         colors.add(new Color(160, 32, 240));
 
 
-        int[] myScore = {1, 5, 14, 16, 7, 2};
-        int[] opponentScore = {6, 9, 11, 10, 3, 15};
+        int[] myScore = GameServiceProvider.players().getPlayer(0).getScore();
+        int[] opponentScore = GameServiceProvider.players().getPlayer(1).getScore();
 
         //score on score models.board
         for (int i = 0; i < 6; i++) {

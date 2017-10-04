@@ -6,6 +6,7 @@ import gui.MainFrame;
 import models.board.Board;
 import models.bag.Bag;
 import providers.Provider;
+import tests.Tests;
 
 public class GameServiceProvider extends Provider {
 
@@ -13,6 +14,7 @@ public class GameServiceProvider extends Provider {
     private PlayerContainer players;
     private Bag bag;
     private Game game;
+    private Tests tests;
     private MainFrame gui;
 
     protected void initialize() {
@@ -21,35 +23,36 @@ public class GameServiceProvider extends Provider {
         this.players = new PlayerContainer(bag);
         this.game = new Game(board, players.getPlayers(), bag);
         this.gui = new MainFrame();
+        this.tests = new Tests();
     }
 
     public static MainFrame gui() {
-        verifyInitialization();
-        return instance.gui;
+        return getInstance().gui;
     }
 
     public static Board board() {
-        verifyInitialization();
-        return instance.board;
+        return getInstance().board;
     }
 
     public static PlayerContainer players() {
-        verifyInitialization();
-        return instance.players;
+        return getInstance().players;
     }
 
     public static Bag bag() {
-        verifyInitialization();
-        return instance.bag;
+        return getInstance().bag;
     }
 
     public static Game game() {
-        return instance.game;
+        return getInstance().game;
+    }
+
+    public static Tests test() {
+        return getInstance().tests;
     }
 
     public static void restart() {
-        GameServiceProvider.gui().dispose();
-        instance = new GameServiceProvider();
+        gui().dispose();
+        reboot();
     }
 
 }

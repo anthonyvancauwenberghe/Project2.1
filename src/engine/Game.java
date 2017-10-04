@@ -99,11 +99,11 @@ public class Game {
 
     public boolean won() {
         for (int i = 0; i < 6; i++) {
-            if (!getCurrentPlayer().getScore().get(i).equals(18)) {
-                return false;
+            if (getCurrentPlayer().getScore()[i] >= 18) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void turn() {

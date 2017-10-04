@@ -40,4 +40,8 @@ public class Piece {
     public boolean isSamePieceAs(Piece piece) {
         return this.getUniqueCode() == piece.getUniqueCode();
     }
+
+    public void changeHeadColor(Color color){
+        this.head = color;
+    }
 }
