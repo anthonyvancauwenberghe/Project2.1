@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
         initBoardComponent();
         initRackComponent();
 
-        setSize(1920, 800);
+        setSize(1280, 768);
         setResizable(false);
         pack();
         setVisible(true);

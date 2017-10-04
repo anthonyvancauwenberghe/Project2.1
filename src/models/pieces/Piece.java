@@ -1,13 +1,13 @@
 package models.pieces;
 
-import java.awt.*;
+import models.tiles.Tile;
 
 public class Piece {
 
-    private Color head;
-    private Color tail;
+    private Tile head;
+    private Tile tail;
 
-    public Piece(Color head, Color tail) {
+    public Piece(Tile head, Tile tail) {
         this.head = head;
         this.tail = tail;
     }
@@ -18,22 +18,18 @@ public class Piece {
     }
 
     public int getUniqueCode() {
-        int redCode = 2 * head.getRed() + 5 * tail.getRed();
-        int blueCode = 10 * head.getBlue() + 20 * tail.getBlue();
-        int greenCode = 25 * head.getRed() + 50 * tail.getRed();
-
-        return redCode + blueCode + greenCode;
+        return tail.getUniqueCode() + head.getUniqueCode();
     }
 
-    public Color getHead() {
+    public Tile getHead() {
         return head;
     }
 
-    public Color getTail() {
+    public Tile getTail() {
         return tail;
     }
 
-    public boolean hasEqualColors() {
+    public boolean hasEqualTiles() {
         return head.equals(tail);
     }
 
@@ -41,7 +37,7 @@ public class Piece {
         return this.getUniqueCode() == piece.getUniqueCode();
     }
 
-    public void changeHeadColor(Color color){
-        this.head = color;
+    public void changeHeadTile(Tile Tile) {
+        this.head = Tile;
     }
 }

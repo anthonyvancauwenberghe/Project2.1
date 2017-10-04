@@ -20,7 +20,7 @@ public class BoardComponent extends JComponent{
     float height =  width * 3/4;
 
         int startingX = 350; // coordinates for node 0,0
-        int startingY = 250;
+        int startingY = 253;
 
     int[] testnodecoord = {-1,2};
 
@@ -65,12 +65,12 @@ public class BoardComponent extends JComponent{
             yP[5] = (int) (nodeY + (0.5 * height));
 
 
-            g.setColor(new Color(0,0,0));
+            g.setColor(nP.get(i).getTile());
             //g.setColor(nP.get(i).getColor());
 
             g.fillPolygon(xP, yP, 6);
 
-            g.setColor(new Color(255,0,0));
+            g.setColor(new Color(0,0,0));
             g.drawPolygon(xP, yP, 6);
 
             //g.drawString(nP.get(i).x + ", " + nP.get(i).y, nodeX, nodeY);

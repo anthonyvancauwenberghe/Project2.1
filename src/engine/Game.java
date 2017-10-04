@@ -131,10 +131,10 @@ public class Game {
 
     public boolean valid_placement(Piece piece, Node node) {
         ArrayList<Node> neighbours = board.neighbours(node);
-        if (piece.hasEqualColors()) {
+        if (piece.hasEqualTiles()) {
             int cnt = 0;
             for (int i = 0; i < neighbours.size(); i++) {
-                if (neighbours.get(i).getColor().equals(piece.getHead())) {
+                if (neighbours.get(i).getTile().equals(piece.getHead())) {
                     cnt++;
                     if (cnt == 2) {
                         return true;
@@ -144,7 +144,7 @@ public class Game {
 
         } else {
             for (int i = 0; i < neighbours.size(); i++) {
-                if (neighbours.get(i).getColor().equals(piece.getHead())) {
+                if (neighbours.get(i).getTile().equals(piece.getHead())) {
                     return true;
                 }
             }

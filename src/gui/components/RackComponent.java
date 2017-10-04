@@ -35,6 +35,8 @@ public class RackComponent extends JComponent {
             Hexagon hexagon = new Hexagon(new Point(coordinateX, coordinateY), radius);
 
             g.fillPolygon(hexagon.getHexagon());
+            g.setColor(new Color(0, 0, 0));
+            g.drawPolygon(hexagon.getHexagon());
 
             coordinateX += 100;
         }
@@ -47,7 +49,8 @@ public class RackComponent extends JComponent {
             Hexagon hexagon2 = new Hexagon(new Point(coordinateX, coordinateY), radius);
 
             g.fillPolygon(hexagon2.getHexagon());
-
+            g.setColor(new Color(0, 0, 0));
+            g.drawPolygon(hexagon2.getHexagon());
             coordinateX += 100;
         }
 

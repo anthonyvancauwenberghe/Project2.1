@@ -1,35 +1,35 @@
 package models.pieces;
 
-import java.awt.*;
+import models.tiles.Tile;
 
 public enum Pieces {
 
-    REDBLUE(new Piece(Color.red, Color.BLUE)),
-    REDGREEN(new Piece(Color.red, Color.green)),
-    REDORANGE(new Piece(Color.red, Color.orange)),
-    REDYELLOW(new Piece(Color.red, Color.yellow)),
-    REDPURPLE(new Piece(Color.red, new Color(160, 32, 240))),
-    REDRED(new Piece(Color.red, Color.red)),
+    REDBLUE(new Piece(Tile.red, Tile.purple)),
+    REDGREEN(new Piece(Tile.red, Tile.green)),
+    REDORANGE(new Piece(Tile.red, Tile.orange)),
+    REDYELLOW(new Piece(Tile.red, Tile.yellow)),
+    REDPURPLE(new Piece(Tile.red, Tile.purple)),
+    REDRED(new Piece(Tile.red, Tile.red)),
 
-    BLUEGREEN(new Piece(Color.blue, Color.green)),
-    BLUEORANGE(new Piece(Color.blue, Color.orange)),
-    BLUEYELLOW(new Piece(Color.blue, Color.yellow)),
-    BLUEPURPLE(new Piece(Color.blue, new Color(160, 32, 240))),
-    BLUEBLUE(new Piece(Color.blue, Color.blue)),
+    BLUEGREEN(new Piece(Tile.blue, Tile.green)),
+    BLUEORANGE(new Piece(Tile.blue, Tile.orange)),
+    BLUEYELLOW(new Piece(Tile.blue, Tile.yellow)),
+    BLUEPURPLE(new Piece(Tile.blue, Tile.purple)),
+    BLUEBLUE(new Piece(Tile.blue, Tile.blue)),
 
-    GREENORANGE(new Piece(Color.green, Color.orange)),
-    GREENYELLOW(new Piece(Color.green, Color.yellow)),
-    GREENPURPLE(new Piece(Color.green, new Color(160, 32, 240))),
-    GREENGREEN(new Piece(Color.green, Color.green)),
+    GREENORANGE(new Piece(Tile.green, Tile.orange)),
+    GREENYELLOW(new Piece(Tile.green, Tile.yellow)),
+    GREENPURPLE(new Piece(Tile.green, Tile.purple)),
+    GREENGREEN(new Piece(Tile.green, Tile.green)),
 
-    ORANGEYELLOW(new Piece(Color.orange, Color.yellow)),
-    ORANGEPURPLE(new Piece(Color.orange, new Color(160, 32, 240))),
-    ORANGEORANGE(new Piece(Color.orange, Color.yellow)),
+    ORANGEYELLOW(new Piece(Tile.orange, Tile.yellow)),
+    ORANGEPURPLE(new Piece(Tile.orange, Tile.purple)),
+    ORANGEORANGE(new Piece(Tile.orange, Tile.yellow)),
 
-    YELLOWPURPLE(new Piece(Color.yellow, new Color(160, 32, 240))),
-    YELLOWYELLOW(new Piece(Color.yellow, Color.yellow)),
+    YELLOWPURPLE(new Piece(Tile.yellow, Tile.purple)),
+    YELLOWYELLOW(new Piece(Tile.yellow, Tile.yellow)),
 
-    PURPLEPURPLE(new Piece(new Color(160, 32, 240), new Color(160, 32, 240)));
+    PURPLEPURPLE(new Piece(Tile.purple, Tile.purple));
 
     private Piece piece;
 

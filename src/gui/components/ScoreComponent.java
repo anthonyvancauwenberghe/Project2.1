@@ -21,7 +21,7 @@ public class ScoreComponent extends JPanel {
         int circleSize = 20;
         int gapSize = 26;
         int startingX = 70;
-        int startingY = 10;
+        int startingY = 25;
         int currentX = startingX;
         int currentY = startingY;
         List<Color> colors = new ArrayList<Color>();

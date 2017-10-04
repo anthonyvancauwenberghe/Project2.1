@@ -1,28 +1,19 @@
 package models.board;
 
-import models.pieces.Piece;
-
-import java.awt.*;
+import models.tiles.Tile;
 
 
 public class Node {
     public int x;
     public int y;
 
-    private int id;
     private boolean fixed;
-    private Piece piece;
-    private Color color;
+    private Tile tile;
 
-    public Node(int x, int y, Color color) {
+    public Node(int x, int y, Tile tile) {
         this.x = x;
         this.y = y;
-        this.color = color;
-    }
-
-    public Node(int id, int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.tile = tile;
     }
 
     public int getX() {
@@ -33,8 +24,8 @@ public class Node {
         return y;
     }
 
-    public int[] getCoord(){
-        int [] coord = {x,y};
+    public int[] getCoord() {
+        int[] coord = {x, y};
         return coord;
     }
 
@@ -43,22 +34,18 @@ public class Node {
     }
 
     public boolean isOccupied() {
-        return piece != null;
+        return !tile.isEmpty();
     }
 
-    public void setPiece(Piece piece) {
-        this.piece = piece;
+    public Tile getTile() {
+        return this.tile;
     }
 
-    public Piece getPiece() {
-        return piece;
+    public void setTile(Tile tile) {
+        this.tile = tile;
     }
 
-    public Color getColor(){
-        return this.color;
-    }
-
-    public void setColor(Color color){
-        this.color = color;
+    public void removeTile() {
+        this.tile = Tile.empty;
     }
 }

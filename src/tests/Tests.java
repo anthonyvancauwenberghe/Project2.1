@@ -1,154 +1,170 @@
 package tests;
 
+import models.board.Node;
+import models.tiles.Tile;
 import providers.impl.GameServiceProvider;
 
 public class Tests {
 
-    public void moveFirstPlayerScore(){
+    public void moveFirstPlayerScore() {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        for(int i=1; i<6; i++){
+        for (int i = 1; i < 6; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(0,i);
+            GameServiceProvider.players().getPlayer(0).setScore(0, i);
             GameServiceProvider.gui().repaintAll();
 
         }
 
-        for(int i=1; i<7; i++){
+        for (int i = 1; i < 7; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(1,i);
+            GameServiceProvider.players().getPlayer(0).setScore(1, i);
             GameServiceProvider.gui().repaintAll();
 
         }
 
-        for(int i=1; i<8; i++){
+        for (int i = 1; i < 8; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(2,i);
+            GameServiceProvider.players().getPlayer(0).setScore(2, i);
             GameServiceProvider.gui().repaintAll();
 
         }
 
-        for(int i=1; i<9; i++){
+        for (int i = 1; i < 9; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(3,i);
+            GameServiceProvider.players().getPlayer(0).setScore(3, i);
             GameServiceProvider.gui().repaintAll();
 
         }
 
-        for(int i=1; i<10; i++){
+        for (int i = 1; i < 10; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(4,i);
+            GameServiceProvider.players().getPlayer(0).setScore(4, i);
             GameServiceProvider.gui().repaintAll();
 
         }
 
-        for(int i=1; i<11; i++){
+        for (int i = 1; i < 11; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(5,i);
+            GameServiceProvider.players().getPlayer(0).setScore(5, i);
             GameServiceProvider.gui().repaintAll();
 
         }
     }
 
-    public void changeSecondPlayerScore(){
+    public void changeSecondPlayerScore() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        for(int i=1; i<6; i++){
+        for (int i = 1; i < 6; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(0,i);
+            GameServiceProvider.players().getPlayer(1).setScore(0, i);
             GameServiceProvider.gui().repaintAll();
 
         }
 
-        for(int i=1; i<7; i++){
+        for (int i = 1; i < 7; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(1,i);
+            GameServiceProvider.players().getPlayer(1).setScore(1, i);
             GameServiceProvider.gui().repaintAll();
 
         }
 
-        for(int i=1; i<8; i++){
+        for (int i = 1; i < 8; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(2,i);
+            GameServiceProvider.players().getPlayer(1).setScore(2, i);
             GameServiceProvider.gui().repaintAll();
 
         }
 
-        for(int i=1; i<9; i++){
+        for (int i = 1; i < 9; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(3,i);
+            GameServiceProvider.players().getPlayer(1).setScore(3, i);
             GameServiceProvider.gui().repaintAll();
 
         }
 
-        for(int i=1; i<10; i++){
+        for (int i = 1; i < 10; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(4,i);
+            GameServiceProvider.players().getPlayer(1).setScore(4, i);
             GameServiceProvider.gui().repaintAll();
 
         }
 
-        for(int i=1; i<11; i++){
+        for (int i = 1; i < 11; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(5,i);
+            GameServiceProvider.players().getPlayer(1).setScore(5, i);
             GameServiceProvider.gui().repaintAll();
 
+        }
+    }
+
+    public void lightUpAllTiles() {
+        for (Node node : GameServiceProvider.board().getNodes()) {
+            System.out.println("Node id: " + GameServiceProvider.board().getNodes().indexOf(node));
+            node.setTile(Tile.blue);
+            GameServiceProvider.gui().repaintAll();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            node.removeTile();
         }
     }
 }
