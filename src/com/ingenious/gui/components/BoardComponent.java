@@ -3,6 +3,7 @@ package com.ingenious.gui.components;
 import com.ingenious.models.board.Node;
 import com.ingenious.config.Configuration;
 import com.ingenious.providers.impl.GameServiceProvider;
+import com.sun.prism.image.Coords;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,37 +78,34 @@ public class BoardComponent extends JComponent {
             g.drawPolygon(xP, yP, 6);
         }
 
-        int[] hex = point_to_hex(testnodecoord[0], testnodecoord[1]);
+        Point hex = point_to_hex(testnodecoord[0], testnodecoord[1]);
         System.out.println("Center point: " + testnodecoord[0] + ", " + testnodecoord[1]);
-        System.out.println(hex[0] + ", " + hex[1]);
+        System.out.println(hex.getX() + ", " + hex.getY());
         BoardListener listener = new BoardListener();
         addMouseListener(listener);
     }
-        
 
-    }
 
-    public int[] point_to_hex(int x, int y) {
+    public Point point_to_hex(int x, int y) {
         int q = (int) Math.round((x - startingX) / (0.75 * width));
         int r = (int) Math.round((y - startingY - (q * 0.5 * height)) / height);
 
-        int[] n = {q, r};
-        return n;
+        return new Point(q, r);
     }
 
-    class BoardListener implements MouseListener{
+    class BoardListener implements MouseListener {
 
         Node clicked;
         Node clicked2;
-        int cnt =0;
+        int cnt = 0;
 
         @Override
         public void mouseClicked(MouseEvent e) {
             int x = e.getX();
             int y = e.getY();
-            int coord[] = point_to_hex(x,y);
-            clicked = GameServiceProvider.board().getNode(coord[0],coord[1]);
-            System.out.println("x = [" + coord[0] + "]" +" " + "y = [" + coord[1] + "]");
+            Point coord = point_to_hex(x, y);
+            clicked = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
+            System.out.println("x = [" + coord.getX() + "]" + " " + "y = [" + coord.getY() + "]");
             System.out.println();
         }
 
