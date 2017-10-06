@@ -1,6 +1,10 @@
 package com.ingenious.models.board;
 
+import com.ingenious.events.impl.BoardIsUpdatedEvent;
 import com.ingenious.models.tiles.Tile;
+import com.ingenious.providers.impl.GameServiceProvider;
+
+import java.util.ArrayList;
 
 
 public class Node {
@@ -29,6 +33,10 @@ public class Node {
         return coord;
     }
 
+    public boolean hasEmptyTile() {
+        return this.tile.isEmpty();
+    }
+
     public boolean isFixed() {
         return fixed;
     }
@@ -43,9 +51,14 @@ public class Node {
 
     public void setTile(Tile tile) {
         this.tile = tile;
+        new BoardIsUpdatedEvent();
     }
 
     public void removeTile() {
         this.tile = Tile.empty;
+    }
+
+    public ArrayList<Node> getNeighbours() {
+        return GameServiceProvider.board().getNeighboursOfNode(this);
     }
 }

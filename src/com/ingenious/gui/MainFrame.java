@@ -4,6 +4,7 @@ import com.ingenious.gui.components.BoardComponent;
 import com.ingenious.gui.components.RackComponent;
 import com.ingenious.gui.components.ScoreComponent;
 import com.ingenious.providers.impl.GameServiceProvider;
+import com.ingenious.models.board.Board;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,7 +47,7 @@ public class MainFrame extends JFrame {
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
-        Component boardComponent = new BoardComponent();
+        BoardComponent boardComponent = new BoardComponent();
         this.boardPanel.add(boardComponent, gbc);
     }
 

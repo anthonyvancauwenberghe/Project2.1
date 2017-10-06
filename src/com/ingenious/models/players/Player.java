@@ -1,5 +1,6 @@
 package com.ingenious.models.players;
 
+import com.ingenious.events.impl.ScoreIsUpdatedEvent;
 import com.ingenious.models.board.Node;
 import com.ingenious.models.rack.Rack;
 
@@ -25,6 +26,7 @@ public abstract class Player implements Moveable {
 
     public void setScore(int index, int value) {
         this.score[index] = value;
+        new ScoreIsUpdatedEvent();
     }
 
     public Rack getRack() {

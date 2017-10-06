@@ -60,6 +60,7 @@ public class Game {
     }
 
 
+    /*
     public void place_piece(Piece piece, Node node_1, Node node_2) {
         if (valid_placement(piece, node_1)) {
             if (bonus_play != 0) {
@@ -71,7 +72,7 @@ public class Game {
         }
         int newScore_1 = calculate_score(node_1, node_2);
         int newScore_2 = calculate_score(node_2, node_1);
-        if (getCurrentPlayer().getRack().getContents().isEmpty()) {
+        if (getCurrentPlayer().getRack().getContents().hasEmptyTile()) {
             draw(getCurrentPlayer());
             turn();
         } else {
@@ -86,6 +87,7 @@ public class Game {
             }
         }
     }
+    */
 
     public int calculate_score(Node node_1, Node node_2) {
         return 0;
@@ -129,7 +131,7 @@ public class Game {
             }
         }
     }
-
+/*
     public boolean valid_placement(Piece piece, Node node) {
         ArrayList<Node> neighbours = board.neighbours(node);
         if (piece.hasEqualTiles()) {
@@ -153,4 +155,5 @@ public class Game {
 
         return false;
     }
+    */
 }
