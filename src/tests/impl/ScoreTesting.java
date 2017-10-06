@@ -17,7 +17,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(0).setScore(0, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
 
@@ -28,7 +27,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(0).setScore(1, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
 
@@ -39,7 +37,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(0).setScore(2, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
 
@@ -50,7 +47,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(0).setScore(3, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
 
@@ -61,7 +57,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(0).setScore(4, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
 
@@ -72,7 +67,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(0).setScore(5, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
     }
@@ -91,7 +85,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(1).setScore(0, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
 
@@ -102,7 +95,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(1).setScore(1, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
 
@@ -113,7 +105,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(1).setScore(2, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
 
@@ -124,7 +115,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(1).setScore(3, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
 
@@ -135,7 +125,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(1).setScore(4, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
 
@@ -146,7 +135,6 @@ public class ScoreTesting {
                 e.printStackTrace();
             }
             GameServiceProvider.players().getPlayer(1).setScore(5, i);
-            GameServiceProvider.gui().repaintAll();
 
         }
     }

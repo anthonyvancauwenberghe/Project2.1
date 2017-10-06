@@ -40,5 +40,9 @@ abstract public class Provider {
         return instance;
     }
 
+    public static boolean isBooted() {
+        return instance != null;
+    }
+
     protected abstract void initialize();
 }

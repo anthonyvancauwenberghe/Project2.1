@@ -62,34 +62,21 @@ public class BoardComponent extends JComponent {
             xP[5] = (int) (nodeX - (0.25 * width));    // -1/4w, +1/2h
             yP[5] = (int) (nodeY + (0.5 * height));
 
-
             g.setColor(nP.get(i).getTile());
-            //g.setColor(nP.get(i).getColor());
 
             g.fillPolygon(xP, yP, 6);
 
             g.setColor(new Color(0, 0, 0));
 
             if (Configuration.showCoordinates)
-                g.drawString((nP.get(i).getX() + 5) + "," + (nP.get(i).getY()+5), nodeX - 9, nodeY + 3);
+                g.drawString((nP.get(i).getX()) + "," + (nP.get(i).getY()), nodeX - 9, nodeY + 3);
 
             g.drawPolygon(xP, yP, 6);
-
-            //g.drawString(nP.get(i).x + ", " + nP.get(i).y, nodeX, nodeY);
         }
 
         int[] hex = point_to_hex(testnodecoord[0], testnodecoord[1]);
-        System.out.println("Center point: " + testnodecoord[0] + ", " + testnodecoord[1]);
-        System.out.println(hex[0] + ", " + hex[1]);
-    }
 
-    /*public int[] pixel_to_hex(int x, int y)
-    {
-        int q = x * 2/3 / size;
-        int r = (int) Math.round((-x / 3 + Math.sqrt(3) / 3 * y) / size);
-        int[] n = {q,r};
-        return n;
-    }*/
+    }
 
     public int[] point_to_hex(int x, int y) {
         int q = (int) Math.round((x - startingX) / (0.75 * width));

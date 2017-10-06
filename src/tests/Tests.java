@@ -1,9 +1,8 @@
 package tests;
 
-import com.ingenious.models.board.Board;
-import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
 import tests.impl.BoardTesting;
+import tests.impl.ScoreTesting;
 
 public class Tests {
     private static Tests instance = null;
@@ -21,10 +20,11 @@ public class Tests {
 
     /* ALL TESTS YOU WANT TO EXECUTE GO IN HERE */
     public void execute() {
-        BoardTesting board = new BoardTesting();
-        board.colorNeighbouringNodes(GameServiceProvider.board().getNode(0,0));
+        //  BoardTesting board = new BoardTesting()
+        // board.lightUpAllNodes();
 
-
+        ScoreTesting score = new ScoreTesting();
+        score.changeSecondPlayerScore();
     }
 
 

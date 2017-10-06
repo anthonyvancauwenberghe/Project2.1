@@ -3,6 +3,7 @@ package com.ingenious.models.board; /**
  */
 
 import com.ingenious.config.Configuration;
+import com.ingenious.events.impl.BoardIsUpdatedEvent;
 import com.ingenious.models.tiles.Tile;
 
 import java.util.ArrayList;
@@ -45,14 +46,20 @@ public class Board {
     }
 
     private void buildNodeCoordinatesArray() {
-        this.nodeCoord = new int[(Configuration.boardWidth - 1) * 2 + 2][(Configuration.boardWidth - 1) * 2 + 2];
+        this.nodeCoord = new int[2 * (Configuration.boardWidth) - 1][2 * (Configuration.boardWidth) - 1];
         int offset = Configuration.boardWidth - 1;
 
+        /*Loop through the array and set all initial values to -1 */
+        for (int x = 0; x < nodeCoord.length; x++) {
+            for (int y = 0; y < nodeCoord[x].length; y++) {
+                nodeCoord[x][y] = -1;
+            }
+        }
 
+        /* Set all coordinate values to the given index from the node arraylist */
         for (int i = 0; i < nodes.size(); i++) {
             int xOffset = nodes.get(i).getX() + offset;
             int yOffset = nodes.get(i).getY() + offset;
-            System.out.println("x: " + xOffset + " y: " + yOffset + " for index " + i);
             nodeCoord[xOffset][yOffset] = i;
         }
     }
@@ -64,26 +71,17 @@ public class Board {
      * return node when it's found on the board else return null
      */
     public Node getNode(int x, int y) {
-        //ADDING THE WIDTH OF THE BOARD TO MAKE SURE THERE ARE NO NEGATIVEN NUMBERS AS KEY IN THE ARRAY
+        //ADDING THE WIDTH OF THE BOARD TO MAKE SURE THERE ARE NO NEGATIVE NUMBERS AS KEY IN THE ARRAY
         x = x + Configuration.boardWidth - 1;
         y = y + Configuration.boardWidth - 1;
 
-        System.out.println(x + " " + y);
-
-        int index = -1;
-        try {
-            //TODO CAN SOMEONE FIX THIS PLEASE NEEDS TO ADD IF STATEMENTS TO MAKE SURE IT DOES NOT GO OUT OF BOUNDS INSTEAD OF TRY CATCH
-            index = this.nodeCoord[x][y];
-            System.out.println("index: " + index + " for coordinate " + x + " " + y);
-
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
-
-        if (index != -1)
-            return nodes.get(index);
-        else
+        if (x < 0 || x > 2 * (Configuration.boardWidth - 1) || y < 0 || y > 2 * (Configuration.boardWidth - 1))
             return null;
+
+        if (this.nodeCoord[x][y] == -1)
+            return null;
+
+        return nodes.get(this.nodeCoord[x][y]);
     }
 
 
@@ -110,57 +108,36 @@ public class Board {
 
         if (northWest != null) {
             neighbours.add(northWest);
-            System.out.println("northwest added " + northWest.getX() + " " + northWest.getY());
         }
 
         if (southWest != null) {
             neighbours.add(southWest);
-            System.out.println("southWest added " + southWest.getX() + " " + southWest.getY());
         }
 
         if (north != null) {
             neighbours.add(north);
-            System.out.println("north added " + north.getX() + " " + north.getY());
         }
 
         if (south != null) {
             neighbours.add(south);
-            System.out.println("south added " + south.getX() + " " + south.getY());
         }
 
         if (northEast != null) {
             neighbours.add(northEast);
-            System.out.println("northEast added " + northEast.getX() + " " + northEast.getY());
         }
 
         if (southEast != null) {
             neighbours.add(southEast);
-            System.out.println("southEast added " + southEast.getX() + " " + southEast.getY());
         }
-
 
         return neighbours;
     }
-    /*
-
-    public ArrayList<Node> neighbours(Node node) {
-        ArrayList<Node> neighbours = new ArrayList<Node>();
-        int[] coordN = node.getCoord();
-        for (int i = 0; i < neighbours.size(); i++) {
-            int[] coord = neighbours.get(i).getCoord();
-            if ((coord[0] == coordN[0] && coord[1] == coordN[1] - 1) || (coord[0] == coordN[0] + 1 && coord[1] == coordN[1] - 1)
-                    || (coord[0] == coordN[0] && coord[1] == coordN[1] + 1) || (coord[0] == coordN[0] - 1 && coord[1] == coordN[1] + 1) ||
-                    (coord[0] == coordN[0] - 1 && coord[1] == coordN[1]) || (coord[0] == coordN[0] + 1 && coord[1] == coordN[1])) {
-                neighbours.add(neighbours.get(i));
-            }
-        }
-        return neighbours;
-    }
-    */
 
     public void addTile(Tile tile, Node node) {
-        if (!node.getTile().isEmpty())
+        if (!node.getTile().isEmpty()) {
             node.setTile(tile);
+            new BoardIsUpdatedEvent();
+        }
     }
 
 }

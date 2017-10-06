@@ -71,7 +71,7 @@ public class Game {
         }
         int newScore_1 = calculate_score(node_1, node_2);
         int newScore_2 = calculate_score(node_2, node_1);
-        if (getCurrentPlayer().getRack().getContents().isEmpty()) {
+        if (getCurrentPlayer().getRack().getContents().hasEmptyTile()) {
             draw(getCurrentPlayer());
             turn();
         } else {

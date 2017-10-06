@@ -10,15 +10,16 @@ public class BoardTesting {
 
     public void lightUpAllNodes() {
         for (Node node : GameServiceProvider.board().getNodes()) {
-            System.out.println("Node id: " + GameServiceProvider.board().getNodes().indexOf(node));
-            node.setTile(Tile.blue);
-            GameServiceProvider.gui().repaintAll();
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if(node.hasEmptyTile()){
+                node.setTile(Tile.blue);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                node.removeTile();
             }
-            node.removeTile();
+
         }
     }
 
@@ -28,12 +29,9 @@ public class BoardTesting {
 
     public void colorNeighbouringNodes(Node node){
         ArrayList<Node> neighbours =  node.getNeighbours();
-
             for(Node neighbour : neighbours){
-                neighbour.setTile(Tile.blue);
+                neighbour.setTile(Tile.red);
             }
-
-        GameServiceProvider.gui().repaintAll();
     }
 
 }

@@ -15,10 +15,6 @@ public class MainFrame extends JFrame {
     private JPanel scorePanel;
     private JPanel rackPanel;
 
-    public ScoreComponent score;
-    public BoardComponent board;
-    public RackComponent rack;
-
     public MainFrame() {
         setContentPane(rootPanel);
 
@@ -49,7 +45,6 @@ public class MainFrame extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         BoardComponent boardComponent = new BoardComponent();
         this.boardPanel.add(boardComponent, gbc);
-        this.board = boardComponent;
     }
 
     private void initRackComponent() {
