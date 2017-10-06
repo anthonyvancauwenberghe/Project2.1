@@ -1,6 +1,10 @@
 package com.ingenious.models.board;
 
 import com.ingenious.models.tiles.Tile;
+import com.ingenious.providers.impl.GameServiceProvider;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 public class Node {
@@ -47,5 +51,9 @@ public class Node {
 
     public void removeTile() {
         this.tile = Tile.empty;
+    }
+
+    public ArrayList<Node> getNeighbours() {
+        return GameServiceProvider.board().getNeighboursOfNode(this);
     }
 }

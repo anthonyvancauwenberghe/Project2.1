@@ -4,6 +4,8 @@ import com.ingenious.models.board.Node;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
 
+import java.util.ArrayList;
+
 public class BoardTesting {
 
     public void lightUpAllNodes() {
@@ -18,6 +20,20 @@ public class BoardTesting {
             }
             node.removeTile();
         }
+    }
+
+    public void setTileOnCoordinate(int x, int y, Tile tile) {
+        GameServiceProvider.board().getNode(x, y).setTile(tile);
+    }
+
+    public void colorNeighbouringNodes(Node node){
+        ArrayList<Node> neighbours =  node.getNeighbours();
+
+            for(Node neighbour : neighbours){
+                neighbour.setTile(Tile.blue);
+            }
+
+        GameServiceProvider.gui().repaintAll();
     }
 
 }

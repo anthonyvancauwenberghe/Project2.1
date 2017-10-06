@@ -3,6 +3,7 @@ package com.ingenious.gui;
 import com.ingenious.gui.components.BoardComponent;
 import com.ingenious.gui.components.RackComponent;
 import com.ingenious.gui.components.ScoreComponent;
+import com.ingenious.models.board.Board;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,10 @@ public class MainFrame extends JFrame {
     private JPanel boardPanel;
     private JPanel scorePanel;
     private JPanel rackPanel;
+
+    public ScoreComponent score;
+    public BoardComponent board;
+    public RackComponent rack;
 
     public MainFrame() {
         setContentPane(rootPanel);
@@ -42,8 +47,9 @@ public class MainFrame extends JFrame {
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
-        Component boardComponent = new BoardComponent();
+        BoardComponent boardComponent = new BoardComponent();
         this.boardPanel.add(boardComponent, gbc);
+        this.board = boardComponent;
     }
 
     private void initRackComponent() {
