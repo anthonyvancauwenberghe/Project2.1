@@ -1,10 +1,13 @@
 package com.ingenious.gui.components;
 
+import com.ingenious.models.board.Node;
 import com.ingenious.providers.impl.GameServiceProvider;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by alexisguillot on 14/09/2017.
@@ -79,6 +82,8 @@ public class BoardComponent extends JComponent{
         int[] hex = point_to_hex( testnodecoord[0], testnodecoord[1]);
         System.out.println("Center point: " + testnodecoord[0] + ", " + testnodecoord[1]);
         System.out.println(hex[0] + ", " + hex[1]);
+        BoardListener listener = new BoardListener();
+        addMouseListener(listener);
     }
 
     /*public int[] pixel_to_hex(int x, int y)
@@ -96,5 +101,37 @@ public class BoardComponent extends JComponent{
 
         int[] n = {q,r};
         return n;
+    }
+
+    class BoardListener implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            int x = e.getX();
+            int y = e.getY();
+            int[] coordNode = point_to_hex(x,y);
+            Node clicked = GameServiceProvider.board().getNode(coordNode[0],coordNode[1]);
+            System.out.println("x = "+ coordNode[0]+"  y = " + coordNode[1]);
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
     }
 }

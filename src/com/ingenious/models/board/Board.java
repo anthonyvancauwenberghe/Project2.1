@@ -60,15 +60,14 @@ public class Board {
 
     public ArrayList<Node> neighbours(Node node) {
         ArrayList<Node> neighbours = new ArrayList<Node>();
-        int[] coordN = node.getCoord();
-        for (int i = 0; i < neighbours.size(); i++) {
-            int[] coord = neighbours.get(i).getCoord();
-            if ((coord[0] == coordN[0] && coord[1] == coordN[1] - 1) || (coord[0] == coordN[0] + 1 && coord[1] == coordN[1] - 1)
-                    || (coord[0] == coordN[0] && coord[1] == coordN[1] + 1) || (coord[0] == coordN[0] - 1 && coord[1] == coordN[1] + 1) ||
-                    (coord[0] == coordN[0] - 1 && coord[1] == coordN[1]) || (coord[0] == coordN[0] + 1 && coord[1] == coordN[1])) {
-                neighbours.add(neighbours.get(i));
-            }
-        }
+        int x = node.getX();
+        int y = node.getY();
+        neighbours.add(getNode(x,y-1));
+        neighbours.add(getNode(x,y+1));
+        neighbours.add(getNode(x-1,y));
+        neighbours.add(getNode(x+1,y));
+        neighbours.add(getNode(x+1,y-1));
+        neighbours.add(getNode(x-1,y+1));
         return neighbours;
     }
 

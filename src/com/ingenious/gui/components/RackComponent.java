@@ -65,22 +65,22 @@ public class RackComponent extends JComponent {
             Piece clicked = null;
             float x = e.getX();
             if (x >= 60 && x <= 130) {
-                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(0);
+                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(0);
             }
             if (x >= 170 && x <= 230) {
-                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(1);
+                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(1);
             }
             if (x >= 270 && x <= 330) {
-                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(2);
+                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(2);
             }
             if (x >= 370 && x <= 430) {
-                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(3);
+                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(3);
             }
             if (x >= 470 && x <= 530) {
-                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(4);
+                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(4);
             }
             if (x >= 570 && x <= 630) {
-                clicked = GameServiceProvider.players().getPlayer(1).getRack().getContents().get(5);
+                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(5);
             }
             System.out.print(clicked.getHead().toString() + " " + clicked.getTail().toString());
         }
