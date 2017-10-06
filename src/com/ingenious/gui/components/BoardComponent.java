@@ -105,13 +105,18 @@ public class BoardComponent extends JComponent{
 
     class BoardListener implements MouseListener{
 
+        Node clicked;
+        Node clicked2;
+        int cnt =0;
+
         @Override
         public void mouseClicked(MouseEvent e) {
             int x = e.getX();
             int y = e.getY();
-            int[] coordNode = point_to_hex(x,y);
-            Node clicked = GameServiceProvider.board().getNode(coordNode[0],coordNode[1]);
-            System.out.println("x = "+ coordNode[0]+"  y = " + coordNode[1]);
+            int coord[] = point_to_hex(x,y);
+            clicked = GameServiceProvider.board().getNode(coord[0],coord[1]);
+            System.out.println("x = [" + coord[0] + "]" +" " + "y = [" + coord[1] + "]");
+            System.out.println();
         }
 
         @Override
