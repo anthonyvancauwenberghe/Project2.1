@@ -1,5 +1,6 @@
 package com.ingenious.engine;
 
+import com.ingenious.gui.components.BoardComponent;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.Node;
 import com.ingenious.models.players.Player;

@@ -3,10 +3,14 @@ package com.ingenious.gui;
 import com.ingenious.gui.components.BoardComponent;
 import com.ingenious.gui.components.RackComponent;
 import com.ingenious.gui.components.ScoreComponent;
+import com.ingenious.providers.impl.GameServiceProvider;
 import com.ingenious.models.board.Board;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
 
 public class MainFrame extends JFrame {
 
@@ -55,7 +59,21 @@ public class MainFrame extends JFrame {
         Component rackComponent = new RackComponent();
         //rackPanel.setBackground(Color.WHITE);
         this.rackPanel.add(rackComponent, gbc);
+        JButton swapButton = new JButton("Swap");
+        SwapListener listener = new SwapListener();
+        swapButton.addActionListener(listener);
+        this.rackPanel.add(swapButton);
     }
+
+    class SwapListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            GameServiceProvider.game().swap();
+            getRackPanel().repaint();
+        }
+    }
+
 
     public void repaintAll() {
         this.getBoardPanel().repaint();

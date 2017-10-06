@@ -67,4 +67,5 @@ public class Piece {
     public void changeHeadTile(Tile Tile) {
         this.head = Tile;
     }
+
 }
