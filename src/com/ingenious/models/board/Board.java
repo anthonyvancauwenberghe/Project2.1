@@ -20,7 +20,6 @@ public class Board {
     }
 
     public void initBoard() {
-        int index = 0;
         int cnt = 0; //This counter keeps track of the number of nodes that were created
         int board_width = Configuration.boardWidth; // this is the radius of nodes from the center to the end of the com.ingenious.models.board (incl. center)
         int tmp_top = -(board_width - 1);//reference to keep track of the decrease in the number of hexes to be created
@@ -29,16 +28,9 @@ public class Board {
             for (int j = board_width - 1; j >= tmp_top; j--) {
                 if (i == 0) {
                     nodes.add(new Node(i, -j, Tile.empty));//Create nodes only once for the case when i is 0 because it is the center
-                    insertIndex(i,-j, index);
-                    index++;
-                    ++cnt;
                 } else {
                     nodes.add(new Node(i, -j, Tile.empty));
-                    insertIndex(i,-j,index);
-                    index++;
                     nodes.add(new Node(-i, j, Tile.empty)); // then creates 2 version of the node, its regular and mirrored version.
-                    insertIndex(-i,j,index);
-                    index++;
                     cnt += 2;
                 }
             }
@@ -146,31 +138,6 @@ public class Board {
             node.setTile(tile);
             new BoardIsUpdatedEvent();
         }
-    }
-
-    public void insertIndex(int x, int y, int index){
-       // System.out.println("x = [" + x + "], y = [" + y + "], index = [" + index + "]");
-        if(x<0){
-            x = 5 - x;
-        }
-        if(y<0){
-            y = 5 - y;
-        }
-       // System.out.println("x = [" + x + "], y = [" + y + "], index = [" + index + "]");
-        this.nodeCoord[x][y] = index;
-    }
-
-    public Node getNode(int x, int y){
-        int index;
-        if(x<0){
-            x = 5 -x;
-        }
-        if(y<0){
-            y = 5 - y;
-        }
-      //  System.out.println("x = [" + x + "], y = [" + y + "]");
-        index = nodeCoord[x][y];
-        return nodes.get(index);
     }
 
 }
