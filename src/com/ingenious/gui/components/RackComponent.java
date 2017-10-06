@@ -30,7 +30,7 @@ public class RackComponent extends JComponent {
         coordinateY = 25;
 
         for (int i = 0; i < 6; i++) {
-            g.setColor(GameServiceProvider.players().getPlayer(1).getRack().getContents().get(i).getHead());
+            g.setColor(GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(i).getHead());
 
             Hexagon hexagon = new Hexagon(new Point(coordinateX, coordinateY), radius);
 
@@ -44,7 +44,7 @@ public class RackComponent extends JComponent {
         coordinateY = 60;
 
         for (int i = 0; i < 6; i++) {
-            g.setColor(GameServiceProvider.players().getPlayer(1).getRack().getContents().get(i).getTail());
+            g.setColor(GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(i).getTail());
 
             Hexagon hexagon2 = new Hexagon(new Point(coordinateX, coordinateY), radius);
 
