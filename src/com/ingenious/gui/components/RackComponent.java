@@ -18,7 +18,7 @@ public class RackComponent extends JComponent {
     int coordinateY;
     int radius = 20;
 
-    public void paintComponent(Graphics g) {
+    public void paint(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -105,5 +105,6 @@ public class RackComponent extends JComponent {
 
         }
     }
+
 
 }
