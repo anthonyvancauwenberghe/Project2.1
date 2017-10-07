@@ -1,10 +1,12 @@
 package com.ingenious.containers;
 
+import com.ingenious.algorithms.impl.ExampleAlgorithm;
 import com.ingenious.models.bag.Bag;
 import com.ingenious.models.players.Player;
-import com.ingenious.models.players.impl.bots.impl.ExampleBot;
-import com.ingenious.models.players.impl.human.Human;
+import com.ingenious.models.players.impl.Bot;
+import com.ingenious.models.players.impl.Human;
 import com.ingenious.models.rack.Rack;
+import com.ingenious.models.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class PlayerContainer {
     /* ADD PLAYERS OR BOTS HERE */
     protected void initPlayers() {
         this.addPlayer(new Human("random_player_name"));
-        this.addPlayer(new ExampleBot());
+        this.addPlayer(new Bot("test bot", new ExampleAlgorithm()));
     }
 
     private void addPlayer(Player player) {
@@ -41,9 +43,7 @@ public class PlayerContainer {
     }
 
     private void initScore(Player player) {
-        for (int i = 0; i < 6; i++) {
-            player.score[i]=0;
-        }
+        player.score = new Score();
     }
 
     private void initRack(Player player) {

@@ -1,4 +1,4 @@
-package com.ingenious.models.players.impl.human;
+package com.ingenious.models.players.impl;
 
 import com.ingenious.models.players.Player;
 

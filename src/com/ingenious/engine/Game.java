@@ -1,13 +1,11 @@
 package com.ingenious.engine;
 
-import com.ingenious.gui.components.BoardComponent;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.Node;
 import com.ingenious.models.players.Player;
 import com.ingenious.models.bag.Bag;
 import com.ingenious.models.pieces.Piece;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -102,7 +100,7 @@ public class Game {
 
     public boolean won() {
         for (int i = 0; i < 6; i++) {
-            if (getCurrentPlayer().getScore()[i] >= 18) {
+            if (getCurrentPlayer().getScoreArray()[i] >= 18) {
                 return true;
             }
         }
