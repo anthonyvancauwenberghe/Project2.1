@@ -20,11 +20,11 @@ public class Tests extends Thread {
 
     /* ALL TESTS YOU WANT TO EXECUTE GO IN HERE */
     public void run() {
-        BoardTesting board = new BoardTesting();
-        board.lightUpAllNodes();
+        //BoardTesting board = new BoardTesting();
+        //board.lightUpAllNodes();
 
-        ScoreTesting score = new ScoreTesting();
-        score.changeSecondPlayerScore();
+        //ScoreTesting score = new ScoreTesting();
+        //score.changeSecondPlayerScore();
     }
 
 
