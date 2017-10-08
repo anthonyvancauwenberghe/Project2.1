@@ -16,7 +16,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(0, i);
+            GameServiceProvider.players().getPlayer(0).score().setRedScore(i);
 
         }
 
@@ -26,7 +26,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(1, i);
+            GameServiceProvider.players().getPlayer(0).score().setGreenScore(i);
 
         }
 
@@ -36,7 +36,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(2, i);
+            GameServiceProvider.players().getPlayer(0).score().setBlueScore(i);
 
         }
 
@@ -46,7 +46,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(3, i);
+            GameServiceProvider.players().getPlayer(0).score().setOrangeScore(i);
 
         }
 
@@ -56,7 +56,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(4, i);
+            GameServiceProvider.players().getPlayer(0).score().setYellowScore(i);
 
         }
 
@@ -66,7 +66,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(0).setScore(5, i);
+            GameServiceProvider.players().getPlayer(0).score().setPurpleScore(i);
 
         }
     }
@@ -84,7 +84,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(0, i);
+            GameServiceProvider.players().getPlayer(1).score().setRedScore(i);
 
         }
 
@@ -94,7 +94,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(1, i);
+            GameServiceProvider.players().getPlayer(1).score().setGreenScore(i);
 
         }
 
@@ -104,7 +104,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(2, i);
+            GameServiceProvider.players().getPlayer(1).score().setBlueScore(i);
 
         }
 
@@ -114,7 +114,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(3, i);
+            GameServiceProvider.players().getPlayer(1).score().setOrangeScore(i);
 
         }
 
@@ -124,7 +124,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(4, i);
+            GameServiceProvider.players().getPlayer(1).score().setYellowScore(i);
 
         }
 
@@ -134,7 +134,7 @@ public class ScoreTesting {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameServiceProvider.players().getPlayer(1).setScore(5, i);
+            GameServiceProvider.players().getPlayer(1).score().setPurpleScore(i);
 
         }
     }
