@@ -5,7 +5,10 @@ import com.ingenious.models.board.Node;
 import com.ingenious.models.players.Player;
 import com.ingenious.models.bag.Bag;
 import com.ingenious.models.pieces.Piece;
+import com.ingenious.providers.impl.GameServiceProvider;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -88,7 +91,60 @@ public class Game {
     */
 
     public int calculate_score(Node node_1, Node node_2) {
-        return 0;
+        int x = node_1.getX();
+        int y = node_1.getY();
+        int l = 1;
+        int score = 0;
+        Color color = node_1.getTile().getColor();
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x,y-l) != node_2 && color == GameServiceProvider.board().getNode(x,y-l).getTile().getColor()){
+            score++;
+            y = y - l;
+        }
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x,y+l) != node_2 && color == GameServiceProvider.board().getNode(x,y+l).getTile().getColor()){
+            score++;
+            y = y + l;
+        }
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x + l,y) != node_2 && color == GameServiceProvider.board().getNode(x + l,y).getTile().getColor()){
+            score++;
+            x = x + l;
+        }
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x - l,y)  != node_2 && color == GameServiceProvider.board().getNode(x - l,y).getTile().getColor()){
+            score++;
+            x = x - l;
+        }
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x+l,y-l)  != node_2 && color == GameServiceProvider.board().getNode(x+l,y-l).getTile().getColor()){
+            score++;
+            y = y - l;
+            x = x + l;
+        }
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x-l,y+l) != node_2 && color == GameServiceProvider.board().getNode(x-l,y+l).getTile().getColor()){
+            score++;
+            y = y + l;
+            x = x - l;
+        }
+
+        if(color == Color.green){
+            getCurrentPlayer().score().setGreenScore(score+getCurrentPlayer().score().getGreenScore());
+        }
+        else if (color == Color.blue){
+            getCurrentPlayer().score().setBlueScore(score+getCurrentPlayer().score().getBlueScore());
+        }
+        else if(color == Color.red){
+            getCurrentPlayer().score().setRedScore(score+getCurrentPlayer().score().getRedScore());
+        }
+        else if(color == Color.yellow){
+            getCurrentPlayer().score().setYellowScore(score+getCurrentPlayer().score().getYellowScore());
+        }
+        else if(color == Color.orange){
+            getCurrentPlayer().score().setOrangeScore(score+getCurrentPlayer().score().getOrangeScore());
+        }
+        else{
+            getCurrentPlayer().score().setPurpleScore(score+getCurrentPlayer().score().getPurpleScore());
+        }
+
+
+
+        return score;
     }
 
     public boolean bonus_play(int newScore) {

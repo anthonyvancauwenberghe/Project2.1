@@ -13,9 +13,15 @@ public class Tile extends Color {
     public final static Tile yellow = new Tile(255, 255, 0);
     public final static Tile purple = new Tile(160, 32, 240);
 
+    private Color color;
+
 
     public Tile(int r, int g, int b) {
         super(r, g, b);
+    }
+
+    public Color getColor(){
+        return color;
     }
 
     public int getUniqueCode() {
