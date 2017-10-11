@@ -6,7 +6,7 @@ import com.ingenious.providers.impl.GameServiceProvider;
 public class ScoreIsUpdatedEvent extends Event {
 
     @Override
-    public void handle() {
+    protected void handle() {
         this.repaintScore();
     }
 
