@@ -5,6 +5,7 @@ import com.ingenious.models.board.Node;
 import com.ingenious.models.players.Player;
 import com.ingenious.models.bag.Bag;
 import com.ingenious.models.pieces.Piece;
+import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
 
 import java.awt.*;
@@ -41,6 +42,15 @@ public class Game {
         return this.players.get(this.current_player_index);
     }
 
+    public Player getOppenent(){
+        if(current_player_index == 0){
+            return this.players.get(1);
+        }
+        else{
+            return this.players.get(0);
+        }
+    }
+
     public void draw(Player player) {
         for (int i = 0; i < 6; i++) {
             Piece piece = bag.getAndRemoveRandomPiece();
@@ -61,89 +71,87 @@ public class Game {
     }
 
 
-    /*
+
     public void place_piece(Piece piece, Node node_1, Node node_2) {
-        if (valid_placement(piece, node_1)) {
+        if (valid_placement(piece, node_1, node_2)) {
             if (bonus_play != 0) {
                 bonus_play--;
             }
             getCurrentPlayer().getRack().getContents().remove(piece);
             board.addTile(piece.getHead(), node_1);
             board.addTile(piece.getTail(), node_2);
-        }
-        int newScore_1 = calculate_score(node_1, node_2);
-        int newScore_2 = calculate_score(node_2, node_1);
-        if (getCurrentPlayer().getRack().getContents().hasEmptyTile()) {
-            draw(getCurrentPlayer());
-            turn();
-        } else {
-            if (bonus_play(newScore_1)) {
-                bonus_play++;
-            }
-            if (bonus_play(newScore_2)) {
-                bonus_play++;
-            }
-            if (bonus_play == 0) {
+            int newScore_1 = calculate_score(node_1, node_2);
+            int newScore_2 = calculate_score(node_2, node_1);
+            if (getCurrentPlayer().getRack().getContents().isEmpty()) {
+                draw(getCurrentPlayer());
                 turn();
+            } else {
+                if (bonus_play(newScore_1)) {
+                    bonus_play++;
+                }
+                if (bonus_play(newScore_2)) {
+                    bonus_play++;
+                }
+                if (bonus_play == 0) {
+                    turn();
+                }
             }
         }
     }
-    */
+
 
     public int calculate_score(Node node_1, Node node_2) {
         int x = node_1.getX();
         int y = node_1.getY();
         int l = 1;
         int score = 0;
-        Color color = node_1.getTile().getColor();
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x,y-l) != node_2 && color == GameServiceProvider.board().getNode(x,y-l).getTile().getColor()){
+        Tile tile = node_1.getTile();
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x,y-l) != node_2 && tile.equals(GameServiceProvider.board().getNode(x,y-l).getTile())){
             score++;
             y = y - l;
         }
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x,y+l) != node_2 && color == GameServiceProvider.board().getNode(x,y+l).getTile().getColor()){
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x,y+l) != node_2 && tile.equals(GameServiceProvider.board().getNode(x,y+l).getTile())){
             score++;
             y = y + l;
         }
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x + l,y) != node_2 && color == GameServiceProvider.board().getNode(x + l,y).getTile().getColor()){
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x + l,y) != node_2 && tile.equals(GameServiceProvider.board().getNode(x + l,y).getTile())){
             score++;
             x = x + l;
         }
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x - l,y)  != node_2 && color == GameServiceProvider.board().getNode(x - l,y).getTile().getColor()){
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x - l,y)  != node_2 && tile.equals(GameServiceProvider.board().getNode(x - l,y).getTile())){
             score++;
             x = x - l;
         }
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x+l,y-l)  != node_2 && color == GameServiceProvider.board().getNode(x+l,y-l).getTile().getColor()){
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x+l,y-l)  != node_2 && tile.equals(GameServiceProvider.board().getNode(x+l,y-l).getTile())){
             score++;
             y = y - l;
             x = x + l;
         }
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x-l,y+l) != node_2 && color == GameServiceProvider.board().getNode(x-l,y+l).getTile().getColor()){
+        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x-l,y+l) != node_2 &&  tile.equals(GameServiceProvider.board().getNode(x-l,y+l).getTile())){
             score++;
             y = y + l;
             x = x - l;
         }
 
-        if(color == Color.green){
+        if(tile.equals(Color.green)){
             getCurrentPlayer().score().setGreenScore(score+getCurrentPlayer().score().getGreenScore());
         }
-        else if (color == Color.blue){
+        else if (tile.equals(Color.blue)){
             getCurrentPlayer().score().setBlueScore(score+getCurrentPlayer().score().getBlueScore());
         }
-        else if(color == Color.red){
+        else if(tile.equals(Color.red)){
             getCurrentPlayer().score().setRedScore(score+getCurrentPlayer().score().getRedScore());
         }
-        else if(color == Color.yellow){
+        else if(tile.equals(Color.yellow)){
             getCurrentPlayer().score().setYellowScore(score+getCurrentPlayer().score().getYellowScore());
         }
-        else if(color == Color.orange){
+        else if(tile.equals(Color.orange)){
             getCurrentPlayer().score().setOrangeScore(score+getCurrentPlayer().score().getOrangeScore());
         }
         else{
             getCurrentPlayer().score().setPurpleScore(score+getCurrentPlayer().score().getPurpleScore());
         }
-
-
-
+        //repaint score
         return score;
     }
 
@@ -185,13 +193,14 @@ public class Game {
             }
         }
     }
-/*
-    public boolean valid_placement(Piece piece, Node node) {
-        ArrayList<Node> neighbours = board.neighbours(node);
+
+    public boolean valid_placement(Piece piece, Node node_1, Node node_2) {
+        ArrayList<Node> neighbours_1 = board.getNeighboursOfNode(node_1);
+        ArrayList<Node> neighbours_2 = board.getNeighboursOfNode(node_2);
         if (piece.hasEqualTiles()) {
             int cnt = 0;
-            for (int i = 0; i < neighbours.size(); i++) {
-                if (neighbours.get(i).getTile().equals(piece.getHead())) {
+            for (int i = 0; i < neighbours_1.size(); i++) {
+                if (neighbours_1.get(i).getTile().equals(piece.getHead()) || neighbours_2.get(i).getTile().equals(piece.getTail())) {
                     cnt++;
                     if (cnt == 2) {
                         return true;
@@ -200,8 +209,8 @@ public class Game {
             }
 
         } else {
-            for (int i = 0; i < neighbours.size(); i++) {
-                if (neighbours.get(i).getTile().equals(piece.getHead())) {
+            for (int i = 0; i < neighbours_1.size(); i++) {
+                if (neighbours_1.get(i).getTile().equals(piece.getHead()) || neighbours_2.get(i).getTile().equals(piece.getTail())) {
                     return true;
                 }
             }
@@ -209,5 +218,5 @@ public class Game {
 
         return false;
     }
-    */
+
 }

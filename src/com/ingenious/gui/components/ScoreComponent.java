@@ -33,8 +33,8 @@ public class ScoreComponent extends JPanel {
         colors.add(new Color(160, 32, 240));
 
 
-        int[] myScore = GameServiceProvider.players().getPlayer(0).getScoreArray();
-        int[] opponentScore = GameServiceProvider.players().getPlayer(1).getScoreArray();
+        int[] myScore = GameServiceProvider.game().getCurrentPlayer().getScoreArray();
+        int[] opponentScore = GameServiceProvider.game().getOppenent().getScoreArray();
 
         //score on score com.ingenious.models.board
         for (int i = 0; i < 6; i++) {
