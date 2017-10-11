@@ -86,13 +86,13 @@ public class Game {
                 draw(getCurrentPlayer());
                 turn();
             } else {
-                if (bonus_play(newScore_1)) {
+                if (bonus_play(newScore_1)){
                     bonus_play++;
                 }
                 if (bonus_play(newScore_2)) {
                     bonus_play++;
                 }
-                if (bonus_play == 0) {
+                if (bonus_play == 0){
                     turn();
                 }
             }
@@ -186,7 +186,7 @@ public class Game {
 
     public void setNextPlayerAsCurrent() {
         for (Player player : players) {
-            if (this.current_player_index >= this.players.size()) {
+            if (this.current_player_index == 1) {
                 this.current_player_index = 0;
             } else {
                 this.current_player_index++;
@@ -195,26 +195,24 @@ public class Game {
     }
 
     public boolean valid_placement(Piece piece, Node node_1, Node node_2) {
+        if(node_1.isOccupied() || node_2.isOccupied()){
+            return false;
+        }
         ArrayList<Node> neighbours_1 = board.getNeighboursOfNode(node_1);
         ArrayList<Node> neighbours_2 = board.getNeighboursOfNode(node_2);
-        if (piece.hasEqualTiles()) {
-            int cnt = 0;
+        if(!neighbours_1.contains(node_2)){
+            return false;
+        }
             for (int i = 0; i < neighbours_1.size(); i++) {
-                if (neighbours_1.get(i).getTile().equals(piece.getHead()) || neighbours_2.get(i).getTile().equals(piece.getTail())) {
-                    cnt++;
-                    if (cnt == 2) {
+                if (neighbours_1.get(i).getTile().equals(piece.getHead())){
                         return true;
-                    }
                 }
             }
-
-        } else {
-            for (int i = 0; i < neighbours_1.size(); i++) {
-                if (neighbours_1.get(i).getTile().equals(piece.getHead()) || neighbours_2.get(i).getTile().equals(piece.getTail())) {
+            for(int i=0; i<neighbours_2.size(); i++){
+                if(neighbours_2.get(i).getTile().equals(piece.getTail())){
                     return true;
                 }
             }
-        }
 
         return false;
     }

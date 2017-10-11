@@ -47,29 +47,30 @@ public class RackComponent extends JComponent {
         super.paintComponent(g);
 
         X_position = X_start;
-
         for (int i = 0; i < 6; i++) {
-            g.setColor(GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(i).getHead());
-            Hexagon hexagon;
-            if (MovingMode == i)
-                hexagon = new Hexagon(new Point(MovingPieceX, MovingPieceY));
-            else
-                hexagon = new Hexagon(new Point(X_position, Y_line));
+            if(GameServiceProvider.game().getCurrentPlayer().getRack().getIndexSelected() != i) {
+                g.setColor(GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(i).getHead());
+                Hexagon hexagon;
+                if (MovingMode == i)
+                    hexagon = new Hexagon(new Point(MovingPieceX, MovingPieceY));
+                else
+                    hexagon = new Hexagon(new Point(X_position, Y_line));
 
-            g.fillPolygon(hexagon.getHexagon());
-            g.setColor(new Color(0, 0, 0));
-            g.drawPolygon(hexagon.getHexagon());
+                g.fillPolygon(hexagon.getHexagon());
+                g.setColor(new Color(0, 0, 0));
+                g.drawPolygon(hexagon.getHexagon());
 
-            g.setColor(GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(i).getTail());
-            Hexagon hexagon2;
-            if (MovingMode == i)
-                hexagon2 = new Hexagon(new Point(MovingPieceX, (int) (MovingPieceY + Hexagon.getHeight())));
-            else
-                hexagon2 = new Hexagon(new Point(X_position, (int) (Y_line + Hexagon.getHeight())));
+                g.setColor(GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(i).getTail());
+                Hexagon hexagon2;
+                if (MovingMode == i)
+                    hexagon2 = new Hexagon(new Point(MovingPieceX, (int) (MovingPieceY + Hexagon.getHeight())));
+                else
+                    hexagon2 = new Hexagon(new Point(X_position, (int) (Y_line + Hexagon.getHeight())));
 
-            g.fillPolygon(hexagon2.getHexagon());
-            g.setColor(new Color(0, 0, 0));
-            g.drawPolygon(hexagon2.getHexagon());
+                g.fillPolygon(hexagon2.getHexagon());
+                g.setColor(new Color(0, 0, 0));
+                g.drawPolygon(hexagon2.getHexagon());
+            }
 
             X_position += X_gap;
         }
@@ -83,14 +84,14 @@ public class RackComponent extends JComponent {
     class MouseWatcher implements MouseMotionListener {
         @Override
         public void mouseMoved(MouseEvent e) {
-            if (MovingMode != -1) {
+           /* if (MovingMode != -1) {
                 MovingPieceX = e.getX();
                 MovingPieceY = e.getY();
                 repaint();
 
                 //System.out.print("Mouse: " + e.getX() + ", " + e.getY());
                 //System.out.println("Piece moved to: " + MovingPieceX + ", " + MovingPieceY);
-            }
+            }*/
         }
 
         @Override
@@ -100,30 +101,47 @@ public class RackComponent extends JComponent {
     class MouseSpy implements MouseListener {
         @Override
         public void mouseClicked(MouseEvent e) {
-            Piece clicked = null;
             float x = e.getX();
             if (x >= (X_start-(Hexagon.getWidth()*0.5)) && x <= (X_start+(Hexagon.getWidth()*0.5))) {
-                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(0);
+
+                GameServiceProvider.game().getCurrentPlayer().getRack().setPieceSelected(0);
+                GameServiceProvider.gui().getRackPanel().repaint();
+                GameServiceProvider.gui().getBoardPanel().repaint();
                 changeMovingMode(0);
             }
             if (x >= ((X_start+X_gap)-(Hexagon.getWidth()*0.5)) && x <= ((X_start+X_gap)+(Hexagon.getWidth()*0.5))) {
-                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(1);
+
+                GameServiceProvider.game().getCurrentPlayer().getRack().setPieceSelected(1);
+                GameServiceProvider.gui().getRackPanel().repaint();
+                GameServiceProvider.gui().getBoardPanel().repaint();
                 changeMovingMode(1);
             }
             if (x >= ((X_start+(X_gap*2))-(Hexagon.getWidth()*0.5)) && x <= ((X_start+(X_gap*2))+(Hexagon.getWidth()*0.5))) {
-                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(2);
+
+                GameServiceProvider.game().getCurrentPlayer().getRack().setPieceSelected(2);
+                GameServiceProvider.gui().getRackPanel().repaint();
+                GameServiceProvider.gui().getBoardPanel().repaint();
                 changeMovingMode(2);
             }
             if (x >= ((X_start+(X_gap*3))-(Hexagon.getWidth()*0.5)) && x <= ((X_start+(X_gap*3))+(Hexagon.getWidth()*0.5))) {
-                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(3);
+
+                GameServiceProvider.game().getCurrentPlayer().getRack().setPieceSelected(3);
+                GameServiceProvider.gui().getRackPanel().repaint();
+                GameServiceProvider.gui().getBoardPanel().repaint();
                 changeMovingMode(3);
             }
             if (x >= ((X_start+(X_gap*4))-(Hexagon.getWidth()*0.5)) && x <= ((X_start+(X_gap*4))+(Hexagon.getWidth()*0.5))) {
-                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(4);
+
+                GameServiceProvider.game().getCurrentPlayer().getRack().setPieceSelected(4);
+                GameServiceProvider.gui().getRackPanel().repaint();
+                GameServiceProvider.gui().getBoardPanel().repaint();
                 changeMovingMode(4);
             }
             if (x >= ((X_start+(X_gap*5))-(Hexagon.getWidth()*0.5)) && x <= ((X_start+(X_gap*5))+(Hexagon.getWidth()*0.5))) {
-                clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(5);
+
+                GameServiceProvider.game().getCurrentPlayer().getRack().setPieceSelected(5);
+                GameServiceProvider.gui().getRackPanel().repaint();
+                GameServiceProvider.gui().getBoardPanel().repaint();
                 changeMovingMode(5);
             }
             //System.out.print(clicked.getHead().toString() + " " + clicked.getTail().toString());

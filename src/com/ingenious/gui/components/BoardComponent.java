@@ -2,12 +2,15 @@ package com.ingenious.gui.components;
 
 import com.ingenious.models.board.Node;
 import com.ingenious.config.Configuration;
+import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.tiles.C;
 import com.ingenious.providers.impl.GameServiceProvider;
 import com.sun.prism.image.Coords;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -57,12 +60,28 @@ public class BoardComponent extends JComponent {
             g.drawPolygon(hexagon.getHexagon());
         }
 
+        if(GameServiceProvider.game().getCurrentPlayer().getRack().selected()) {
+            Piece piece = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected();
+            Hexagon hexagon = new Hexagon(new Point(670, 140));
+            g.setColor(piece.getHead());
+            g.fillPolygon(hexagon.getHexagon());
+            g.setColor(Color.BLACK);
+            g.drawPolygon(hexagon.getHexagon());
+            hexagon = new Hexagon(new Point(670,(int)(140+Hexagon.getHeight())));
+            g.setColor(piece.getTail());
+            g.fillPolygon(hexagon.getHexagon());
+            g.setColor(Color.BLACK);
+            g.drawPolygon(hexagon.getHexagon());
+        }
+
+
         //System.out.println("Center point: " + testnodecoord[0] + ", " + testnodecoord[1]);
         //System.out.println(hex.getX() + ", " + hex.getY());
         BoardListener listener = new BoardListener();
         addMouseListener(listener);
+        addKeyListener(listener);
+        requestFocus();
     }
-
 
     public Point point_to_hex(int x, int y) {
         int q = (int) Math.round((x - startingX) / (0.75 * Hexagon.getWidth()));
@@ -71,20 +90,25 @@ public class BoardComponent extends JComponent {
         return new Point(q, r);
     }
 
-    class BoardListener implements MouseListener {
+
+    class BoardListener implements MouseListener, KeyListener {
 
         Node clicked;
         Node clicked2;
         int cnt = 0;
-
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(MouseEvent e){
             int x = e.getX();
             int y = e.getY();
             Point coord = point_to_hex(x, y);
-            clicked = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
-            System.out.println("x = [" + coord.getX() + "]" + " " + "y = [" + coord.getY() + "]");
-            System.out.println();
+            if(cnt == 0){
+                clicked = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
+                cnt++;
+            }
+            else{
+                clicked2 = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
+
+            }
         }
 
         @Override
@@ -105,6 +129,30 @@ public class BoardComponent extends JComponent {
         @Override
         public void mouseExited(MouseEvent e) {
 
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                if(GameServiceProvider.game().getCurrentPlayer().getRack().selected() && cnt != 0){
+                    GameServiceProvider.game().place_piece(GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected(), clicked, clicked2);
+                    cnt = 0;
+                    GameServiceProvider.gui().repaintAll();
+                }
+            }
+            if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                cnt = 0;
+            }
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
         }
     }
 }

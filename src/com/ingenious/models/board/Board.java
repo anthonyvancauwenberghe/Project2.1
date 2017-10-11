@@ -134,7 +134,7 @@ public class Board {
     }
 
     public void addTile(Tile tile, Node node) {
-        if (!node.getTile().isEmpty()) {
+        if (node.getTile().isEmpty()) {
             node.setTile(tile);
             new BoardIsUpdatedEvent();
         }
