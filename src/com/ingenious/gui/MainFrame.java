@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseEvent;
 
 public class MainFrame extends JFrame {
 
@@ -31,7 +33,43 @@ public class MainFrame extends JFrame {
         pack();
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        GlassPane glass = new GlassPane();
+        this.setGlassPane(glass);
+        glass.setVisible(true);
+
+
+        //RootMouseWatcher rootMouseWatcher = new RootMouseWatcher();
+        //addMouseMotionListener(rootMouseWatcher);
+        //rackPanel.addMouseMotionListener(rootMouseWatcher);
     }
+
+    class GlassPane extends JComponent implements MouseMotionListener
+    {
+        @Override
+        public void mouseMoved(MouseEvent e)
+        {
+            System.out.println("Mouse goes: " + e.getX() + ", " + e.getY());
+            repaintAll();
+            getGraphics().drawRect(e.getX(),e.getY(),30,30);
+        }
+        @Override
+        public void mouseDragged(MouseEvent e) {}
+    }
+
+    class RootMouseWatcher implements MouseMotionListener
+    {
+        @Override
+        public void mouseMoved(MouseEvent e)
+        {
+            System.out.println("Mouse goes: " + e.getX() + ", " + e.getY());
+            repaintAll();
+            getGraphics().drawRect(e.getX(),e.getY(),30,30);
+        }
+        @Override
+        public void mouseDragged(MouseEvent e) {}
+    }
+
 
     private void initScoreComponent() {
         GridBagConstraints gbc = new GridBagConstraints();

@@ -15,11 +15,13 @@ public class RackComponent extends JComponent {
         this.setVisible(true);
     }
 
-    int coordinateX;
-    int coordinateY;
-    int radius = 20;
+    int X_start = 100;
+    int X_position;
+    int Y_line = 25;
+    int X_gap = (int) (Hexagon.getWidth() + 40);
+
     private int MovingMode = -1;
-    private Piece MovingPiece;
+    public Piece MovingPiece;
     private int MovingPieceX, MovingPieceY;
 
     private void changeMovingMode(int i)
@@ -44,40 +46,32 @@ public class RackComponent extends JComponent {
 
         super.paintComponent(g);
 
-        coordinateX = 100;
+        X_position = X_start;
 
-        for (int i = 0; i < 6; i++)
-        {
-            coordinateY = 25;
-
+        for (int i = 0; i < 6; i++) {
             g.setColor(GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(i).getHead());
-
             Hexagon hexagon;
-            if(MovingMode == i)
-                hexagon = new Hexagon(new Point(MovingPieceX, MovingPieceY), radius);
+            if (MovingMode == i)
+                hexagon = new Hexagon(new Point(MovingPieceX, MovingPieceY));
             else
-                hexagon = new Hexagon(new Point(coordinateX, coordinateY), radius);
+                hexagon = new Hexagon(new Point(X_position, Y_line));
 
-                g.fillPolygon(hexagon.getHexagon());
-                g.setColor(new Color(0, 0, 0));
-                g.drawPolygon(hexagon.getHexagon());
+            g.fillPolygon(hexagon.getHexagon());
+            g.setColor(new Color(0, 0, 0));
+            g.drawPolygon(hexagon.getHexagon());
 
-                coordinateY = 60;
-
-                g.setColor(GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(i).getTail());
-
+            g.setColor(GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(i).getTail());
             Hexagon hexagon2;
-            if(MovingMode == i)
-                hexagon2 = new Hexagon(new Point(MovingPieceX, MovingPieceY + 35), radius);
+            if (MovingMode == i)
+                hexagon2 = new Hexagon(new Point(MovingPieceX, (int) (MovingPieceY + Hexagon.getHeight())));
             else
-                hexagon2 = new Hexagon(new Point(coordinateX, coordinateY), radius);
+                hexagon2 = new Hexagon(new Point(X_position, (int) (Y_line + Hexagon.getHeight())));
 
-                g.fillPolygon(hexagon2.getHexagon());
-                g.setColor(new Color(0, 0, 0));
-                g.drawPolygon(hexagon2.getHexagon());
+            g.fillPolygon(hexagon2.getHexagon());
+            g.setColor(new Color(0, 0, 0));
+            g.drawPolygon(hexagon2.getHexagon());
 
-                coordinateX += 100;
-
+            X_position += X_gap;
         }
 
         MouseSpy listener = new MouseSpy();
@@ -95,7 +89,7 @@ public class RackComponent extends JComponent {
                 repaint();
 
                 //System.out.print("Mouse: " + e.getX() + ", " + e.getY());
-                System.out.println("Piece moved to: " + MovingPieceX + ", " + MovingPieceY);
+                //System.out.println("Piece moved to: " + MovingPieceX + ", " + MovingPieceY);
             }
         }
 
@@ -108,28 +102,27 @@ public class RackComponent extends JComponent {
         public void mouseClicked(MouseEvent e) {
             Piece clicked = null;
             float x = e.getX();
-            if (x >= 60 && x <= 130) {
+            if (x >= (X_start-(Hexagon.getWidth()*0.5)) && x <= (X_start+(Hexagon.getWidth()*0.5))) {
                 clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(0);
-                //System.out.println("Hex is clicked");
                 changeMovingMode(0);
             }
-            if (x >= 170 && x <= 230) {
+            if (x >= ((X_start+X_gap)-(Hexagon.getWidth()*0.5)) && x <= ((X_start+X_gap)+(Hexagon.getWidth()*0.5))) {
                 clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(1);
                 changeMovingMode(1);
             }
-            if (x >= 270 && x <= 330) {
+            if (x >= ((X_start+(X_gap*2))-(Hexagon.getWidth()*0.5)) && x <= ((X_start+(X_gap*2))+(Hexagon.getWidth()*0.5))) {
                 clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(2);
                 changeMovingMode(2);
             }
-            if (x >= 370 && x <= 430) {
+            if (x >= ((X_start+(X_gap*3))-(Hexagon.getWidth()*0.5)) && x <= ((X_start+(X_gap*3))+(Hexagon.getWidth()*0.5))) {
                 clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(3);
                 changeMovingMode(3);
             }
-            if (x >= 470 && x <= 530) {
+            if (x >= ((X_start+(X_gap*4))-(Hexagon.getWidth()*0.5)) && x <= ((X_start+(X_gap*4))+(Hexagon.getWidth()*0.5))) {
                 clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(4);
                 changeMovingMode(4);
             }
-            if (x >= 570 && x <= 630) {
+            if (x >= ((X_start+(X_gap*5))-(Hexagon.getWidth()*0.5)) && x <= ((X_start+(X_gap*5))+(Hexagon.getWidth()*0.5))) {
                 clicked = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(5);
                 changeMovingMode(5);
             }
