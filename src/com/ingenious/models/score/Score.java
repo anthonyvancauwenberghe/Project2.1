@@ -54,33 +54,33 @@ public class Score {
     }
 
     public void setRedScore(int redScore) {
-        new ScoreIsUpdatedEvent();
         this.redScore = redScore;
+        new ScoreIsUpdatedEvent();
     }
 
     public void setGreenScore(int greenScore) {
-        new ScoreIsUpdatedEvent();
         this.greenScore = greenScore;
+        new ScoreIsUpdatedEvent();
     }
 
     public void setBlueScore(int blueScore) {
-        new ScoreIsUpdatedEvent();
         this.blueScore = blueScore;
+        new ScoreIsUpdatedEvent();
     }
 
     public void setOrangeScore(int orangeScore) {
-        new ScoreIsUpdatedEvent();
         this.orangeScore = orangeScore;
+        new ScoreIsUpdatedEvent();
     }
 
     public void setYellowScore(int yellowScore) {
-        new ScoreIsUpdatedEvent();
         this.yellowScore = yellowScore;
+        new ScoreIsUpdatedEvent();
     }
 
     public void setPurpleScore(int purpleScore) {
-        new ScoreIsUpdatedEvent();
         this.purpleScore = purpleScore;
+        new ScoreIsUpdatedEvent();
     }
 
     public int[] toArray() {
