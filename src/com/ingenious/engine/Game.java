@@ -106,33 +106,36 @@ public class Game {
         int l = 1;
         int score = 0;
         Tile tile = node_1.getTile();
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x,y-l) != node_2 && tile.equals(GameServiceProvider.board().getNode(x,y-l).getTile())){
-            score++;
-            y = y - l;
-        }
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x,y+l) != node_2 && tile.equals(GameServiceProvider.board().getNode(x,y+l).getTile())){
-            score++;
-            y = y + l;
-        }
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x + l,y) != node_2 && tile.equals(GameServiceProvider.board().getNode(x + l,y).getTile())){
-            score++;
-            x = x + l;
-        }
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x - l,y)  != node_2 && tile.equals(GameServiceProvider.board().getNode(x - l,y).getTile())){
-            score++;
-            x = x - l;
-        }
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x+l,y-l)  != node_2 && tile.equals(GameServiceProvider.board().getNode(x+l,y-l).getTile())){
-            score++;
-            y = y - l;
-            x = x + l;
-        }
-        while(5 > x && x > -5 && y > -5 && y < 5 && GameServiceProvider.board().getNode(x-l,y+l) != node_2 &&  tile.equals(GameServiceProvider.board().getNode(x-l,y+l).getTile())){
-            score++;
-            y = y + l;
-            x = x - l;
-        }
 
+        while(GameServiceProvider.board().getNode(x,y-l)!= null && GameServiceProvider.board().getNode(x,y-l) != node_2 && tile.equals(GameServiceProvider.board().getNode(x,y-l).getTile())){
+            score++;
+            l++;
+        }
+        l = 1;
+        while(GameServiceProvider.board().getNode(x,y+l)!= null && GameServiceProvider.board().getNode(x,y+l) != node_2 && tile.equals(GameServiceProvider.board().getNode(x,y+l).getTile())){
+            score++;
+            l++;
+        }
+        l = 1;
+        while(GameServiceProvider.board().getNode(x+l,y)!= null && GameServiceProvider.board().getNode(x + l,y) != node_2 && tile.equals(GameServiceProvider.board().getNode(x + l,y).getTile())){
+            score++;
+           l++;
+        }
+        l = 1;
+        while(GameServiceProvider.board().getNode(x-l,y)!= null && GameServiceProvider.board().getNode(x - l,y)  != node_2 && tile.equals(GameServiceProvider.board().getNode(x - l,y).getTile())){
+            score++;
+            l++;
+        }
+        l = 1;
+        while(GameServiceProvider.board().getNode(x+l,y-l)!= null && GameServiceProvider.board().getNode(x+l,y-l)  != node_2 && tile.equals(GameServiceProvider.board().getNode(x+l,y-l).getTile())){
+            score++;
+            l++;
+        }
+        l = 1;
+        while(GameServiceProvider.board().getNode(x-l,y+l)!= null && GameServiceProvider.board().getNode(x-l,y+l) != node_2 &&  tile.equals(GameServiceProvider.board().getNode(x-l,y+l).getTile())){
+            score++;
+            l++;
+        }
         if(tile.equals(Color.green)){
             getCurrentPlayer().score().setGreenScore(score+getCurrentPlayer().score().getGreenScore());
         }
