@@ -188,12 +188,10 @@ public class Game {
     }
 
     public void setNextPlayerAsCurrent() {
-        for (Player player : players) {
             if (this.current_player_index == 1) {
                 this.current_player_index = 0;
             } else {
                 this.current_player_index++;
-            }
         }
     }
 

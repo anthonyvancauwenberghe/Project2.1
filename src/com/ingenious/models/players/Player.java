@@ -29,7 +29,7 @@ public abstract class Player implements Moveable {
     }
 
     public Rack getRack() {
-        return rack;
+        return this.rack;
     }
 
     public void executeMove(Node node) {
