@@ -106,6 +106,7 @@ public class BoardComponent extends JComponent {
                 cnt++;
             }
             else{
+                cnt++;
                 clicked2 = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
 
             }
@@ -139,7 +140,7 @@ public class BoardComponent extends JComponent {
         @Override
         public void keyPressed(KeyEvent e) {
             if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                if(GameServiceProvider.game().getCurrentPlayer().getRack().selected() && cnt != 0){
+                if(GameServiceProvider.game().getCurrentPlayer().getRack().selected() && cnt == 2){
                     GameServiceProvider.game().place_piece(GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected(), clicked, clicked2);
                     cnt = 0;
                     GameServiceProvider.gui().repaintAll();
