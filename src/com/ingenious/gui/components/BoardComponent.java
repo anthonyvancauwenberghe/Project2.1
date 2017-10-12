@@ -6,10 +6,13 @@ import com.ingenious.config.Configuration;
 import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.tiles.C;
 import com.ingenious.providers.impl.GameServiceProvider;
+import com.sun.prism.*;
 import com.sun.prism.image.Coords;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -72,6 +75,8 @@ public class BoardComponent extends JComponent {
         addMouseListener(listener);
         addKeyListener(listener);
         requestFocus();
+
+        g.drawString("Current Player: "+ GameServiceProvider.game().getCurrentPlayer().getName(), 20,20);
     }
 
     public void repaintNode(Graphics g, int X, int Y, Color c)
@@ -172,11 +177,8 @@ public class BoardComponent extends JComponent {
                 }
             }
             if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-                if(cnt > 0)
-                {
                     cnt = 0;
                     repaint();
-                }
             }
 
         }
