@@ -137,30 +137,55 @@ public class Game {
             score++;
             l++;
         }
-        if(tile.equals(Color.green)){
-            getCurrentPlayer().score().setGreenScore(score+getCurrentPlayer().score().getGreenScore());
+        int newScore = 0;
+        if(tile.equals(Tile.green)){
+            newScore = score+getCurrentPlayer().score().getGreenScore();
+            if(newScore >18){
+                newScore = 18;
+            }
+            getCurrentPlayer().score().setGreenScore(newScore);
         }
-        else if (tile.equals(Color.blue)){
-            getCurrentPlayer().score().setBlueScore(score+getCurrentPlayer().score().getBlueScore());
+        else if (tile.equals(Tile.blue)){
+            newScore = score+getCurrentPlayer().score().getBlueScore();
+            if(newScore >18){
+                newScore = 18;
+            }
+            getCurrentPlayer().score().setBlueScore(newScore);
         }
-        else if(tile.equals(Color.red)){
-            getCurrentPlayer().score().setRedScore(score+getCurrentPlayer().score().getRedScore());
+        else if(tile.equals(Tile.red)){
+            newScore = score+getCurrentPlayer().score().getRedScore();
+            if(newScore >18){
+                newScore = 18;
+            }
+            getCurrentPlayer().score().setRedScore(newScore);
         }
-        else if(tile.equals(Color.yellow)){
-            getCurrentPlayer().score().setYellowScore(score+getCurrentPlayer().score().getYellowScore());
+        else if(tile.equals(Tile.yellow)){
+            newScore = score+getCurrentPlayer().score().getYellowScore();
+            if(newScore >18){
+                newScore = 18;
+            }
+            getCurrentPlayer().score().setYellowScore(newScore);
         }
-        else if(tile.equals(Color.orange)){
-            getCurrentPlayer().score().setOrangeScore(score+getCurrentPlayer().score().getOrangeScore());
+        else if(tile.equals(Tile.orange)){
+            newScore = score+getCurrentPlayer().score().getOrangeScore();
+            if(newScore >18){
+                newScore = 18;
+            }
+            getCurrentPlayer().score().setOrangeScore(newScore);
         }
         else{
-            getCurrentPlayer().score().setPurpleScore(score+getCurrentPlayer().score().getPurpleScore());
+            newScore = score+getCurrentPlayer().score().getPurpleScore();
+            if(newScore >18){
+                newScore = 18;
+            }
+            getCurrentPlayer().score().setPurpleScore(newScore);
         }
         //repaint score
         return score;
     }
 
     public boolean bonus_play(int newScore) {
-        if (newScore > 18) {
+        if (newScore >= 18) {
             return true;
         }
         return false;

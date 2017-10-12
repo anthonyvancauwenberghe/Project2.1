@@ -45,6 +45,14 @@ public class Board {
         return nodes;
     }
 
+    public boolean inBoard(int x, int y)
+    {
+        if(getNode(x,y) == null)
+            return false;
+        else
+            return true;
+    }
+
     private void buildNodeCoordinatesArray() {
         this.nodeCoord = new int[2 * (Configuration.boardWidth) - 1][2 * (Configuration.boardWidth) - 1];
         int offset = Configuration.boardWidth - 1;
@@ -131,6 +139,12 @@ public class Board {
         }
       
         return neighbours;
+    }
+
+    public boolean isNeighbour(Node node1, Node node2)
+    {
+        ArrayList<Node> neighbours = node1.getNeighbours();
+        return neighbours.contains(node2);
     }
 
     public void addTile(Tile tile, Node node) {

@@ -1,5 +1,6 @@
 package com.ingenious.gui.components;
 
+import com.ingenious.engine.Game;
 import com.ingenious.models.board.Node;
 import com.ingenious.config.Configuration;
 import com.ingenious.models.pieces.Piece;
@@ -23,7 +24,6 @@ public class BoardComponent extends JComponent {
     int startingX = 350; // coordinates for node 0,0
     int startingY = 253;
 
-
     public BoardComponent() {
         this.setVisible(true);
     }
@@ -37,16 +37,10 @@ public class BoardComponent extends JComponent {
         ArrayList<com.ingenious.models.board.Node> nodeList = GameServiceProvider.board().getNodes();
 
         for (int i = 0; i < nodeList.size(); i++) {
-            int[] xP = new int[6];
-            int[] yP = new int[6];
-            int nodeX;
-            int nodeY;
-
             //adjust x and y of node to actual location
-            nodeX = (int) (startingX + (nodeList.get(i).x * (0.75 * Hexagon.getWidth())));
-            nodeY = (int) (startingY + (nodeList.get(i).y * Hexagon.getHeight()) + (nodeList.get(i).x * 0.5 * Hexagon.getHeight()));
+            Point node = hex_to_centerpoint(nodeList.get(i).x, nodeList.get(i).y);
 
-            Hexagon hexagon = new Hexagon(new Point(nodeX, nodeY));
+            Hexagon hexagon = new Hexagon(new Point(node.x, node.y));
 
             g.setColor(nodeList.get(i).getTile());
 
@@ -55,7 +49,7 @@ public class BoardComponent extends JComponent {
             g.setColor(C.getColor(C.LINE));
 
             if (Configuration.showCoordinates)
-                g.drawString((nodeList.get(i).getX()) + "," + (nodeList.get(i).getY()), nodeX - 9, nodeY + 3);
+                g.drawString((nodeList.get(i).getX()) + "," + (nodeList.get(i).getY()), node.x - 9, node.y + 3);
 
             g.drawPolygon(hexagon.getHexagon());
         }
@@ -74,13 +68,24 @@ public class BoardComponent extends JComponent {
             g.drawPolygon(hexagon.getHexagon());
         }
 
-
-        //System.out.println("Center point: " + testnodecoord[0] + ", " + testnodecoord[1]);
-        //System.out.println(hex.getX() + ", " + hex.getY());
         BoardListener listener = new BoardListener();
         addMouseListener(listener);
         addKeyListener(listener);
         requestFocus();
+    }
+
+    public void repaintNode(Graphics g, int X, int Y, Color c)
+    {
+        if(GameServiceProvider.board().inBoard(X,Y))
+        {
+            Point p = hex_to_centerpoint(X, Y);
+
+            Hexagon h = new Hexagon(p);
+            g.setColor(c);
+            g.fillPolygon(h.getHexagon());
+            g.setColor(C.getColor(C.LINE));
+            g.drawPolygon(h.getHexagon());
+        }
     }
 
     public Point point_to_hex(int x, int y) {
@@ -90,24 +95,43 @@ public class BoardComponent extends JComponent {
         return new Point(q, r);
     }
 
+    public Point hex_to_centerpoint(int x, int y)
+    {
+        Point p = new Point();
+        p.x = (int) (startingX + (x * (0.75 * Hexagon.getWidth())));
+        p.y = (int) (startingY + (y * Hexagon.getHeight()) + (x * 0.5 * Hexagon.getHeight()));
+        return p;
+    }
+
 
     class BoardListener implements MouseListener, KeyListener {
 
         Node clicked;
         Node clicked2;
         int cnt = 0;
+        Graphics g = GameServiceProvider.gui().getBoardPanel().getGraphics();
         @Override
         public void mouseClicked(MouseEvent e){
             int x = e.getX();
             int y = e.getY();
             Point coord = point_to_hex(x, y);
+
             if(cnt == 0){
                 clicked = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
+                Color c = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getHead();
+                repaintNode(g, coord.x, coord.y, C.makeTransparant(c));
                 cnt++;
             }
-            else{
+            else if(cnt == 1)
+            {
                 clicked2 = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
 
+                if(GameServiceProvider.board().isNeighbour(clicked, clicked2))
+                {
+                    Color d = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getTail();
+                    repaintNode(g, coord.x, coord.y, C.makeTransparant(d));
+                    cnt++;
+                }
             }
         }
 
@@ -139,14 +163,20 @@ public class BoardComponent extends JComponent {
         @Override
         public void keyPressed(KeyEvent e) {
             if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                if(GameServiceProvider.game().getCurrentPlayer().getRack().selected() && cnt != 0){
+                if(GameServiceProvider.game().getCurrentPlayer().getRack().selected() && cnt == 2){
                     GameServiceProvider.game().place_piece(GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected(), clicked, clicked2);
-                    cnt = 0;
                     GameServiceProvider.gui().repaintAll();
+                    cnt = 0;
+                    clicked = null;
+                    clicked2 = null;
                 }
             }
             if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-                cnt = 0;
+                if(cnt > 0)
+                {
+                    cnt = 0;
+                    repaint();
+                }
             }
 
         }
