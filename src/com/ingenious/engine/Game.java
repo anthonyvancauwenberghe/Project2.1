@@ -96,6 +96,7 @@ public class Game {
                     turn();
                 }
             }
+            getCurrentPlayer().getRack().setPieceSelected(-1);
         }
     }
 
