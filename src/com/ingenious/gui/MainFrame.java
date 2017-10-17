@@ -108,7 +108,7 @@ public class MainFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             GameServiceProvider.game().swap();
-            getRackPanel().repaint();
+            repaintAll();
         }
     }
 
