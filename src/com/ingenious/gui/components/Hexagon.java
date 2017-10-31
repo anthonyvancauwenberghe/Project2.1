@@ -12,8 +12,8 @@ public class Hexagon
     private final Polygon hexagon;
 
     private static int SIZE = Configuration.hexagonSize;
-    private static float WIDTH = SIZE * 2;
-    private static float HEIGHT = WIDTH * 3 / 4;
+    private static double WIDTH = SIZE * 2;
+    private static double HEIGHT = WIDTH * 3 / 4;
 
     public Hexagon(Point center)
     {
@@ -21,17 +21,23 @@ public class Hexagon
         this.hexagon = createHexagon();
     }
 
-    public Polygon getHexagon() {
-        return hexagon;
+    public Polygon getHexagon() { return hexagon; }
+
+    public static double Height() { return HEIGHT; }
+    public static double Height(double r) // r: ratio
+    {
+        if(r > 0)
+            return HEIGHT * r;
+        else
+            return 0;
     }
-    public static float getWidth() {
-        return WIDTH;
-    }
-    public static float getHeight() {
-        return HEIGHT;
-    }
-    public static double getHalfHeight() {
-        return (HEIGHT * 0.5);
+    public static double Width() { return WIDTH; }
+    public static double Width(double r) // r: ratio
+    {
+        if(r > 0)
+            return WIDTH * r;
+        else
+            return 0;
     }
 
     private Polygon createHexagon()
@@ -40,28 +46,28 @@ public class Hexagon
         
         //clockwise, with starting point on the far left
         polygon.addPoint(
-                (int) (center.x - (0.5 * WIDTH)),    // -1/2w, y
+                (int) (center.x - Width(0.5)),    // -1/2w, y
                 center.y
         );
         polygon.addPoint(
-                (int) (center.x - (0.25 * WIDTH)),    // -1/4w, -1/2h
-                (int) (center.y - (0.5 * HEIGHT))
+                (int) (center.x - Width(0.25)),    // -1/4w, -1/2h
+                (int) (center.y - Height(0.5))
         );
         polygon.addPoint(
-                (int) (center.x + (0.25 * WIDTH)),    // +1/4w, -1/2h
-                (int) (center.y - (0.5 * HEIGHT))
+                (int) (center.x + Width(0.25)),    // +1/4w, -1/2h
+                (int) (center.y - Height(0.5))
         );
         polygon.addPoint(
-                (int) (center.x + (0.5 * WIDTH)),    // +1/2w, y
+                (int) (center.x + Width(0.5)),    // +1/2w, y
                 center.y
         );
         polygon.addPoint(
-                (int) (center.x + (0.25 * WIDTH)),    // +1/4w, +1/2h
-                (int) (center.y + (0.5 * HEIGHT))
+                (int) (center.x + Width(0.25)),    // +1/4w, +1/2h
+                (int) (center.y + Height(0.5))
         );
         polygon.addPoint(
-                (int) (center.x - (0.25 * WIDTH)),    // -1/4w, +1/2h
-                (int) (center.y + (0.5 * HEIGHT))
+                (int) (center.x - Width(0.25)),    // -1/4w, +1/2h
+                (int) (center.y + Height(0.5))
         );
         return polygon;
     }

@@ -5,6 +5,7 @@ import com.ingenious.models.board.Node;
 import com.ingenious.config.Configuration;
 import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.tiles.C;
+import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
 import com.sun.prism.*;
 import com.sun.prism.image.Coords;
@@ -62,12 +63,12 @@ public class BoardComponent extends JComponent {
             Hexagon hexagon = new Hexagon(new Point(670, 140));
             g.setColor(piece.getHead());
             g.fillPolygon(hexagon.getHexagon());
-            g.setColor(Color.BLACK);
+            g.setColor(C.getColor(C.LINE));
             g.drawPolygon(hexagon.getHexagon());
-            hexagon = new Hexagon(new Point(670,(int)(140+Hexagon.getHeight())));
+            hexagon = new Hexagon(new Point(670,(int)(140+Hexagon.Height())));
             g.setColor(piece.getTail());
             g.fillPolygon(hexagon.getHexagon());
-            g.setColor(Color.BLACK);
+            g.setColor(C.getColor(C.LINE));
             g.drawPolygon(hexagon.getHexagon());
         }
 
@@ -79,14 +80,14 @@ public class BoardComponent extends JComponent {
         g.drawString("Current Player: "+ GameServiceProvider.game().getCurrentPlayer().getName(), 20,20);
     }
 
-    public void repaintNode(Graphics g, int X, int Y, Color c)
+    public void repaintNode(Graphics g, int X, int Y, Color tileColor)
     {
         if(GameServiceProvider.board().inBoard(X,Y))
         {
             Point p = hex_to_centerpoint(X, Y);
 
             Hexagon h = new Hexagon(p);
-            g.setColor(c);
+            g.setColor(tileColor);
             g.fillPolygon(h.getHexagon());
             g.setColor(C.getColor(C.LINE));
             g.drawPolygon(h.getHexagon());
@@ -94,8 +95,8 @@ public class BoardComponent extends JComponent {
     }
 
     public Point point_to_hex(int x, int y) {
-        int q = (int) Math.round((x - startingX) / (0.75 * Hexagon.getWidth()));
-        int r = (int) Math.round((y - startingY - (q * 0.5 * Hexagon.getHeight())) / Hexagon.getHeight());
+        int q = (int) Math.round((x - startingX) / Hexagon.Width(0.75));
+        int r = (int) Math.round((y - startingY - (q * Hexagon.Height(0.5))) / Hexagon.Height());
 
         return new Point(q, r);
     }
@@ -103,8 +104,8 @@ public class BoardComponent extends JComponent {
     public Point hex_to_centerpoint(int x, int y)
     {
         Point p = new Point();
-        p.x = (int) (startingX + (x * (0.75 * Hexagon.getWidth())));
-        p.y = (int) (startingY + (y * Hexagon.getHeight()) + (x * 0.5 * Hexagon.getHeight()));
+        p.x = (int) (startingX + (x * Hexagon.Width(0.75)));
+        p.y = (int) (startingY + (y * Hexagon.Height()) + (x * Hexagon.Height(0.5)));
         return p;
     }
 
@@ -123,8 +124,8 @@ public class BoardComponent extends JComponent {
 
             if(cnt == 0){
                 clicked = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
-                Color c = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getHead();
-                repaintNode(g, coord.x, coord.y, C.makeTransparant(c));
+                Tile c = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getHead();
+                repaintNode(g, coord.x, coord.y, C.getColor(c.getColorName(),true));
                 cnt++;
             }
             else if(cnt == 1)
@@ -133,8 +134,8 @@ public class BoardComponent extends JComponent {
 
                 if(GameServiceProvider.board().isNeighbour(clicked, clicked2))
                 {
-                    Color d = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getTail();
-                    repaintNode(g, coord.x, coord.y, C.makeTransparant(d));
+                    Tile d = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getTail();
+                    repaintNode(g, coord.x, coord.y, C.getColor(d.getColorName(), true));
                     cnt++;
                 }
             }
