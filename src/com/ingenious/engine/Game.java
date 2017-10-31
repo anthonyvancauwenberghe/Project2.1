@@ -63,7 +63,9 @@ public class Game {
             bag.addPiece(getCurrentPlayer().getRack().getContents().get(i));
         }
         draw(getCurrentPlayer());
+        turn();
     }
+
 
     //at the end of each turn make sure you have 6 tiles
     public void refresh() {
@@ -229,7 +231,7 @@ public class Game {
         ArrayList<Node> neighbours_2 = board.getNeighboursOfNode(node_2);
         if(!neighbours_1.contains(node_2)){
             return false;
-        }
+        }/*
             for (int i = 0; i < neighbours_1.size(); i++) {
                 if (neighbours_1.get(i).getTile().equals(piece.getHead())){
                         return true;
@@ -239,9 +241,9 @@ public class Game {
                 if(neighbours_2.get(i).getTile().equals(piece.getTail())){
                     return true;
                 }
-            }
+            }*/
 
-        return false;
+        return true;
     }
 
 }

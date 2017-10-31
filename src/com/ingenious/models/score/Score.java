@@ -1,6 +1,11 @@
 package com.ingenious.models.score;
 
 import com.ingenious.events.impl.ScoreIsUpdatedEvent;
+import com.ingenious.models.tiles.Tile;
+import com.ingenious.providers.impl.GameServiceProvider;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Score {
 
@@ -87,4 +92,5 @@ public class Score {
         int[] score = {redScore, greenScore, blueScore, orangeScore, yellowScore, purpleScore};
         return score;
     }
+
 }
