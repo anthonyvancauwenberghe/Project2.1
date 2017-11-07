@@ -1,3 +1,4 @@
+import com.ingenious.algorithms.impl.GenericTree;
 import com.ingenious.providers.impl.GameServiceProvider;
 import tests.Tests;
 
@@ -8,5 +9,7 @@ public class Main {
 
         /* INITIATE THE TESTS ON ANOTHER THREAD */
         Tests.getInstance().start();
+
+        GenericTree tree = new GenericTree();
     }
 }

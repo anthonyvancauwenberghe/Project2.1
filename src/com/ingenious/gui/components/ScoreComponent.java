@@ -42,7 +42,7 @@ public class ScoreComponent extends JPanel
                     g2d.setColor(C.getColor(colors[i],true));
                 } else {
                     if (myScore[i] < j) {
-                        g2d.setColor(C.getColor(C.GRAY)); //Color.gray
+                        g2d.setColor(C.getColor(C.GRAY));
                         g2d.drawOval(currentX, currentY, circleSize, circleSize);
                         g2d.setColor(C.getColor(C.GRAY,true));
                     }
