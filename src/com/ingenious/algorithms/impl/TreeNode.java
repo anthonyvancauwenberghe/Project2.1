@@ -48,4 +48,12 @@ public class TreeNode<T>{
     public TreeNode getParent() {
         return parent;
     }
+
+    public Boolean hasChildren()
+    {
+        if(this.children.isEmpty())
+            return false;
+        else
+            return true;
+    }
 }

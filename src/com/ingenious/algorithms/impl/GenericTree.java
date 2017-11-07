@@ -5,23 +5,21 @@ public class GenericTree
 {
     public GenericTree()
     {
-        TreeNode<String> root = new TreeNode<>("Root");
+        TreeNode<Integer> root = new TreeNode<>(2);
+        TreeNode<Integer> child1 = new TreeNode<>(5);
+        TreeNode<Integer> child2 = new TreeNode<>(4);
 
-        TreeNode<String> child1 = new TreeNode<>("Child1");
-        child1.addChild("Grandchild1");
-        child1.addChild("Grandchild2");
-
-        TreeNode<String> child2 = new TreeNode<>("Child2");
-        child2.addChild("Grandchild3");
 
         root.addChild(child1);
+            child1.addChild(2);
+            child1.addChild(3);
         root.addChild(child2);
-        root.addChild("Child3");
-
+                child2.addChild(1);
+        root.addChild(2);
         root.addChildren(Arrays.asList(
-                new TreeNode<>("Child4"),
-                new TreeNode<>("Child5"),
-                new TreeNode<>("Child6")
+                new TreeNode<>(3),
+                new TreeNode<>(2),
+                new TreeNode<>(5)
         ));
 
         for(TreeNode node : root.getChildren())
