@@ -16,6 +16,7 @@ public class GenericTree
         root.addChild(child2);
                 child2.addChild(1);
         root.addChild(2);
+        root.addChild(2);
         root.addChildren(Arrays.asList(
                 new TreeNode<>(3),
                 new TreeNode<>(2),
