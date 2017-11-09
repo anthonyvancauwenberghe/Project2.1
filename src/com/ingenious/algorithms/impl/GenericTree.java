@@ -3,11 +3,13 @@ import java.util.Arrays;
 
 public class GenericTree
 {
+    public TreeNode root;
+
     public GenericTree()
     {
-        TreeNode<Integer> root = new TreeNode<>(2);
-        TreeNode<Integer> child1 = new TreeNode<>(5);
-        TreeNode<Integer> child2 = new TreeNode<>(4);
+        root = new TreeNode(2);
+        TreeNode child1 = new TreeNode(5);
+        TreeNode child2 = new TreeNode(4);
 
 
         root.addChild(child1);
@@ -18,12 +20,25 @@ public class GenericTree
         root.addChild(2);
         root.addChild(2);
         root.addChildren(Arrays.asList(
-                new TreeNode<>(3),
-                new TreeNode<>(2),
-                new TreeNode<>(5)
+                new TreeNode(3),
+                new TreeNode(2),
+                new TreeNode(5)
         ));
+    }
 
-        for(TreeNode node : root.getChildren())
+    public GenericTree getTree()
+    {
+        return this;
+    }
+
+    public TreeNode getRoot()
+    {
+        return root;
+    }
+
+    public void printValues()
+    {
+        for (TreeNode node : this.root.getChildren())
         {
             System.out.println(node.getData());
         }
