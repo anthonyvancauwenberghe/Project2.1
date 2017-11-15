@@ -1,18 +1,14 @@
 package com.ingenious.gui.components;
 
-import com.ingenious.engine.Game;
 import com.ingenious.models.board.Node;
 import com.ingenious.config.Configuration;
 import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.tiles.C;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
-import com.sun.prism.*;
-import com.sun.prism.image.Coords;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
