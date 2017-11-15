@@ -14,7 +14,6 @@ public class Board {
     private int[][] nodeCoord;
 
 
-
     public Board() {
         initBoard();
     }
@@ -45,9 +44,8 @@ public class Board {
         return nodes;
     }
 
-    public boolean inBoard(int x, int y)
-    {
-        if(getNode(x,y) == null)
+    public boolean inBoard(int x, int y) {
+        if (getNode(x, y) == null)
             return false;
         else
             return true;
@@ -137,12 +135,14 @@ public class Board {
         if (southEast != null) {
             neighbours.add(southEast);
         }
-      
+
         return neighbours;
     }
 
-    public boolean isNeighbour(Node node1, Node node2)
-    {
+    public boolean isNeighbour(Node node1, Node node2) {
+        if (node1 == null || node2 == null)
+            return false;
+
         ArrayList<Node> neighbours = node1.getNeighbours();
         return neighbours.contains(node2);
     }
