@@ -6,6 +6,7 @@ import com.ingenious.algorithms.impl.mcts.Move;
 import com.ingenious.config.Configuration;
 import com.ingenious.events.impl.BoardIsUpdatedEvent;
 import com.ingenious.models.tiles.Tile;
+import com.ingenious.providers.impl.GameServiceProvider;
 
 import java.util.ArrayList;
 
@@ -192,6 +193,15 @@ public class Board {
     }
 
     public void doMove(Move move) {
+
+        if(!move.isInverted()){
+            this.getNode(move.getNode().getX(),move.getNode().getY()).setTile(move.getPiece().getHead());
+            this.getNode(move.getNode2().getX(),move.getNode2().getY()).setTile(move.getPiece().getTail());
+        }
+        else{
+            this.getNode(move.getNode().getX(),move.getNode().getY()).setTile(move.getPiece().getTail());
+            this.getNode(move.getNode2().getX(),move.getNode2().getY()).setTile(move.getPiece().getHead());
+        }
 
     }
 

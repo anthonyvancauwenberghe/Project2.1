@@ -1,5 +1,6 @@
 package com.ingenious.models.score;
 
+import com.ingenious.config.Configuration;
 import com.ingenious.events.impl.ScoreIsUpdatedEvent;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;

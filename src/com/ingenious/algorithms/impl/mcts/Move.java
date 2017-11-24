@@ -27,4 +27,9 @@ public class Move {
         return node;
     }
 
+    public Node getNode2() { return node2;}
+
+    public boolean isInverted() {
+        return inverted;
+    }
 }

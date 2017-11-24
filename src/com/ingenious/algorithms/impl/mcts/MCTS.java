@@ -17,6 +17,16 @@ public class MCTS {
     public MCTS() {
         this.initialize();
         System.out.println("initialized");
+        Tile h = new Tile(50,120,50);
+        Tile t = new Tile(70,70,20);
+
+        Node node1= GameServiceProvider.board().getNode(0,0);
+        Node node2= GameServiceProvider.board().getNode(1,0);
+        Piece p = GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(0);
+        Move move = new Move(node1,node2,p,true);
+
+        GameServiceProvider.board().doMove(move);
+        GameServiceProvider.gui().repaintAll();
 
     }
 

@@ -19,7 +19,6 @@ public class BoardTesting {
                 }
                 node.removeTile();
             }
-
         }
     }
 
