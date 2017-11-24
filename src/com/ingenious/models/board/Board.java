@@ -19,6 +19,12 @@ public class Board {
         initBoard();
     }
 
+    private Board(ArrayList<Node> ns, int[][] nc)
+    {
+        this.nodes = ns;
+        this.nodeCoord = nc;
+    }
+
     public void initBoard() {
         int cnt = 0; //This counter keeps track of the number of nodes that were created
         int board_width = Configuration.boardWidth; // this is the radius of nodes from the center to the end of the com.ingenious.models.board (incl. center)
@@ -92,6 +98,20 @@ public class Board {
         return nodes.get(this.nodeCoord[x][y]);
     }
 
+    public Node getNode(int x, int y, ArrayList<Node> nodesList) {
+        //ADDING THE WIDTH OF THE BOARD TO MAKE SURE THERE ARE NO NEGATIVE NUMBERS AS KEY IN THE ARRAY
+        x = x + Configuration.boardWidth - 1;
+        y = y + Configuration.boardWidth - 1;
+
+        if (x < 0 || x > 2 * (Configuration.boardWidth - 1) || y < 0 || y > 2 * (Configuration.boardWidth - 1))
+            return null;
+
+        if (this.nodeCoord[x][y] == -1)
+            return null;
+
+        return nodesList.get(this.nodeCoord[x][y]);
+    }
+
 
     public void setInitialTiles() {
         this.getNodes().get(0).setTile(Tile.red);
@@ -152,6 +172,19 @@ public class Board {
             node.setTile(tile);
             new BoardIsUpdatedEvent();
         }
+    }
+
+    public void addTile(Tile tile, Node node, boolean update) {
+        if (node.getTile().isEmpty()) {
+            node.setTile(tile);
+            if(update)
+                new BoardIsUpdatedEvent();
+        }
+    }
+
+    public Board getClone()
+    {
+        return new Board(this.nodes, this.nodeCoord);
     }
 
 }

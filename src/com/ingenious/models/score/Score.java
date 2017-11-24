@@ -58,6 +58,18 @@ public class Score {
         return purpleScore;
     }
 
+    public int[] getScores()
+    {
+        int[] scores = new int[6];
+        scores[0] = this.getRedScore();
+        scores[1] = this.getGreenScore();
+        scores[2] = this.getBlueScore();
+        scores[3] = this.getOrangeScore();
+        scores[4] = this.getYellowScore();
+        scores[5] = this.getPurpleScore();
+        return  scores;
+    }
+
     public void setRedScore(int redScore) {
         this.redScore = redScore;
         new ScoreIsUpdatedEvent();

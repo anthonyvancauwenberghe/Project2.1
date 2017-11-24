@@ -14,7 +14,8 @@ public class Node {
     private boolean fixed;
     private Tile tile;
 
-    public Node(int x, int y, Tile tile) {
+    public Node(int x, int y, Tile tile)
+    {
         this.x = x;
         this.y = y;
         this.tile = tile;
