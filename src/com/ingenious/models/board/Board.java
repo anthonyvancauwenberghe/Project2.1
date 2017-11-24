@@ -2,6 +2,7 @@ package com.ingenious.models.board; /**
  * Created by alexisguillot on 14/09/2017.
  */
 
+import com.ingenious.algorithms.impl.mcts.Move;
 import com.ingenious.config.Configuration;
 import com.ingenious.events.impl.BoardIsUpdatedEvent;
 import com.ingenious.models.tiles.Tile;
@@ -18,8 +19,7 @@ public class Board {
         initBoard();
     }
 
-    private Board(ArrayList<Node> ns, int[][] nc)
-    {
+    private Board(ArrayList<Node> ns, int[][] nc) {
         this.nodes = ns;
         this.nodeCoord = nc;
     }
@@ -177,14 +177,23 @@ public class Board {
     public void addTile(Tile tile, Node node, boolean update) {
         if (node.getTile().isEmpty()) {
             node.setTile(tile);
-            if(update)
+            if (update)
                 new BoardIsUpdatedEvent();
         }
     }
 
-    public Board getClone()
-    {
-        return new Board(this.nodes, this.nodeCoord);
+    public Board getClone() {
+        ArrayList<Node> nodes = new ArrayList<>();
+
+        for (Node node : this.nodes) {
+            nodes.add(node.getClone());
+        }
+        return new Board(nodes, this.nodeCoord.clone());
     }
+
+    public void doMove(Move move) {
+
+    }
+
 
 }

@@ -68,4 +68,8 @@ public class Piece {
         this.head = Tile;
     }
 
+    public Piece getClone() {
+        return new Piece(this.head, this.tail);
+    }
+
 }

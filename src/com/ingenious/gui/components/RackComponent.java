@@ -1,7 +1,6 @@
 package com.ingenious.gui.components;
 
-import com.ingenious.models.pieces.Piece;
-import com.ingenious.models.tiles.C;
+import com.ingenious.config.Configuration;
 import com.ingenious.providers.impl.GameServiceProvider;
 
 import javax.swing.*;
@@ -40,7 +39,7 @@ public class RackComponent extends JComponent {
                     hexagon = new Hexagon(new Point(X_position, Y_line));
 
                     g.fillPolygon(hexagon.getHexagon());
-                    g.setColor(C.getColor(C.LINE));
+                    g.setColor(Configuration.LineColor);
                     g.drawPolygon(hexagon.getHexagon());
 
                     g.setColor(GameServiceProvider.game().getCurrentPlayer().getRack().getContents().get(i).getTail());
@@ -48,7 +47,7 @@ public class RackComponent extends JComponent {
                     hexagon2 = new Hexagon(new Point(X_position, (int) (Y_line + Hexagon.Height())));
 
                     g.fillPolygon(hexagon2.getHexagon());
-                    g.setColor(C.getColor(C.LINE));
+                    g.setColor(Configuration.LineColor);
                     g.drawPolygon(hexagon2.getHexagon());
                 }
 

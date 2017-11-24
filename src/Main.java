@@ -9,7 +9,7 @@ public class Main {
 
 
         /* INITIATE THE TESTS ON ANOTHER THREAD */
-        // Tests.getInstance().start();
+         Tests.getInstance().start();
 
         //GenericTree tree = new GenericTree();
     }

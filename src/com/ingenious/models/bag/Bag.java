@@ -14,6 +14,20 @@ public class Bag {
         this.fillBag();
     }
 
+    public Bag(ArrayList<Piece> pieces) {
+        this.pieces = pieces;
+    }
+
+    public Bag getClone() {
+        ArrayList<Piece> pieces = new ArrayList<>();
+
+        for (Piece piece : this.pieces) {
+            pieces.add(piece.getClone());
+        }
+
+        return new Bag(pieces);
+    }
+
     public void addPiece(Piece piece) {
         this.pieces.add(piece);
     }
@@ -99,7 +113,7 @@ public class Bag {
         }
     }
 
-    public void refillBag(){
+    public void refillBag() {
         this.pieces.clear();
         this.fillBag();
     }

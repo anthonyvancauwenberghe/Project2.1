@@ -64,7 +64,6 @@ public class Game {
             bag.addPiece(getCurrentPlayer().getRack().getContents().get(i));
         }
         draw(getCurrentPlayer());
-        turn();
     }
 
 

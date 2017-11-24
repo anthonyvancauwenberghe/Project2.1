@@ -11,14 +11,17 @@ public class Node {
     public int x;
     public int y;
 
-    private boolean fixed;
+    private boolean fixed = false;
     private Tile tile;
 
-    public Node(int x, int y, Tile tile)
-    {
+    public Node(int x, int y, Tile tile) {
         this.x = x;
         this.y = y;
         this.tile = tile;
+    }
+
+    public Node getClone() {
+        return new Node(this.x, this.y, this.tile);
     }
 
     public int getX() {
@@ -53,6 +56,10 @@ public class Node {
     public void setTile(Tile tile) {
         this.tile = tile;
         new BoardIsUpdatedEvent();
+    }
+
+    public void setFixed(boolean fixed) {
+        this.fixed = fixed;
     }
 
     public void removeTile() {

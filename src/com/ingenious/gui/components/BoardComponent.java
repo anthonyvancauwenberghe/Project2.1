@@ -3,7 +3,6 @@ package com.ingenious.gui.components;
 import com.ingenious.models.board.Node;
 import com.ingenious.config.Configuration;
 import com.ingenious.models.pieces.Piece;
-import com.ingenious.models.tiles.C;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
 
@@ -29,7 +28,7 @@ public class BoardComponent extends JComponent {
     }
 
     public void paint(Graphics g) {
-        if(GameServiceProvider.isBooted()){
+        if (GameServiceProvider.isBooted()) {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
@@ -48,7 +47,7 @@ public class BoardComponent extends JComponent {
 
                 g.fillPolygon(hexagon.getHexagon());
 
-                g.setColor(C.getColor(C.LINE));
+                g.setColor(Configuration.LineColor);
 
                 if (Configuration.showCoordinates)
                     g.drawString((nodeList.get(i).getX()) + "," + (nodeList.get(i).getY()), node.x - 9, node.y + 3);
@@ -61,12 +60,12 @@ public class BoardComponent extends JComponent {
                 Hexagon hexagon = new Hexagon(new Point(670, 140));
                 g.setColor(piece.getHead());
                 g.fillPolygon(hexagon.getHexagon());
-                g.setColor(C.getColor(C.LINE));
+                g.setColor(Configuration.LineColor);
                 g.drawPolygon(hexagon.getHexagon());
                 hexagon = new Hexagon(new Point(670, (int) (140 + Hexagon.Height())));
                 g.setColor(piece.getTail());
                 g.fillPolygon(hexagon.getHexagon());
-                g.setColor(C.getColor(C.LINE));
+                g.setColor(Configuration.LineColor);
                 g.drawPolygon(hexagon.getHexagon());
             }
 
@@ -80,14 +79,14 @@ public class BoardComponent extends JComponent {
 
     }
 
-    public void repaintNode(Graphics g, int X, int Y, Color tileColor) {
+    public void repaintNode(Graphics g, int X, int Y, Tile tileColor) {
         if (GameServiceProvider.board().inBoard(X, Y)) {
             Point p = hex_to_centerpoint(X, Y);
 
             Hexagon h = new Hexagon(p);
             g.setColor(tileColor);
             g.fillPolygon(h.getHexagon());
-            g.setColor(C.getColor(C.LINE));
+            g.setColor(Configuration.LineColor);
             g.drawPolygon(h.getHexagon());
         }
     }
@@ -124,16 +123,16 @@ public class BoardComponent extends JComponent {
                 clicked = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
                 if (GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected() != null) {
                     Tile c = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getHead();
-                    repaintNode(g, coord.x, coord.y, C.getColor(c.getColorName(), true));
+                    repaintNode(g, coord.x, coord.y, c);
                 }
 
                 cnt++;
             } else if (cnt == 1) {
                 clicked2 = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
 
-                if (GameServiceProvider.board().isNeighbour(clicked, clicked2)) {
+                if (GameServiceProvider.board().isNeighbour(clicked, clicked2) && GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected() != null) {
                     Tile d = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getTail();
-                    repaintNode(g, coord.x, coord.y, C.getColor(d.getColorName(), true));
+                    repaintNode(g, coord.x, coord.y, d);
                     cnt++;
                 }
             }
