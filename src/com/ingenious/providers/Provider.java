@@ -20,7 +20,7 @@ abstract public class Provider {
         }
     }
 
-    protected static void reboot(){
+    public static void reboot(){
         instance = new GameServiceProvider();
     }
 

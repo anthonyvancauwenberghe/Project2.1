@@ -8,11 +8,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScoreComponent extends JPanel
-{
+public class ScoreComponent extends JPanel {
     @Override
-    public void paintComponent(Graphics g)
-    {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
@@ -28,8 +26,12 @@ public class ScoreComponent extends JPanel
         int currentY = startingY;
         C[] colors = C.getTileColors();
 
-        int[] myScore = GameServiceProvider.game().getCurrentPlayer().getScoreArray();
-        int[] opponentScore = GameServiceProvider.game().getOppenent().getScoreArray();
+        int[] myScore = {0, 0, 0, 0, 0,0};
+        int[] opponentScore = {0, 0, 0, 0, 0,0};
+        if (GameServiceProvider.isBooted()) {
+            myScore = GameServiceProvider.game().getCurrentPlayer().getScoreArray();
+            opponentScore = GameServiceProvider.game().getOppenent().getScoreArray();
+        }
 
         //score on score com.ingenious.models.board
         for (int i = 0; i < 6; i++) {
@@ -39,12 +41,12 @@ public class ScoreComponent extends JPanel
                     g2d.setStroke(new BasicStroke(1));
                     g2d.setColor(C.getColor(colors[i]));
                     g2d.fillOval(currentX, currentY, circleSize, circleSize);
-                    g2d.setColor(C.getColor(colors[i],true));
+                    g2d.setColor(C.getColor(colors[i], true));
                 } else {
                     if (myScore[i] < j) {
                         g2d.setColor(C.getColor(C.GRAY));
                         g2d.drawOval(currentX, currentY, circleSize, circleSize);
-                        g2d.setColor(C.getColor(C.GRAY,true));
+                        g2d.setColor(C.getColor(C.GRAY, true));
                     }
                     g2d.fillOval(currentX, currentY, circleSize, circleSize);
                 }
@@ -60,7 +62,7 @@ public class ScoreComponent extends JPanel
 
         for (int z = 18; z >= 0; z--) {
             g2d.setColor(C.getColor(C.LINE));
-            g2d.drawString(Integer.toString(z), currentX, currentY-6);
+            g2d.drawString(Integer.toString(z), currentX, currentY - 6);
             currentY += gapSize;
         }
 

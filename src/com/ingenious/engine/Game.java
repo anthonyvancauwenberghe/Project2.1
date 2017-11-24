@@ -77,6 +77,7 @@ public class Game {
 
     public void place_piece(Piece piece, Node node_1, Node node_2) {
         if (valid_placement(piece, node_1, node_2)) {
+            getCurrentPlayer().getRack().setPieceSelected(-1);
             if (bonus_play != 0) {
                 bonus_play--;
             }
@@ -99,7 +100,6 @@ public class Game {
                     turn();
                 }
             }
-            getCurrentPlayer().getRack().setPieceSelected(-1);
         }
     }
 

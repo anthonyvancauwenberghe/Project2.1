@@ -1,18 +1,14 @@
 package com.ingenious.gui.components;
 
-import com.ingenious.engine.Game;
 import com.ingenious.models.board.Node;
 import com.ingenious.config.Configuration;
 import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.tiles.C;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
-import com.sun.prism.*;
-import com.sun.prism.image.Coords;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -33,57 +29,59 @@ public class BoardComponent extends JComponent {
     }
 
     public void paint(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        if(GameServiceProvider.isBooted()){
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-        ArrayList<com.ingenious.models.board.Node> nodeList = GameServiceProvider.board().getNodes();
 
-        for (int i = 0; i < nodeList.size(); i++) {
-            //adjust x and y of node to actual location
-            Point node = hex_to_centerpoint(nodeList.get(i).x, nodeList.get(i).y);
+            ArrayList<com.ingenious.models.board.Node> nodeList = GameServiceProvider.board().getNodes();
 
-            Hexagon hexagon = new Hexagon(new Point(node.x, node.y));
+            for (int i = 0; i < nodeList.size(); i++) {
+                //adjust x and y of node to actual location
+                Point node = hex_to_centerpoint(nodeList.get(i).x, nodeList.get(i).y);
 
-            g.setColor(nodeList.get(i).getTile());
+                Hexagon hexagon = new Hexagon(new Point(node.x, node.y));
 
-            g.fillPolygon(hexagon.getHexagon());
+                g.setColor(nodeList.get(i).getTile());
 
-            g.setColor(C.getColor(C.LINE));
+                g.fillPolygon(hexagon.getHexagon());
 
-            if (Configuration.showCoordinates)
-                g.drawString((nodeList.get(i).getX()) + "," + (nodeList.get(i).getY()), node.x - 9, node.y + 3);
+                g.setColor(C.getColor(C.LINE));
 
-            g.drawPolygon(hexagon.getHexagon());
+                if (Configuration.showCoordinates)
+                    g.drawString((nodeList.get(i).getX()) + "," + (nodeList.get(i).getY()), node.x - 9, node.y + 3);
+
+                g.drawPolygon(hexagon.getHexagon());
+            }
+
+            if (GameServiceProvider.game().getCurrentPlayer().getRack().selected()) {
+                Piece piece = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected();
+                Hexagon hexagon = new Hexagon(new Point(670, 140));
+                g.setColor(piece.getHead());
+                g.fillPolygon(hexagon.getHexagon());
+                g.setColor(C.getColor(C.LINE));
+                g.drawPolygon(hexagon.getHexagon());
+                hexagon = new Hexagon(new Point(670, (int) (140 + Hexagon.Height())));
+                g.setColor(piece.getTail());
+                g.fillPolygon(hexagon.getHexagon());
+                g.setColor(C.getColor(C.LINE));
+                g.drawPolygon(hexagon.getHexagon());
+            }
+
+            BoardListener listener = new BoardListener();
+            addMouseListener(listener);
+            addKeyListener(listener);
+            requestFocus();
+
+            g.drawString("Current Player: " + GameServiceProvider.game().getCurrentPlayer().getName(), 20, 20);
         }
 
-        if(GameServiceProvider.game().getCurrentPlayer().getRack().selected()) {
-            Piece piece = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected();
-            Hexagon hexagon = new Hexagon(new Point(670, 140));
-            g.setColor(piece.getHead());
-            g.fillPolygon(hexagon.getHexagon());
-            g.setColor(C.getColor(C.LINE));
-            g.drawPolygon(hexagon.getHexagon());
-            hexagon = new Hexagon(new Point(670,(int)(140+Hexagon.Height())));
-            g.setColor(piece.getTail());
-            g.fillPolygon(hexagon.getHexagon());
-            g.setColor(C.getColor(C.LINE));
-            g.drawPolygon(hexagon.getHexagon());
-        }
-
-        BoardListener listener = new BoardListener();
-        addMouseListener(listener);
-        addKeyListener(listener);
-        requestFocus();
-
-        g.drawString("Current Player: "+ GameServiceProvider.game().getCurrentPlayer().getName(), 20,20);
     }
 
-    public void repaintNode(Graphics g, int X, int Y, Color tileColor)
-    {
-        if(GameServiceProvider.board().inBoard(X,Y))
-        {
+    public void repaintNode(Graphics g, int X, int Y, Color tileColor) {
+        if (GameServiceProvider.board().inBoard(X, Y)) {
             Point p = hex_to_centerpoint(X, Y);
 
             Hexagon h = new Hexagon(p);
@@ -101,8 +99,7 @@ public class BoardComponent extends JComponent {
         return new Point(q, r);
     }
 
-    public Point hex_to_centerpoint(int x, int y)
-    {
+    public Point hex_to_centerpoint(int x, int y) {
         Point p = new Point();
         p.x = (int) (startingX + (x * Hexagon.Width(0.75)));
         p.y = (int) (startingY + (y * Hexagon.Height()) + (x * Hexagon.Height(0.5)));
@@ -116,24 +113,25 @@ public class BoardComponent extends JComponent {
         Node clicked2;
         int cnt = 0;
         Graphics g = GameServiceProvider.gui().getBoardPanel().getGraphics();
+
         @Override
-        public void mouseClicked(MouseEvent e){
+        public void mouseClicked(MouseEvent e) {
             int x = e.getX();
             int y = e.getY();
             Point coord = point_to_hex(x, y);
 
-            if(cnt == 0){
+            if (cnt == 0) {
                 clicked = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
-                Tile c = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getHead();
-                repaintNode(g, coord.x, coord.y, C.getColor(c.getColorName(),true));
+                if (GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected() != null) {
+                    Tile c = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getHead();
+                    repaintNode(g, coord.x, coord.y, C.getColor(c.getColorName(), true));
+                }
+
                 cnt++;
-            }
-            else if(cnt == 1)
-            {
+            } else if (cnt == 1) {
                 clicked2 = GameServiceProvider.board().getNode((int) coord.getX(), (int) coord.getY());
 
-                if(GameServiceProvider.board().isNeighbour(clicked, clicked2))
-                {
+                if (GameServiceProvider.board().isNeighbour(clicked, clicked2)) {
                     Tile d = GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected().getTail();
                     repaintNode(g, coord.x, coord.y, C.getColor(d.getColorName(), true));
                     cnt++;
@@ -168,8 +166,8 @@ public class BoardComponent extends JComponent {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                if(GameServiceProvider.game().getCurrentPlayer().getRack().selected() && cnt == 2){
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                if (GameServiceProvider.game().getCurrentPlayer().getRack().selected() && cnt == 2) {
                     GameServiceProvider.game().place_piece(GameServiceProvider.game().getCurrentPlayer().getRack().getPieceSelected(), clicked, clicked2);
                     GameServiceProvider.gui().repaintAll();
                     cnt = 0;
@@ -177,9 +175,9 @@ public class BoardComponent extends JComponent {
                     clicked2 = null;
                 }
             }
-            if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-                    cnt = 0;
-                    repaint();
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                cnt = 0;
+                repaint();
             }
 
         }

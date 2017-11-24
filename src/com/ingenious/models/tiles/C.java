@@ -58,6 +58,7 @@ public enum C
         Color rC;
         if(!transparency)
             rC = C.getColor(c);
+
         else
         {
             switch (c)

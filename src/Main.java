@@ -7,9 +7,10 @@ public class Main {
          /* BOOT THE GAMESERVICE PROVIDER */
         GameServiceProvider.boot();
 
-        /* INITIATE THE TESTS ON ANOTHER THREAD */
-        Tests.getInstance().start();
 
-        GenericTree tree = new GenericTree();
+        /* INITIATE THE TESTS ON ANOTHER THREAD */
+        // Tests.getInstance().start();
+
+        //GenericTree tree = new GenericTree();
     }
 }
