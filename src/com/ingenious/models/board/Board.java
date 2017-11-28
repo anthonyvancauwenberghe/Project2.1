@@ -47,7 +47,6 @@ public class Board {
     }
 
     public ArrayList<Node> getNodes() {
-
         return nodes;
     }
 
@@ -171,6 +170,7 @@ public class Board {
     public void addTile(Tile tile, Node node) {
         if (node.getTile().isEmpty()) {
             node.setTile(tile);
+            //System.out.println("Node was set correctly");
             new BoardIsUpdatedEvent();
         }
     }

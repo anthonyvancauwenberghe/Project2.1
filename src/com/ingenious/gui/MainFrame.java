@@ -97,6 +97,7 @@ public class MainFrame extends JFrame {
         Component rackComponent = new RackComponent();
         //rackPanel.setBackground(Color.WHITE);
         this.rackPanel.add(rackComponent, gbc);
+
         JButton swapButton = new JButton("Swap");
         SwapListener listener = new SwapListener();
         swapButton.addActionListener(listener);
@@ -111,6 +112,8 @@ public class MainFrame extends JFrame {
             repaintAll();
         }
     }
+
+
 
 
     public void repaintAll() {

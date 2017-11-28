@@ -33,11 +33,14 @@ public class Piece {
 
     private Tile head;
     private Tile tail;
+    private int orientation;
 
     public Piece(Tile head, Tile tail) {
+        this.orientation = 0;
         this.head = head;
         this.tail = tail;
     }
+
 
     @Override
     public String toString() {

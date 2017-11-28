@@ -11,7 +11,8 @@ import com.ingenious.models.score.Score;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerContainer {
+public class PlayerContainer
+{
 
     private List<Player> players;
     private Bag bag;

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by carolley on 14-Nov-17.
  */
-public class Q_learning {
+public class Q_learningTest {
 
     public static void main(String[] args) {
         GameServiceProvider.boot();
