@@ -30,13 +30,6 @@ public class QTable{
         return q_tables;
     }
 
-    public Double[] get_Qtable(Node node){
-        return q_tables.get(node);
-    }
-
-    public void replace_Qtable(Node node, Double [] new_Qtable){
-        q_tables.put(node,new_Qtable);
-    }
 
     public void print(int n){
         for(int i=0; i<=n; i++){
