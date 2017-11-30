@@ -110,7 +110,7 @@ public class Game {
         int score = 0;
         Tile tile = node_1.getTile();
 
-        while(GameServiceProvider.board().getNode(x,y-l)!= null && GameServiceProvider.board().getNode(x,y-l) != node_2 && tile.equals(GameServiceProvider.board().getNode(x,y-l).getTile())){
+        while(this.board.getNode(x,y-l)!= null && GameServiceProvider.board().getNode(x,y-l) != node_2 && tile.equals(GameServiceProvider.board().getNode(x,y-l).getTile())){
             score++;
             l++;
         }

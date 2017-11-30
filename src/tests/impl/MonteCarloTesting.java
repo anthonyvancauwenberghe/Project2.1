@@ -1,12 +1,12 @@
 package tests.impl;
 
-import com.ingenious.algorithms.impl.mcts.MCTS;
+import com.ingenious.algorithms.impl.mcts.MCTSAlgorithm;
 
 public class MonteCarloTesting {
 
     public void run() {
         try {
-            MCTS branches = new MCTS();
+            MCTSAlgorithm branches = new MCTSAlgorithm();
             branches.generateBaseMoves();
         } catch (Exception exception) {
 

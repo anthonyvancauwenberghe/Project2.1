@@ -2,11 +2,10 @@ package com.ingenious.models.board; /**
  * Created by alexisguillot on 14/09/2017.
  */
 
-import com.ingenious.algorithms.impl.mcts.Move;
+import com.ingenious.models.move.Move;
 import com.ingenious.config.Configuration;
 import com.ingenious.events.impl.BoardIsUpdatedEvent;
 import com.ingenious.models.tiles.Tile;
-import com.ingenious.providers.impl.GameServiceProvider;
 
 import java.util.ArrayList;
 

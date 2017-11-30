@@ -5,7 +5,7 @@ import com.ingenious.models.board.Node;
 import com.ingenious.models.rack.Rack;
 import com.ingenious.models.score.Score;
 
-public abstract class Player implements Moveable {
+public class Player {
 
     private String name;
 
@@ -14,6 +14,12 @@ public abstract class Player implements Moveable {
 
     public Player(String name) {
         this.name = name;
+        this.score = new Score();
+    }
+
+    public Player(String name, Score score) {
+        this.name = name;
+        this.score = score;
     }
 
     public String getName() {
@@ -32,7 +38,7 @@ public abstract class Player implements Moveable {
         return this.rack;
     }
 
-    public void executeMove(Node node) {
-        //TODO IMPLEMENT MOVE LOGIC
+    public Player getClone() {
+        return new Player(this.name, this.score);
     }
 }

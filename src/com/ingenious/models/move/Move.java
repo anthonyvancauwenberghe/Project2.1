@@ -1,4 +1,4 @@
-package com.ingenious.algorithms.impl.mcts;
+package com.ingenious.models.move;
 
 import com.ingenious.models.board.Node;
 import com.ingenious.models.pieces.Piece;
