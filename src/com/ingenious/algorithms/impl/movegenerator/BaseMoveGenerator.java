@@ -1,7 +1,7 @@
 package com.ingenious.algorithms.impl.movegenerator;
 
 import com.ingenious.models.board.Board;
-import com.ingenious.models.board.Node;
+import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.move.Move;
 import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.rack.Rack;
@@ -41,24 +41,24 @@ public class BaseMoveGenerator {
     public ArrayList<Move> generate() {
         long startTime = System.nanoTime();
         ArrayList<Move> moves = new ArrayList<>();
-
+        Board board = this.board.getClone();
         //TODO SPAWN THREADS
-        for (Node node : this.board.getNodes()) {
-            if (!node.isOccupied()) {
-                for (Node neighbour : node.getNeighbours()) {
-                    if (!neighbour.isOccupied()) {
+        for (BoardNode boardNode : board.getBoardNodes()) {
+            if (boardNode.isEmpty()) {
+                for (BoardNode neighbour : boardNode.getNeighbours()) {
+                    if (neighbour.isEmpty()) {
                         for (Piece piece : this.rack) {
                             if (piece.hasEqualTiles()) {
-                                moves.add(new Move(node, neighbour, piece, false));
+                                moves.add(new Move(boardNode, neighbour, piece, false));
                             } else {
-                                moves.add(new Move(node, neighbour, piece, false));
-                                moves.add(new Move(node, neighbour, piece, true));
+                                moves.add(new Move(boardNode, neighbour, piece, false));
+                                moves.add(new Move(boardNode, neighbour, piece, true));
                             }
                         }
                     }
                 }
             }
-            node.setTile(Tile.occupied);
+            boardNode.setTile(Tile.occupied);
         }
         long endTime = System.nanoTime();
         System.out.println("Created " + moves.size() + " Moves");

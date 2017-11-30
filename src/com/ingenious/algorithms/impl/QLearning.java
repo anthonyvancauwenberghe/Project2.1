@@ -1,12 +1,9 @@
 package com.ingenious.algorithms.impl;
 
-import com.ingenious.models.board.Board;
-import com.ingenious.models.board.Node;
+import com.ingenious.models.board.BoardNode;
 import com.ingenious.providers.impl.GameServiceProvider;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -14,13 +11,13 @@ import java.util.Random;
  */
 public class QLearning
 {
-    private ArrayList<Node> nodes = GameServiceProvider.board().getNodes();
+    private ArrayList<BoardNode> boardNodes = GameServiceProvider.board().getBoardNodes();
     private ArrayList<double[]> qTables = new ArrayList<double[]>();
     private int EPSILON = 50;
 
     public void createQValueTable()
     {
-        for(int i = 0; i < nodes.size(); i++)
+        for(int i = 0; i < boardNodes.size(); i++)
         {
             double[] array = {0.0,0.0,0.0,0.0,0.0,0.0};
             qTables.add(array);
@@ -28,9 +25,9 @@ public class QLearning
         }
 
     }
-    public double[] getQTable(Node node)
+    public double[] getQTable(BoardNode boardNode)
     {
-        int index = nodes.indexOf(node);
+        int index = boardNodes.indexOf(boardNode);
         return qTables.get(index);
     }
 
@@ -42,13 +39,13 @@ public class QLearning
           randomAction();
         }
         else{
-            Node head = argmaxQ();
+            BoardNode head = argmaxQ();
 
         }
 
     }
 
-    public void play(Node a, Node b){
+    public void play(BoardNode a, BoardNode b){
         //place head at a, place tail at b
     }
 
@@ -58,36 +55,36 @@ public class QLearning
 
     public void randomAction(){
         Random random = new Random();
-        int index_head = random.nextInt(nodes.size());
-        Node node_head = nodes.get(index_head);
-        if(node_head.isOccupied()){
+        int index_head = random.nextInt(boardNodes.size());
+        BoardNode boardNode_head = boardNodes.get(index_head);
+        if(boardNode_head.isOccupied()){
             randomAction();
         }
         else{
-            ArrayList<Node> free_neighbours = free_neighbour_nodes(node_head);
+            ArrayList<BoardNode> free_neighbours = free_neighbour_nodes(boardNode_head);
             if(free_neighbours.isEmpty()){
                 randomAction();
             }
             else{
                 int index_tail = random.nextInt(free_neighbours.size());
-                Node node_tail = free_neighbours.get(index_tail);
-                play(node_head,node_tail);
+                BoardNode boardNode_tail = free_neighbours.get(index_tail);
+                play(boardNode_head, boardNode_tail);
             }
         }
     }
 
-    public ArrayList<Node> free_neighbour_nodes(Node chosen_node){
-        ArrayList<Node> free_neighbours = new ArrayList<>();
-        for(int i=0; i<chosen_node.getNeighbours().size(); i++){
-            if(!chosen_node.getNeighbours().get(i).isOccupied()){
-                free_neighbours.add(chosen_node.getNeighbours().get(i));
+    public ArrayList<BoardNode> free_neighbour_nodes(BoardNode chosen_Board_node){
+        ArrayList<BoardNode> free_neighbours = new ArrayList<>();
+        for(int i = 0; i< chosen_Board_node.getNeighbours().size(); i++){
+            if(!chosen_Board_node.getNeighbours().get(i).isOccupied()){
+                free_neighbours.add(chosen_Board_node.getNeighbours().get(i));
             }
         }
         return free_neighbours;
     }
 
-    public double highest_q(Node node){
-        double[] q_table = getQTable(node);
+    public double highest_q(BoardNode boardNode){
+        double[] q_table = getQTable(boardNode);
         double high = q_table[0];
         for(int i=1; i<6; i++){
             if(high<q_table[i]){
@@ -97,14 +94,14 @@ public class QLearning
         return high;
     }
 
-    public Node argmaxQ(){
-        Node node = nodes.get(0);
-        for(int i =1; i<nodes.size(); i++){
-            if(highest_q(node)< highest_q(nodes.get(i)) && !free_neighbour_nodes(nodes.get(i)).isEmpty()){
-                node = nodes.get(i);
+    public BoardNode argmaxQ(){
+        BoardNode boardNode = boardNodes.get(0);
+        for(int i = 1; i< boardNodes.size(); i++){
+            if(highest_q(boardNode)< highest_q(boardNodes.get(i)) && !free_neighbour_nodes(boardNodes.get(i)).isEmpty()){
+                boardNode = boardNodes.get(i);
             }
         }
-        return node;
+        return boardNode;
     }
 
 }

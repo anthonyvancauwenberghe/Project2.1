@@ -1,45 +1,45 @@
 package com.ingenious.algorithms.impl.scorecalculator;
 
 import com.ingenious.models.board.Board;
-import com.ingenious.models.board.Node;
+import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.score.Score;
 import com.ingenious.models.tiles.Tile;
 
 public class ScoreCalculator {
 
-    public static Score calculate(Node node_1, Node node_2, Board board, Score oldScore) {
-        int x = node_1.getX();
-        int y = node_1.getY();
+    public static Score calculate(BoardNode boardNode_1, BoardNode boardNode_2, Board board, Score oldScore) {
+        int x = boardNode_1.getX();
+        int y = boardNode_1.getY();
         int l = 1;
         int addedScore = 0;
-        Tile tile = node_1.getTile();
+        Tile tile = boardNode_1.getTile();
 
-        while (board.getNode(x, y - l) != null && board.getNode(x, y - l) != node_2 && tile.equals(board.getNode(x, y - l).getTile())) {
+        while (board.getNode(x, y - l) != null && board.getNode(x, y - l) != boardNode_2 && tile.equals(board.getNode(x, y - l).getTile())) {
             addedScore++;
             l++;
         }
         l = 1;
-        while (board.getNode(x, y + l) != null && board.getNode(x, y + l) != node_2 && tile.equals(board.getNode(x, y + l).getTile())) {
+        while (board.getNode(x, y + l) != null && board.getNode(x, y + l) != boardNode_2 && tile.equals(board.getNode(x, y + l).getTile())) {
             addedScore++;
             l++;
         }
         l = 1;
-        while (board.getNode(x + l, y) != null && board.getNode(x + l, y) != node_2 && tile.equals(board.getNode(x + l, y).getTile())) {
+        while (board.getNode(x + l, y) != null && board.getNode(x + l, y) != boardNode_2 && tile.equals(board.getNode(x + l, y).getTile())) {
             addedScore++;
             l++;
         }
         l = 1;
-        while (board.getNode(x - l, y) != null && board.getNode(x - l, y) != node_2 && tile.equals(board.getNode(x - l, y).getTile())) {
+        while (board.getNode(x - l, y) != null && board.getNode(x - l, y) != boardNode_2 && tile.equals(board.getNode(x - l, y).getTile())) {
             addedScore++;
             l++;
         }
         l = 1;
-        while (board.getNode(x + l, y - l) != null && board.getNode(x + l, y - l) != node_2 && tile.equals(board.getNode(x + l, y - l).getTile())) {
+        while (board.getNode(x + l, y - l) != null && board.getNode(x + l, y - l) != boardNode_2 && tile.equals(board.getNode(x + l, y - l).getTile())) {
             addedScore++;
             l++;
         }
         l = 1;
-        while (board.getNode(x - l, y + l) != null && board.getNode(x - l, y + l) != node_2 && tile.equals(board.getNode(x - l, y + l).getTile())) {
+        while (board.getNode(x - l, y + l) != null && board.getNode(x - l, y + l) != boardNode_2 && tile.equals(board.getNode(x - l, y + l).getTile())) {
             addedScore++;
             l++;
         }

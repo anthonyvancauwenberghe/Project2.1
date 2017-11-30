@@ -8,8 +8,4 @@ public class Human extends Player {
         super(name);
     }
 
-    @Override
-    public void executeMove() {
-
-    }
 }

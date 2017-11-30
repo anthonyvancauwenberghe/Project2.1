@@ -11,8 +11,4 @@ public class Bot extends Player {
         this.algorithm = algorithm;
     }
 
-    public void executeMove() {
-        this.algorithm.execute();
-    }
-
 }

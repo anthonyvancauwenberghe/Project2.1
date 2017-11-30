@@ -1,6 +1,6 @@
 package com.ingenious.gui.components;
 
-import com.ingenious.models.board.Node;
+import com.ingenious.models.board.BoardNode;
 import com.ingenious.config.Configuration;
 import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.tiles.Tile;
@@ -35,22 +35,22 @@ public class BoardComponent extends JComponent {
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
 
-            ArrayList<com.ingenious.models.board.Node> nodeList = GameServiceProvider.board().getNodes();
+            ArrayList<BoardNode> boardNodeList = GameServiceProvider.board().getBoardNodes();
 
-            for (int i = 0; i < nodeList.size(); i++) {
+            for (int i = 0; i < boardNodeList.size(); i++) {
                 //adjust x and y of node to actual location
-                Point node = hex_to_centerpoint(nodeList.get(i).x, nodeList.get(i).y);
+                Point node = hex_to_centerpoint(boardNodeList.get(i).x, boardNodeList.get(i).y);
 
                 Hexagon hexagon = new Hexagon(new Point(node.x, node.y));
 
-                g.setColor(nodeList.get(i).getTile());
+                g.setColor(boardNodeList.get(i).getTile());
 
                 g.fillPolygon(hexagon.getHexagon());
 
                 g.setColor(Configuration.LineColor);
 
                 if (Configuration.showCoordinates)
-                    g.drawString((nodeList.get(i).getX()) + "," + (nodeList.get(i).getY()), node.x - 9, node.y + 3);
+                    g.drawString((boardNodeList.get(i).getX()) + "," + (boardNodeList.get(i).getY()), node.x - 9, node.y + 3);
 
                 g.drawPolygon(hexagon.getHexagon());
             }
@@ -108,8 +108,8 @@ public class BoardComponent extends JComponent {
 
     class BoardListener implements MouseListener, KeyListener {
 
-        Node clicked;
-        Node clicked2;
+        BoardNode clicked;
+        BoardNode clicked2;
         int cnt = 0;
         Graphics g = GameServiceProvider.gui().getBoardPanel().getGraphics();
 

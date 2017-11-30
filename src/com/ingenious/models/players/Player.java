@@ -1,7 +1,5 @@
 package com.ingenious.models.players;
 
-import com.ingenious.events.impl.ScoreIsUpdatedEvent;
-import com.ingenious.models.board.Node;
 import com.ingenious.models.rack.Rack;
 import com.ingenious.models.score.Score;
 

@@ -1,7 +1,7 @@
 package com.ingenious.engine;
 
 import com.ingenious.models.board.Board;
-import com.ingenious.models.board.Node;
+import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.players.Player;
 import com.ingenious.models.bag.Bag;
 import com.ingenious.models.pieces.Piece;
@@ -9,7 +9,6 @@ import com.ingenious.models.score.Score;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,17 +73,17 @@ public class Game {
 
 
 
-    public void place_piece(Piece piece, Node node_1, Node node_2) {
-        if (valid_placement(piece, node_1, node_2)) {
+    public void place_piece(Piece piece, BoardNode boardNode_1, BoardNode boardNode_2) {
+        if (valid_placement(piece, boardNode_1, boardNode_2)) {
             getCurrentPlayer().getRack().setPieceSelected(-1);
             if (bonus_play != 0) {
                 bonus_play--;
             }
             getCurrentPlayer().getRack().getContents().remove(piece);
-            board.addTile(piece.getHead(), node_1);
-            board.addTile(piece.getTail(), node_2);
-            int newScore_1 = calculate_score(node_1, node_2);
-            int newScore_2 = calculate_score(node_2, node_1);
+            board.addTile(piece.getHead(), boardNode_1);
+            board.addTile(piece.getTail(), boardNode_2);
+            int newScore_1 = calculate_score(boardNode_1, boardNode_2);
+            int newScore_2 = calculate_score(boardNode_2, boardNode_1);
             if (getCurrentPlayer().getRack().getContents().isEmpty()) {
                 draw(getCurrentPlayer());
                 turn();
@@ -103,39 +102,39 @@ public class Game {
     }
 
 
-    public int calculate_score(Node node_1, Node node_2) {
-        int x = node_1.getX();
-        int y = node_1.getY();
+    public int calculate_score(BoardNode boardNode_1, BoardNode boardNode_2) {
+        int x = boardNode_1.getX();
+        int y = boardNode_1.getY();
         int l = 1;
         int score = 0;
-        Tile tile = node_1.getTile();
+        Tile tile = boardNode_1.getTile();
 
-        while(this.board.getNode(x,y-l)!= null && GameServiceProvider.board().getNode(x,y-l) != node_2 && tile.equals(GameServiceProvider.board().getNode(x,y-l).getTile())){
+        while(this.board.getNode(x,y-l)!= null && GameServiceProvider.board().getNode(x,y-l) != boardNode_2 && tile.equals(GameServiceProvider.board().getNode(x,y-l).getTile())){
             score++;
             l++;
         }
         l = 1;
-        while(GameServiceProvider.board().getNode(x,y+l)!= null && GameServiceProvider.board().getNode(x,y+l) != node_2 && tile.equals(GameServiceProvider.board().getNode(x,y+l).getTile())){
+        while(GameServiceProvider.board().getNode(x,y+l)!= null && GameServiceProvider.board().getNode(x,y+l) != boardNode_2 && tile.equals(GameServiceProvider.board().getNode(x,y+l).getTile())){
             score++;
             l++;
         }
         l = 1;
-        while(GameServiceProvider.board().getNode(x+l,y)!= null && GameServiceProvider.board().getNode(x + l,y) != node_2 && tile.equals(GameServiceProvider.board().getNode(x + l,y).getTile())){
+        while(GameServiceProvider.board().getNode(x+l,y)!= null && GameServiceProvider.board().getNode(x + l,y) != boardNode_2 && tile.equals(GameServiceProvider.board().getNode(x + l,y).getTile())){
             score++;
            l++;
         }
         l = 1;
-        while(GameServiceProvider.board().getNode(x-l,y)!= null && GameServiceProvider.board().getNode(x - l,y)  != node_2 && tile.equals(GameServiceProvider.board().getNode(x - l,y).getTile())){
+        while(GameServiceProvider.board().getNode(x-l,y)!= null && GameServiceProvider.board().getNode(x - l,y)  != boardNode_2 && tile.equals(GameServiceProvider.board().getNode(x - l,y).getTile())){
             score++;
             l++;
         }
         l = 1;
-        while(GameServiceProvider.board().getNode(x+l,y-l)!= null && GameServiceProvider.board().getNode(x+l,y-l)  != node_2 && tile.equals(GameServiceProvider.board().getNode(x+l,y-l).getTile())){
+        while(GameServiceProvider.board().getNode(x+l,y-l)!= null && GameServiceProvider.board().getNode(x+l,y-l)  != boardNode_2 && tile.equals(GameServiceProvider.board().getNode(x+l,y-l).getTile())){
             score++;
             l++;
         }
         l = 1;
-        while(GameServiceProvider.board().getNode(x-l,y+l)!= null && GameServiceProvider.board().getNode(x-l,y+l) != node_2 &&  tile.equals(GameServiceProvider.board().getNode(x-l,y+l).getTile())){
+        while(GameServiceProvider.board().getNode(x-l,y+l)!= null && GameServiceProvider.board().getNode(x-l,y+l) != boardNode_2 &&  tile.equals(GameServiceProvider.board().getNode(x-l,y+l).getTile())){
             score++;
             l++;
         }
@@ -186,40 +185,40 @@ public class Game {
         return score;
     }
 
-    public Score calculate_score(Node node_1, Node node_2, Board board, Score oldScore)
+    public Score calculate_score(BoardNode boardNode_1, BoardNode boardNode_2, Board board, Score oldScore)
     {
-        int x = node_1.getX();
-        int y = node_1.getY();
+        int x = boardNode_1.getX();
+        int y = boardNode_1.getY();
         int l = 1;
         int addedScore = 0;
-        Tile tile = node_1.getTile();
+        Tile tile = boardNode_1.getTile();
 
-        while(board.getNode(x,y-l)!= null && board.getNode(x,y-l) != node_2 && tile.equals(board.getNode(x,y-l).getTile())){
+        while(board.getNode(x,y-l)!= null && board.getNode(x,y-l) != boardNode_2 && tile.equals(board.getNode(x,y-l).getTile())){
             addedScore++;
             l++;
         }
         l = 1;
-        while(board.getNode(x,y+l)!= null && board.getNode(x,y+l) != node_2 && tile.equals(board.getNode(x,y+l).getTile())){
+        while(board.getNode(x,y+l)!= null && board.getNode(x,y+l) != boardNode_2 && tile.equals(board.getNode(x,y+l).getTile())){
             addedScore++;
             l++;
         }
         l = 1;
-        while(board.getNode(x+l,y)!= null && board.getNode(x + l,y) != node_2 && tile.equals(board.getNode(x + l,y).getTile())){
+        while(board.getNode(x+l,y)!= null && board.getNode(x + l,y) != boardNode_2 && tile.equals(board.getNode(x + l,y).getTile())){
             addedScore++;
             l++;
         }
         l = 1;
-        while(board.getNode(x-l,y)!= null && board.getNode(x - l,y)  != node_2 && tile.equals(board.getNode(x - l,y).getTile())){
+        while(board.getNode(x-l,y)!= null && board.getNode(x - l,y)  != boardNode_2 && tile.equals(board.getNode(x - l,y).getTile())){
             addedScore++;
             l++;
         }
         l = 1;
-        while(board.getNode(x+l,y-l)!= null && board.getNode(x+l,y-l)  != node_2 && tile.equals(board.getNode(x+l,y-l).getTile())){
+        while(board.getNode(x+l,y-l)!= null && board.getNode(x+l,y-l)  != boardNode_2 && tile.equals(board.getNode(x+l,y-l).getTile())){
             addedScore++;
             l++;
         }
         l = 1;
-        while(board.getNode(x-l,y+l)!= null && board.getNode(x-l,y+l) != node_2 &&  tile.equals(board.getNode(x-l,y+l).getTile())){
+        while(board.getNode(x-l,y+l)!= null && board.getNode(x-l,y+l) != boardNode_2 &&  tile.equals(board.getNode(x-l,y+l).getTile())){
             addedScore++;
             l++;
         }
@@ -307,13 +306,13 @@ public class Game {
         }
     }
 
-    public boolean valid_placement(Piece piece, Node node_1, Node node_2) {
-        if(node_1.isOccupied() || node_2.isOccupied()){
+    public boolean valid_placement(Piece piece, BoardNode boardNode_1, BoardNode boardNode_2) {
+        if(boardNode_1.isOccupied() || boardNode_2.isOccupied()){
             return false;
         }
-        ArrayList<Node> neighbours_1 = board.getNeighboursOfNode(node_1);
-        ArrayList<Node> neighbours_2 = board.getNeighboursOfNode(node_2);
-        if(!neighbours_1.contains(node_2)){
+        ArrayList<BoardNode> neighbours_1 = board.getNeighboursOfNode(boardNode_1);
+        ArrayList<BoardNode> neighbours_2 = board.getNeighboursOfNode(boardNode_2);
+        if(!neighbours_1.contains(boardNode_2)){
             return false;
         }/*
             for (int i = 0; i < neighbours_1.size(); i++) {

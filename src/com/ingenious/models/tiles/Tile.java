@@ -10,7 +10,7 @@ public class Tile extends Color {
     public final static Tile red = new Tile(255, 0, 0);
     public final static Tile blue = new Tile(0, 0, 255);
     public final static Tile green = new Tile(0, 255, 0);
-    public final static Tile orange = new Tile(255, 200, 0);
+    public final static Tile orange = new Tile(255, 105, 0);
     public final static Tile yellow = new Tile(255, 255, 0);
     public final static Tile purple = new Tile(160, 32, 240);
 
@@ -25,6 +25,8 @@ public class Tile extends Color {
 
         return redCode + blueCode + greenCode;
     }
+
+
 
     public boolean isEmpty() {
         return this.equals(Tile.empty);

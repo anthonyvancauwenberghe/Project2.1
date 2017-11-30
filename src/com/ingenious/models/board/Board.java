@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Board {
 
-    private ArrayList<Node> nodes = new ArrayList<Node>(); //This is the list containing the nodes
+    private ArrayList<BoardNode> boardNodes = new ArrayList<BoardNode>(); //This is the list containing the boardNodes
     private int[][] nodeCoord;
 
 
@@ -19,23 +19,23 @@ public class Board {
         initBoard();
     }
 
-    private Board(ArrayList<Node> ns, int[][] nc) {
-        this.nodes = ns;
+    private Board(ArrayList<BoardNode> ns, int[][] nc) {
+        this.boardNodes = ns;
         this.nodeCoord = nc;
     }
 
     public void initBoard() {
-        int cnt = 0; //This counter keeps track of the number of nodes that were created
-        int board_width = Configuration.boardWidth; // this is the radius of nodes from the center to the end of the com.ingenious.models.board (incl. center)
+        int cnt = 0; //This counter keeps track of the number of boardNodes that were created
+        int board_width = Configuration.boardWidth; // this is the radius of boardNodes from the center to the end of the com.ingenious.models.board (incl. center)
         int tmp_top = -(board_width - 1);//reference to keep track of the decrease in the number of hexes to be created
         for (int i = 0; i < board_width; i++) //loop as many times as there are columns on the sides of the central one (* 2)
         {
             for (int j = board_width - 1; j >= tmp_top; j--) {
                 if (i == 0) {
-                    nodes.add(new Node(i, -j, Tile.empty));//Create nodes only once for the case when i is 0 because it is the center
+                    boardNodes.add(new BoardNode(i, -j, Tile.empty));//Create boardNodes only once for the case when i is 0 because it is the center
                 } else {
-                    nodes.add(new Node(i, -j, Tile.empty));
-                    nodes.add(new Node(-i, j, Tile.empty)); // then creates 2 version of the node, its regular and mirrored version.
+                    boardNodes.add(new BoardNode(i, -j, Tile.empty));
+                    boardNodes.add(new BoardNode(-i, j, Tile.empty)); // then creates 2 version of the node, its regular and mirrored version.
                     cnt += 2;
                 }
             }
@@ -45,8 +45,8 @@ public class Board {
         this.setInitialTiles();
     }
 
-    public ArrayList<Node> getNodes() {
-        return nodes;
+    public ArrayList<BoardNode> getBoardNodes() {
+        return boardNodes;
     }
 
     public boolean inBoard(int x, int y) {
@@ -68,9 +68,9 @@ public class Board {
         }
 
         /* Set all coordinate values to the given index from the node arraylist */
-        for (int i = 0; i < nodes.size(); i++) {
-            int xOffset = nodes.get(i).getX() + offset;
-            int yOffset = nodes.get(i).getY() + offset;
+        for (int i = 0; i < boardNodes.size(); i++) {
+            int xOffset = boardNodes.get(i).getX() + offset;
+            int yOffset = boardNodes.get(i).getY() + offset;
             nodeCoord[xOffset][yOffset] = i;
         }
     }
@@ -81,7 +81,7 @@ public class Board {
      * @return mixed
      * return node when it's found on the board else return null
      */
-    public Node getNode(int x, int y) {
+    public BoardNode getNode(int x, int y) {
         //ADDING THE WIDTH OF THE BOARD TO MAKE SURE THERE ARE NO NEGATIVE NUMBERS AS KEY IN THE ARRAY
         x = x + Configuration.boardWidth - 1;
         y = y + Configuration.boardWidth - 1;
@@ -92,10 +92,10 @@ public class Board {
         if (this.nodeCoord[x][y] == -1)
             return null;
 
-        return nodes.get(this.nodeCoord[x][y]);
+        return boardNodes.get(this.nodeCoord[x][y]);
     }
 
-    public Node getNode(int x, int y, ArrayList<Node> nodesList) {
+    public BoardNode getNode(int x, int y, ArrayList<BoardNode> nodesList) {
         //ADDING THE WIDTH OF THE BOARD TO MAKE SURE THERE ARE NO NEGATIVE NUMBERS AS KEY IN THE ARRAY
         x = x + Configuration.boardWidth - 1;
         y = y + Configuration.boardWidth - 1;
@@ -111,25 +111,25 @@ public class Board {
 
 
     public void setInitialTiles() {
-        this.getNodes().get(0).setTile(Tile.red);
-        this.getNodes().get(79).setTile(Tile.green);
-        this.getNodes().get(89).setTile(Tile.blue);
-        this.getNodes().get(10).setTile(Tile.orange);
-        this.getNodes().get(80).setTile(Tile.yellow);
-        this.getNodes().get(90).setTile(Tile.purple);
+        this.getBoardNodes().get(0).setTile(Tile.red);
+        this.getBoardNodes().get(79).setTile(Tile.green);
+        this.getBoardNodes().get(89).setTile(Tile.blue);
+        this.getBoardNodes().get(10).setTile(Tile.orange);
+        this.getBoardNodes().get(80).setTile(Tile.yellow);
+        this.getBoardNodes().get(90).setTile(Tile.purple);
     }
 
-    public ArrayList<Node> getNeighboursOfNode(Node node) {
-        ArrayList<Node> neighbours = new ArrayList<Node>();
-        int x = node.getX();
-        int y = node.getY();
+    public ArrayList<BoardNode> getNeighboursOfNode(BoardNode boardNode) {
+        ArrayList<BoardNode> neighbours = new ArrayList<BoardNode>();
+        int x = boardNode.getX();
+        int y = boardNode.getY();
 
-        Node northWest = this.getNode(x - 1, y);
-        Node southWest = this.getNode(x - 1, y + 1);
-        Node north = this.getNode(x, y - 1);
-        Node south = this.getNode(x, y + 1);
-        Node northEast = this.getNode(x + 1, y - 1);
-        Node southEast = this.getNode(x + 1, y);
+        BoardNode northWest = this.getNode(x - 1, y);
+        BoardNode southWest = this.getNode(x - 1, y + 1);
+        BoardNode north = this.getNode(x, y - 1);
+        BoardNode south = this.getNode(x, y + 1);
+        BoardNode northEast = this.getNode(x + 1, y - 1);
+        BoardNode southEast = this.getNode(x + 1, y);
 
         if (northWest != null) {
             neighbours.add(northWest);
@@ -158,48 +158,48 @@ public class Board {
         return neighbours;
     }
 
-    public boolean isNeighbour(Node node1, Node node2) {
-        if (node1 == null || node2 == null)
+    public boolean isNeighbour(BoardNode boardNode1, BoardNode boardNode2) {
+        if (boardNode1 == null || boardNode2 == null)
             return false;
 
-        ArrayList<Node> neighbours = node1.getNeighbours();
-        return neighbours.contains(node2);
+        ArrayList<BoardNode> neighbours = boardNode1.getNeighbours();
+        return neighbours.contains(boardNode2);
     }
 
-    public void addTile(Tile tile, Node node) {
-        if (node.getTile().isEmpty()) {
-            node.setTile(tile);
-            //System.out.println("Node was set correctly");
+    public void addTile(Tile tile, BoardNode boardNode) {
+        if (boardNode.getTile().isEmpty()) {
+            boardNode.setTile(tile);
+            //System.out.println("BoardNode was set correctly");
             new BoardIsUpdatedEvent();
         }
     }
 
-    public void addTile(Tile tile, Node node, boolean update) {
-        if (node.getTile().isEmpty()) {
-            node.setTile(tile);
+    public void addTile(Tile tile, BoardNode boardNode, boolean update) {
+        if (boardNode.getTile().isEmpty()) {
+            boardNode.setTile(tile);
             if (update)
                 new BoardIsUpdatedEvent();
         }
     }
 
     public Board getClone() {
-        ArrayList<Node> nodes = new ArrayList<>();
+        ArrayList<BoardNode> boardNodes = new ArrayList<>();
 
-        for (Node node : this.nodes) {
-            nodes.add(node.getClone());
+        for (BoardNode boardNode : this.boardNodes) {
+            boardNodes.add(boardNode.getClone());
         }
-        return new Board(nodes, this.nodeCoord.clone());
+        return new Board(boardNodes, this.nodeCoord.clone());
     }
 
     public void doMove(Move move) {
 
         if(!move.isInverted()){
-            this.getNode(move.getNode().getX(),move.getNode().getY()).setTile(move.getPiece().getHead());
-            this.getNode(move.getNode2().getX(),move.getNode2().getY()).setTile(move.getPiece().getTail());
+            this.getNode(move.getBoardNode().getX(),move.getBoardNode().getY()).setTile(move.getPiece().getHead());
+            this.getNode(move.getBoardNode2().getX(),move.getBoardNode2().getY()).setTile(move.getPiece().getTail());
         }
         else{
-            this.getNode(move.getNode().getX(),move.getNode().getY()).setTile(move.getPiece().getTail());
-            this.getNode(move.getNode2().getX(),move.getNode2().getY()).setTile(move.getPiece().getHead());
+            this.getNode(move.getBoardNode().getX(),move.getBoardNode().getY()).setTile(move.getPiece().getTail());
+            this.getNode(move.getBoardNode2().getX(),move.getBoardNode2().getY()).setTile(move.getPiece().getHead());
         }
 
     }

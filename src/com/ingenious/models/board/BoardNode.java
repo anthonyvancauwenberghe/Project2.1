@@ -7,21 +7,21 @@ import com.ingenious.providers.impl.GameServiceProvider;
 import java.util.ArrayList;
 
 
-public class Node {
+public class BoardNode {
     public int x;
     public int y;
 
     private boolean fixed = false;
     private Tile tile;
 
-    public Node(int x, int y, Tile tile) {
+    public BoardNode(int x, int y, Tile tile) {
         this.x = x;
         this.y = y;
         this.tile = tile;
     }
 
-    public Node getClone() {
-        return new Node(this.x, this.y, this.tile);
+    public BoardNode getClone() {
+        return new BoardNode(this.x, this.y, this.tile);
     }
 
     public int getX() {
@@ -49,6 +49,10 @@ public class Node {
         return !tile.isEmpty();
     }
 
+    public boolean isEmpty(){
+        return tile.isEmpty();
+    }
+
     public Tile getTile() {
         return this.tile;
     }
@@ -66,7 +70,7 @@ public class Node {
         this.tile = Tile.empty;
     }
 
-    public ArrayList<Node> getNeighbours() {
+    public ArrayList<BoardNode> getNeighbours() {
         return GameServiceProvider.board().getNeighboursOfNode(this);
     }
 }

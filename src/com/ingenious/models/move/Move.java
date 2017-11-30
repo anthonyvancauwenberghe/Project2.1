@@ -1,21 +1,21 @@
 package com.ingenious.models.move;
 
-import com.ingenious.models.board.Node;
+import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.pieces.Piece;
 
 public class Move {
 
     private Piece piece;
 
-    private Node node;
-    private Node node2;
+    private BoardNode boardNode;
+    private BoardNode boardNode2;
 
     private boolean inverted;
 
-    public Move(Node node, Node node2, Piece piece, boolean inverted) {
+    public Move(BoardNode boardNode, BoardNode boardNode2, Piece piece, boolean inverted) {
         this.piece = piece;
-        this.node = node;
-        this.node2 = node2;
+        this.boardNode = boardNode;
+        this.boardNode2 = boardNode2;
         this.inverted = inverted;
     }
 
@@ -23,11 +23,11 @@ public class Move {
         return piece;
     }
 
-    public Node getNode() {
-        return node;
+    public BoardNode getBoardNode() {
+        return boardNode;
     }
 
-    public Node getNode2() { return node2;}
+    public BoardNode getBoardNode2() { return boardNode2;}
 
     public boolean isInverted() {
         return inverted;

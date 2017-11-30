@@ -1,9 +1,5 @@
 package com.ingenious.algorithms.impl;
 
-import com.ingenious.models.board.Node;
-import com.ingenious.providers.impl.GameServiceProvider;
-
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -13,11 +9,11 @@ public class Q_learningTest {
 
     public static void main(String[] args) {
         /*GameServiceProvider.boot();
-        ArrayList<Node> nodes = GameServiceProvider.board().getNodes();
-        QTable qtables = new QTable(nodes);
+        ArrayList<BoardNode> boardNodes = GameServiceProvider.board().getBoardNodes();
+        QTable qtables = new QTable(boardNodes);
         qtables.print(1);
         Double [] r = {1.1,0.0,0.0,0.0,0.0,3.1};
-        qtables.replace_Qtable(GameServiceProvider.board().getNodes().get(0), r);
+        qtables.replace_Qtable(GameServiceProvider.board().getBoardNodes().get(0), r);
         System.out.println("NEEWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
         qtables.print(1);*/
 

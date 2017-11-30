@@ -10,6 +10,4 @@ abstract public class Algorithm {
 
     TreeNode rootNode;
 
-
-
 }
