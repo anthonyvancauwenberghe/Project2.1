@@ -22,7 +22,7 @@ public class Action
         this.index = index;
     }
 
-    public int getAction(Action a)
+    public int getAction()
     {
         return this.index;
     }

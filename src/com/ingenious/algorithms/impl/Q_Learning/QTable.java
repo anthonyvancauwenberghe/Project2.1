@@ -86,4 +86,13 @@ public class QTable {
         return index;
     }
 
+    public double Q(State state, Action action){
+        if(state.equals(State.OCCUPIED)){
+            return Integer.MIN_VALUE;
+        }
+        else{
+            return this.q_values[action.getAction()];
+        }
+    }
+
 }
