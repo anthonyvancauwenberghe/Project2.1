@@ -41,7 +41,7 @@ public class QLearning {
             if(node.isOccupied()){
                 int min = Integer.MIN_VALUE;
                 double [] n = {min,min,min,min,min,min};
-                qTable.edit_Qtable(n);
+                qTable.editQ_table(n);
             }
             qValues[x][y] =  qTable;
         }

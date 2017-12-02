@@ -24,7 +24,7 @@ public class QTable {
         return q_values;
     }
 
-    public void edit_Qtable(double [] q_values){
+    public void editQ_table(double [] q_values){
         this.q_values = q_values;
     }
 
