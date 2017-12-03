@@ -14,9 +14,9 @@ public class QValues
     Board board = GameServiceProvider.board();
     QTable[][] qValues;
 
-    public QValues(){
+    public QValues()
+    {
         create_QValues(board);
-
     }
 
     /**

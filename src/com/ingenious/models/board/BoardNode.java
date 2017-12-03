@@ -73,4 +73,5 @@ public class BoardNode {
     public ArrayList<BoardNode> getNeighbours() {
         return GameServiceProvider.board().getNeighboursOfNode(this);
     }
+
 }
