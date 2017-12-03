@@ -5,6 +5,9 @@ import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 /**
  * Created by danig on 12/3/2017.
  */
@@ -12,25 +15,43 @@ public class GreedyAlgorithm
 {
 
     public Board board;
-    private BoardNode[] placements = {null, null, null, null, null,null};
-    private int [] lengths = {0,0,0,0,0,0};
 
     public GreedyAlgorithm(Board board)
     {
         this.board = board.getClone();
     }
 
-    public void calcLongestLines()
-    {
-        for(int i = 0; i < board.getBoardNodes().size(); i++)
-        {
-            if(board.getBoardNodes().get(i).isOccupied())
-            {
-            }
-        }
+
+    public void greedyPlay(){
+
     }
 
-    public int calcLine(BoardNode node)
+    /**
+     *
+     * @return an array of where to expand for greater score on each color
+     */
+    public BoardNode[] expandOn(){
+
+        ArrayList<BoardNode> nodes = board.getBoardNodes();
+        BoardNode [] placements = new BoardNode[6];
+        int [] lengths = {0,0,0,0,0,0};
+
+        for(int i=0; i<nodes.size(); i++){
+            if(nodes.get(i).isOccupied()){
+                int color_index = indexColor( nodes.get(i).getTile());
+                int[] l = calcLine(nodes.get(i));
+                if(lengths[color_index]< l[0]){
+                    lengths[color_index] = l[0];
+                    placements[color_index] = board.getNode(l[1],l[2]);
+                }
+
+            }
+        }
+            return placements;
+    }
+
+
+    public int[] calcLine(BoardNode node)
     {
         Tile currentTile = node.getTile();
         int scoreNorth = 0;
@@ -86,17 +107,11 @@ public class GreedyAlgorithm
 
     }
 
-    public int getLargestLine(int[] array)
+    public int getLargestLine(int a, int b, int c)
     {
-        int maxLine = 0;
-        for(int i = 1; i < array.length; i++)
-        {
-            if(array[maxLine] < array[i])
-            {
-                maxLine = i;
-            }
-        }
-        return maxLine;
+        int max = Math.max(a,b);
+        max = Math.max(max,c);
+        return max;
     }
 
     public boolean isExpandable(BoardNode node)
@@ -109,5 +124,26 @@ public class GreedyAlgorithm
             }
         }
         return false;
+    }
+
+    public int indexColor(Tile tile){
+        if(tile.equals(Color.RED)){
+            return 0;
+        }
+        if(tile.equals(Color.BLUE)){
+            return 1;
+        }
+        if(tile.equals(Color.green)){
+            return 2;
+        }
+        if(tile.equals(Color.yellow)){
+            return 3;
+        }
+        if(tile.equals(Color.orange)){
+            return 4;
+        }
+        else{
+            return 5;
+        }
     }
 }

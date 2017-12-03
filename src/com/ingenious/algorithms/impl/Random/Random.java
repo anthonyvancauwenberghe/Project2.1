@@ -19,8 +19,9 @@ public class Random {
     private Rack rack;
 
     public Random(Board board){
-        this.board = board.getClone();
+        this.board = board;
     }
+
 
     public void randomPlay(){
         Piece piece = getRandomPiece();
@@ -75,6 +76,8 @@ public class Random {
         }
         return this.rack.getPieceSelected();
     }
+
+
 
     public static void main(String[] args) {
 
