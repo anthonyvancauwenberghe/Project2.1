@@ -1,4 +1,4 @@
-package com.ingenious.algorithms.impl.random;
+package com.ingenious.algorithms.impl.Random;
 
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
