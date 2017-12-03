@@ -14,6 +14,7 @@ import java.util.jar.Pack200;
  */
 public class Random {
 
+
     private Board board;
     private Rack rack;
 
