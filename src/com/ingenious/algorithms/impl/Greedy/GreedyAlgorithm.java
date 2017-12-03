@@ -54,12 +54,17 @@ public class GreedyAlgorithm
     public int[] calcLine(BoardNode node)
     {
         Tile currentTile = node.getTile();
-        int scoreNorth = 0;
-        int scoreEast = 0;
-        int scoreWest = 0;
-        BoardNode north1;
+        int line_NorthSouth = 0;
+        int line_nEastWest = 0;
+        int line_nWestEast = 0;
+        BoardNode NorthSouth1;
+        BoardNode NorthSouth2;
+        BoardNode EastWest1;
+        BoardNode EastWest2;
+        BoardNode WestEast1;
+        BoardNode WestEast2;
 
-        int[] scoresArray = {scoreNorth,scoreEast,scoreWest};
+        int[] line_size = {line_NorthSouth,line_nEastWest,line_nWestEast};
 
         int x = node.getX();
         int y = node.getY();
@@ -67,43 +72,43 @@ public class GreedyAlgorithm
 
         while(this.board.getNode(x,y-l)!= null){
             if(board.getNode(x,y-l).getTile().equals(currentTile)){
-                scoreNorth++;
+                line_NorthSouth++;
             }
             else{
                 if(board.getNode(x,y-l).isEmpty()){
                     isExpandable(board.getNode(x,y-l));
-                    north1 = board.getNode(x,y-l);
+                    NorthSouth1 = board.getNode(x,y-l);
                 }
             }
             l++;
         }
         l = 1;
         while(GameServiceProvider.board().getNode(x,y+l)!= null && currentTile.equals(GameServiceProvider.board().getNode(x,y+l).getTile())){
-            scoreNorth++;
+            line_NorthSouth++;
             l++;
         }
         l = 1;
         while(GameServiceProvider.board().getNode(x+l,y)!= null && currentTile.equals(GameServiceProvider.board().getNode(x + l,y).getTile())){
-            scoreEast++;
+            line_nEastWest++;
             l++;
         }
         l = 1;
         while(GameServiceProvider.board().getNode(x-l,y)!= null && currentTile.equals(GameServiceProvider.board().getNode(x - l,y).getTile())){
-            scoreEast++;
+            line_nEastWest++;
             l++;
         }
         l = 1;
         while(GameServiceProvider.board().getNode(x+l,y-l)!= null && currentTile.equals(GameServiceProvider.board().getNode(x+l,y-l).getTile())){
-            scoreWest++;
+            line_nWestEast++;
             l++;
         }
         l = 1;
         while(GameServiceProvider.board().getNode(x-l,y+l)!= null &&  currentTile.equals(GameServiceProvider.board().getNode(x-l,y+l).getTile())){
-            scoreWest++;
+            line_nWestEast++;
             l++;
         }
-
-        return getLargestLine(scoresArray);
+        int [] a = {0,0,0};
+        return a;
 
     }
 
@@ -146,4 +151,5 @@ public class GreedyAlgorithm
             return 5;
         }
     }
+
 }
