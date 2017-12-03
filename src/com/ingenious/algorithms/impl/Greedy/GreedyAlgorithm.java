@@ -1,4 +1,4 @@
-package com.ingenious.algorithms.impl.Greedy;
+package com.ingenious.algorithms.impl.greedy;
 
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;

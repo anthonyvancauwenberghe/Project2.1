@@ -11,7 +11,6 @@ import com.ingenious.models.players.Player;
 import com.ingenious.models.players.impl.Bot;
 import com.ingenious.models.players.impl.Human;
 import com.ingenious.providers.Provider;
-import tests.Tests;
 
 public class GameServiceProvider extends Provider {
 

@@ -1,6 +1,4 @@
-package com.ingenious.algorithms.impl.Q_Learning;
-
-import java.awt.*;
+package com.ingenious.algorithms.impl.q_learning;
 
 /**
  * Created by danig on 12/2/2017.

@@ -1,4 +1,4 @@
-package com.ingenious.algorithms.impl.Q_Learning;
+package com.ingenious.algorithms.impl.q_learning;
 
 /**
  * Created by carolley on 01-Dec-17.

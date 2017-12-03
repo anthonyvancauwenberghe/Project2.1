@@ -1,10 +1,4 @@
-package com.ingenious.algorithms.impl.Q_Learning;
-
-import com.ingenious.models.board.Board;
-import com.ingenious.models.board.BoardNode;
-import com.ingenious.providers.impl.GameServiceProvider;
-
-import java.util.ArrayList;
+package com.ingenious.algorithms.impl.q_learning;
 
 /**
  * Created by carolley on 01-Dec-17.
