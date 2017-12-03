@@ -23,7 +23,7 @@ public class GreedyAlgorithm
 
 
     public void greedyPlay(){
-
+        int heeeychanges = 5;
     }
 
     /**
