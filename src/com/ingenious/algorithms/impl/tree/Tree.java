@@ -25,6 +25,17 @@ public class Tree {
         return state;
     }
 
+    public State getParentState(Node node)
+    {
+        State state = this.root.getClone();
+
+        for (Move move : node.parentMoves) {
+            state.board.doMove(move);
+        }
+
+        return state;
+    }
+
     public State getRootState() {
         return root;
     }
