@@ -1,7 +1,6 @@
 package com.ingenious.algorithms.generators;
 
 import com.ingenious.algorithms.validators.BoardMoveValidator;
-import com.ingenious.algorithms.validators.ValidateAble;
 import com.ingenious.engine.Game;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
@@ -20,6 +19,7 @@ public class AvailableMovesGenerator {
     public AvailableMovesGenerator(Game state) {
         this.board = state.getBoard().getClone();
         this.rack = this.getNonDuplicateRackPieces(state.getCurrentPlayer().getRack());
+        this.applyHeuristics();
     }
 
     public AvailableMovesGenerator(Game state, boolean applyHeuristics) {
@@ -30,18 +30,41 @@ public class AvailableMovesGenerator {
     }
 
     public void applyHeuristics() {
-        this.fillWorthlessNodes();
+        long startTime = System.nanoTime();
+        this.fillLonelyNodes();
+        long endTime = System.nanoTime();
+        double timeDifference = ((double) endTime - (double) startTime) / 1000000;
+        System.out.println("Applying heuristics to movegenerator Took " + timeDifference + " ms");
     }
 
-    private void fillWorthlessNodes() {
+    private void fillLonelyNodes() {
         for (BoardNode node : this.board.getBoardNodes()) {
-            for (BoardNode neighbour : board.getNeighboursOfNode(node)) {
-                if (neighbour.isEmpty()) {
+            if (node.isAvailable()) {
+                for (BoardNode neighbour : this.board.getNeighboursOfNode(node)) {
                     node.setTile(Tile.occupied);
-                    break;
+                    if (!neighbour.isAvailable()) {
+                        node.setTile(Tile.empty);
+                        break;
+                    }
                 }
             }
         }
+
+        ArrayList<BoardNode> emptyNodes = new ArrayList<>();
+
+        for (BoardNode node : this.board.getBoardNodes()) {
+            if (node.isReallyEmpty()) {
+                emptyNodes.add(node);
+            }
+        }
+
+        for (BoardNode node : emptyNodes) {
+            for (BoardNode neighbour : this.board.getNeighboursOfNode(node)) {
+                if (neighbour.isAvailable())
+                    neighbour.setTile(Tile.empty);
+            }
+        }
+
     }
 
     private ArrayList<Piece> getNonDuplicateRackPieces(Rack rack) {
@@ -64,13 +87,13 @@ public class AvailableMovesGenerator {
     }
 
     public ArrayList<Move> generate() {
+        long startTime = System.nanoTime();
         ArrayList<Move> moves = new ArrayList<>();
 
-        //TODO SPAWN THREADS
         for (BoardNode boardNode : this.board.getBoardNodes()) {
-            if (boardNode.isEmpty()) {
+            if (boardNode.isReallyEmpty()) {
                 for (BoardNode neighbour : boardNode.getNeighbours()) {
-                    if (neighbour.isEmpty()) {
+                    if (neighbour.isEmpty() && !boardNode.isOccupied()) {
                         for (Piece piece : this.rack) {
                             Move move = new Move(boardNode, neighbour, piece, false);
                             if (BoardMoveValidator.validateMove(this.board, move)) {
@@ -86,9 +109,10 @@ public class AvailableMovesGenerator {
                     }
                 }
             }
-            boardNode.setTile(Tile.occupied);
         }
-
+        long endTime = System.nanoTime();
+        double timeDifference = ((double) endTime - (double) startTime) / 1000000;
+        System.out.println("Generating " + moves.size() + " moves took " + timeDifference + " ms");
         return moves;
     }
 }

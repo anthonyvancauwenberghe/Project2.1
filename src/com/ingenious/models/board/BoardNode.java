@@ -59,6 +59,14 @@ public class BoardNode {
         return tile.isAvailable();
     }
 
+    public boolean isReallyEmpty() {
+        return tile.isEmpty();
+    }
+
+    public boolean isAvailable() {
+        return tile.isAvailable();
+    }
+
     public Tile getTile() {
         return this.tile;
     }

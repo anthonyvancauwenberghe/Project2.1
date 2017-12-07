@@ -119,6 +119,14 @@ public class Board {
         this.getBoardNodes().get(90).setTile(Tile.purple);
     }
 
+    public boolean nodeHasAllEmptyNeighbours(BoardNode boardNode) {
+        for (BoardNode node : boardNode.getNeighbours()) {
+            if (!node.isEmpty())
+                return false;
+        }
+        return true;
+    }
+
     public ArrayList<BoardNode> getNeighboursOfNode(BoardNode boardNode) {
         ArrayList<BoardNode> neighbours = new ArrayList<BoardNode>();
         int x = boardNode.getX();
@@ -167,7 +175,7 @@ public class Board {
     }
 
     public void addTile(Tile tile, BoardNode boardNode) {
-            boardNode.setTile(tile);
+        boardNode.setTile(tile);
     }
 
     public Board getClone() {

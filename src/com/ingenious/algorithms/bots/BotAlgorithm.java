@@ -13,7 +13,9 @@ abstract public class BotAlgorithm implements GeneratesMove {
         long startTime = System.nanoTime();
         Move move = generateMove();
         long endTime = System.nanoTime();
-        System.out.println("Took " + (endTime - startTime) / 1000000 + " ms to execute algorithm");
+        double timeDifference = ((double) endTime - (double) startTime) / 1000000;
+        System.out.println("Took " + timeDifference + " ms to execute algorithm");
+        System.out.println();
         return move;
     }
 
