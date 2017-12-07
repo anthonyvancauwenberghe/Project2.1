@@ -10,12 +10,12 @@ import com.ingenious.models.tiles.Tile;
 
 import java.util.ArrayList;
 
-public class RootNodeChildrenFactory {
+public class AvailableMovesFactory {
 
     private Board board;
     private ArrayList<Piece> rack;
 
-    public RootNodeChildrenFactory(Game state) {
+    public AvailableMovesFactory(Game state) {
         this.board = state.getBoard().getClone();
         this.fillWorthlessNodes();
         this.rack = this.getNonDuplicateRackPieces(state.getCurrentPlayer().getRack());
@@ -51,8 +51,8 @@ public class RootNodeChildrenFactory {
         return pieces;
     }
 
-    public ArrayList<Node> generate() {
-        ArrayList<Node> nodes = new ArrayList<>();
+    public ArrayList<Move> generate() {
+        ArrayList<Move> moves = new ArrayList<>();
 
         //TODO SPAWN THREADS
         for (BoardNode boardNode : this.board.getBoardNodes()) {
@@ -61,10 +61,10 @@ public class RootNodeChildrenFactory {
                     if (neighbour.isEmpty()) {
                         for (Piece piece : this.rack) {
                             if (piece.hasEqualTiles()) {
-                                nodes.add(new Node(new Move(boardNode, neighbour, piece, false)));
+                                moves.add(new Move(boardNode, neighbour, piece, false));
                             } else {
-                                nodes.add(new Node(new Move(boardNode, neighbour, piece, false)));
-                                nodes.add(new Node(new Move(boardNode, neighbour, piece, true)));
+                                moves.add(new Move(boardNode, neighbour, piece, false));
+                                moves.add(new Move(boardNode, neighbour, piece, true));
                             }
                         }
                     }
@@ -73,7 +73,6 @@ public class RootNodeChildrenFactory {
             boardNode.setTile(Tile.occupied);
         }
 
-
-        return nodes;
+        return moves;
     }
 }
