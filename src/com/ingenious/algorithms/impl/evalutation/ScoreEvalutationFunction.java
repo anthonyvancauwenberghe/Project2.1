@@ -18,8 +18,6 @@ public class ScoreEvalutationFunction
         int[] player1ScorePast = parentNodeState.players.getPlayers().get(0).getScoreArray();
         int[] player2ScorePast = parentNodeState.players.getPlayers().get(1).getScoreArray();
 
-        //PointColor[] p1ColorRanking = rankPointColors(player1ScorePast);
-        //PointColor[] p2ColorRanking = rankPointColors(player2ScorePast);
 
         int[] player1Diff = new int[6];
         int[] player2Diff = new int[6];
@@ -30,8 +28,19 @@ public class ScoreEvalutationFunction
             player2Diff[i] = player2ScoreCurrent[i] - player2ScorePast[i];
         }
 
-        //multipliers go here
+        //multipliers
         //compare to opponent gain
+        int maxWeight = 1;
+
+        for (int j: player1ScorePast)
+        {
+            if(player1ScorePast[j] <= 8)
+                player1Diff[j] *= maxWeight - player1ScorePast[j];
+            else if (player1ScorePast[j] >= 9)
+                player1Diff[j] *= maxWeight - (17 - player1ScorePast[j]);
+            else  if (player1ScorePast[j] == 18)
+                player1Diff[j] *= 0;
+        }
 
         int totalGainP1 = 0;
         int totalGainP2 = 0;

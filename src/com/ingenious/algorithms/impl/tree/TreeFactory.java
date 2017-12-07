@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 public class TreeFactory {
 
-    public static ArrayList<Node> generateNodes(int layerLimit, State currentState) {
+    public static ArrayList<Node> generateNodes(int layerLimit, State currentState)
+    {
         ArrayList<Move> moves = (new BaseMoveGenerator(currentState.board, currentState.game.getCurrentPlayer().rack)).generate();
         ArrayList<Node> nodes = new ArrayList<>();
 

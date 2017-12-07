@@ -9,7 +9,8 @@ public class Tree {
     private State root;
     private ArrayList<Node> nodes;
 
-    public Tree(State root, ArrayList<Node> nodes) {
+    public Tree(State root, ArrayList<Node> nodes)
+    {
         this.root = root;
         this.nodes = nodes;
     }
