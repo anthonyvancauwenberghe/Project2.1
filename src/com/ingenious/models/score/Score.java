@@ -35,6 +35,10 @@ public class Score {
         this.purpleScore = purpleScore;
     }
 
+    public Score getClone() {
+        return new Score(this.redScore, this.greenScore, this.blueScore, this.orangeScore, this.yellowScore, this.yellowScore);
+    }
+
     public int getRedScore() {
         return redScore;
     }
@@ -59,8 +63,7 @@ public class Score {
         return purpleScore;
     }
 
-    public int[] getScores()
-    {
+    public int[] getScores() {
         int[] scores = new int[6];
         scores[0] = this.getRedScore();
         scores[1] = this.getGreenScore();
@@ -68,7 +71,7 @@ public class Score {
         scores[3] = this.getOrangeScore();
         scores[4] = this.getYellowScore();
         scores[5] = this.getPurpleScore();
-        return  scores;
+        return scores;
     }
 
     public void setRedScore(int redScore) {

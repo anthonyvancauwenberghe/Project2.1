@@ -3,20 +3,21 @@ import com.ingenious.algorithms.impl.State;
 import com.ingenious.algorithms.impl.ModifiedBubblesort;
 import com.ingenious.algorithms.impl.tree.Node;
 import com.ingenious.algorithms.impl.tree.Tree;
+import com.ingenious.engine.Game;
 
 
 public class ScoreEvalutationFunction
 {
     public int evaluateScores(Tree tree, Node currentNode)
     {
-        State currentNodeState = tree.getNodeState(currentNode);
-        State parentNodeState = tree.getParentState(currentNode);
+        Game currentNodeState = tree.getNodeState(currentNode);
+        Game parentNodeState = tree.getParentState(currentNode);
 
-        int[] player1ScoreCurrent = currentNodeState.players.getPlayers().get(0).getScoreArray();
-        int[] player2ScoreCurrent = currentNodeState.players.getPlayers().get(1).getScoreArray();
+        int[] player1ScoreCurrent = currentNodeState.getPlayers().get(0).getScoreArray();
+        int[] player2ScoreCurrent = currentNodeState.getPlayers().get(1).getScoreArray();
 
-        int[] player1ScorePast = parentNodeState.players.getPlayers().get(0).getScoreArray();
-        int[] player2ScorePast = parentNodeState.players.getPlayers().get(1).getScoreArray();
+        int[] player1ScorePast = parentNodeState.getPlayers().get(0).getScoreArray();
+        int[] player2ScorePast = parentNodeState.getPlayers().get(1).getScoreArray();
 
 
         int[] player1Diff = new int[6];

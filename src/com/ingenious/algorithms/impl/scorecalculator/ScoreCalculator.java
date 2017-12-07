@@ -7,7 +7,7 @@ import com.ingenious.models.tiles.Tile;
 
 public class ScoreCalculator {
 
-    public static Score calculate(BoardNode boardNode_1, BoardNode boardNode_2, Board board, Score oldScore) {
+    public static int getScoreStreak(Board board, BoardNode boardNode_1, BoardNode boardNode_2) {
         int x = boardNode_1.getX();
         int y = boardNode_1.getY();
         int l = 1;
@@ -43,6 +43,10 @@ public class ScoreCalculator {
             addedScore++;
             l++;
         }
+        return addedScore;
+    }
+
+    public static Score addScoreStreakToColor(Tile tile, Score oldScore, int addedScore) {
         int newScore = 0;
         if (tile.equals(Tile.green)) {
             newScore = addedScore + oldScore.getGreenScore();
@@ -82,5 +86,12 @@ public class ScoreCalculator {
             oldScore.setPurpleScore(newScore);
         }
         return oldScore;
+    }
+
+    public static Score calculate(BoardNode boardNode_1, BoardNode boardNode_2, Board board, Score oldScore) {
+        Tile tile = boardNode_1.getTile();
+        int addedScore = getScoreStreak(board, boardNode_1, boardNode_2);
+        return addScoreStreakToColor(tile, oldScore, addedScore);
+
     }
 }

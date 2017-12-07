@@ -60,16 +60,13 @@ public class GameServiceProvider extends Provider {
         reboot();
     }
 
-    public static State toState()
-    {
-        Board board = board().getClone();
-        Bag bag = bag().getClone();
-        PlayerContainer playerContainer = new PlayerContainer(bag);
-        for (Player player : players().getPlayers()){
-            playerContainer.addPlayer(player.getClone());
-        }
-        Game game = new Game(board, playerContainer.getPlayers(), bag);
-        return new State(board, game, bag, playerContainer);
+    public static Game toState() {
+        long startTime = System.nanoTime();
+        Game game = game().getClone();
+        long endTime = System.nanoTime();
+        System.out.println("Creating basenodes took " + (endTime - startTime) / 1000 + " ns");
+
+        return game;
     }
 
 }

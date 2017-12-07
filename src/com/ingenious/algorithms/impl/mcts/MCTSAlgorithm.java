@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class MCTSAlgorithm extends Algorithm {
 
+
     private Board board;
     private Rack rack;
 
@@ -28,4 +29,5 @@ public class MCTSAlgorithm extends Algorithm {
         BaseMoveGenerator generator = new BaseMoveGenerator(this.board, this.rack);
         return generator.generate();
     }
+
 }

@@ -193,13 +193,12 @@ public class Board {
 
     public void doMove(Move move) {
 
-        if(!move.isInverted()){
-            this.getNode(move.getBoardNode().getX(),move.getBoardNode().getY()).setTile(move.getPiece().getHead());
-            this.getNode(move.getBoardNode2().getX(),move.getBoardNode2().getY()).setTile(move.getPiece().getTail());
-        }
-        else{
-            this.getNode(move.getBoardNode().getX(),move.getBoardNode().getY()).setTile(move.getPiece().getTail());
-            this.getNode(move.getBoardNode2().getX(),move.getBoardNode2().getY()).setTile(move.getPiece().getHead());
+        if (!move.isInverted()) {
+            this.getNode(move.getBoardNode().getX(), move.getBoardNode().getY()).setTile(move.getPiece().getHead());
+            this.getNode(move.getBoardNode2().getX(), move.getBoardNode2().getY()).setTile(move.getPiece().getTail());
+        } else {
+            this.getNode(move.getBoardNode().getX(), move.getBoardNode().getY()).setTile(move.getPiece().getTail());
+            this.getNode(move.getBoardNode2().getX(), move.getBoardNode2().getY()).setTile(move.getPiece().getHead());
         }
 
     }

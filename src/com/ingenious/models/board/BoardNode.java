@@ -20,8 +20,14 @@ public class BoardNode {
         this.tile = tile;
     }
 
+    public BoardNode(int x, int y, Tile tile, boolean fixed) {
+        this.x = x;
+        this.y = y;
+        this.tile = tile;
+    }
+
     public BoardNode getClone() {
-        return new BoardNode(this.x, this.y, this.tile);
+        return new BoardNode(this.x, this.y, this.tile, this.fixed);
     }
 
     public int getX() {
@@ -49,7 +55,7 @@ public class BoardNode {
         return !tile.isEmpty();
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return tile.isEmpty();
     }
 

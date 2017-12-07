@@ -1,7 +1,9 @@
 package com.ingenious.engine;
 
+import com.ingenious.algorithms.impl.scorecalculator.ScoreCalculator;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
+import com.ingenious.models.move.Move;
 import com.ingenious.models.players.Player;
 import com.ingenious.models.bag.Bag;
 import com.ingenious.models.pieces.Piece;
@@ -24,6 +26,25 @@ public class Game {
 
     public int bonus_play = 0;
 
+    public Board getBoard() {
+        return board;
+    }
+
+    public Bag getBag() {
+        return bag;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Game getClone() {
+        ArrayList<Player> players = new ArrayList<>();
+        for (Player player : this.players) {
+            players.add(player.getClone());
+        }
+        return new Game(this.board, players, this.bag);
+    }
 
     public Game(Board board, List<Player> players, Bag bag) {
         this.board = board;
@@ -32,21 +53,15 @@ public class Game {
         this.current_player_index = 0;
     }
 
-    public void startGame() {
-        for (Player player : players) {
-            draw(player);
-        }
-    }
 
     public Player getCurrentPlayer() {
         return this.players.get(this.current_player_index);
     }
 
-    public Player getOppenent(){
-        if(current_player_index == 0){
+    public Player getOppenent() {
+        if (current_player_index == 0) {
             return this.players.get(1);
-        }
-        else{
+        } else {
             return this.players.get(0);
         }
     }
@@ -72,7 +87,6 @@ public class Game {
     }
 
 
-
     public void place_piece(Piece piece, BoardNode boardNode_1, BoardNode boardNode_2) {
         if (valid_placement(piece, boardNode_1, boardNode_2)) {
             getCurrentPlayer().getRack().setPieceSelected(-1);
@@ -82,191 +96,59 @@ public class Game {
             getCurrentPlayer().getRack().getContents().remove(piece);
             board.addTile(piece.getHead(), boardNode_1);
             board.addTile(piece.getTail(), boardNode_2);
-            int newScore_1 = calculate_score(boardNode_1, boardNode_2);
-            int newScore_2 = calculate_score(boardNode_2, boardNode_1);
+            this.calculate_score(boardNode_1, boardNode_2);
             if (getCurrentPlayer().getRack().getContents().isEmpty()) {
                 draw(getCurrentPlayer());
                 turn();
             } else {
-                if (bonus_play(newScore_1)){
+                if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_1, boardNode_2))) {
                     bonus_play++;
                 }
-                if (bonus_play(newScore_2)) {
+                if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_2, boardNode_1))) {
                     bonus_play++;
                 }
-                if (bonus_play == 0){
+                if (bonus_play == 0) {
                     turn();
                 }
             }
         }
     }
 
-
-    public int calculate_score(BoardNode boardNode_1, BoardNode boardNode_2) {
-        int x = boardNode_1.getX();
-        int y = boardNode_1.getY();
-        int l = 1;
-        int score = 0;
-        Tile tile = boardNode_1.getTile();
-
-        while(this.board.getNode(x,y-l)!= null && GameServiceProvider.board().getNode(x,y-l) != boardNode_2 && tile.equals(GameServiceProvider.board().getNode(x,y-l).getTile())){
-            score++;
-            l++;
-        }
-        l = 1;
-        while(GameServiceProvider.board().getNode(x,y+l)!= null && GameServiceProvider.board().getNode(x,y+l) != boardNode_2 && tile.equals(GameServiceProvider.board().getNode(x,y+l).getTile())){
-            score++;
-            l++;
-        }
-        l = 1;
-        while(GameServiceProvider.board().getNode(x+l,y)!= null && GameServiceProvider.board().getNode(x + l,y) != boardNode_2 && tile.equals(GameServiceProvider.board().getNode(x + l,y).getTile())){
-            score++;
-           l++;
-        }
-        l = 1;
-        while(GameServiceProvider.board().getNode(x-l,y)!= null && GameServiceProvider.board().getNode(x - l,y)  != boardNode_2 && tile.equals(GameServiceProvider.board().getNode(x - l,y).getTile())){
-            score++;
-            l++;
-        }
-        l = 1;
-        while(GameServiceProvider.board().getNode(x+l,y-l)!= null && GameServiceProvider.board().getNode(x+l,y-l)  != boardNode_2 && tile.equals(GameServiceProvider.board().getNode(x+l,y-l).getTile())){
-            score++;
-            l++;
-        }
-        l = 1;
-        while(GameServiceProvider.board().getNode(x-l,y+l)!= null && GameServiceProvider.board().getNode(x-l,y+l) != boardNode_2 &&  tile.equals(GameServiceProvider.board().getNode(x-l,y+l).getTile())){
-            score++;
-            l++;
-        }
-        int newScore = 0;
-        if(tile.equals(Tile.green)){
-            newScore = score+getCurrentPlayer().score().getGreenScore();
-            if(newScore >18){
-                newScore = 18;
+    public boolean doMove(Move move) {
+        Piece piece = move.getPiece();
+        BoardNode boardNode_1 = move.getBoardNode();
+        BoardNode boardNode_2 = move.getBoardNode2();
+        if (valid_placement(piece, boardNode_1, boardNode_2)) {
+            getCurrentPlayer().getRack().setPieceSelected(-1);
+            if (bonus_play != 0) {
+                bonus_play--;
             }
-            getCurrentPlayer().score().setGreenScore(newScore);
-        }
-        else if (tile.equals(Tile.blue)){
-            newScore = score+getCurrentPlayer().score().getBlueScore();
-            if(newScore >18){
-                newScore = 18;
+            getCurrentPlayer().getRack().getContents().remove(piece);
+            board.addTile(piece.getHead(), boardNode_1);
+            board.addTile(piece.getTail(), boardNode_2);
+            this.calculate_score(boardNode_1, boardNode_2);
+            if (getCurrentPlayer().getRack().getContents().isEmpty()) {
+                draw(getCurrentPlayer());
+                turn();
+            } else {
+                if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_1, boardNode_2))) {
+                    bonus_play++;
+                }
+                if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_2, boardNode_1))) {
+                    bonus_play++;
+                }
+                if (bonus_play == 0) {
+                    turn();
+                }
             }
-            getCurrentPlayer().score().setBlueScore(newScore);
+            return true;
         }
-        else if(tile.equals(Tile.red)){
-            newScore = score+getCurrentPlayer().score().getRedScore();
-            if(newScore >18){
-                newScore = 18;
-            }
-            getCurrentPlayer().score().setRedScore(newScore);
-        }
-        else if(tile.equals(Tile.yellow)){
-            newScore = score+getCurrentPlayer().score().getYellowScore();
-            if(newScore >18){
-                newScore = 18;
-            }
-            getCurrentPlayer().score().setYellowScore(newScore);
-        }
-        else if(tile.equals(Tile.orange)){
-            newScore = score+getCurrentPlayer().score().getOrangeScore();
-            if(newScore >18){
-                newScore = 18;
-            }
-            getCurrentPlayer().score().setOrangeScore(newScore);
-        }
-        else{
-            newScore = score+getCurrentPlayer().score().getPurpleScore();
-            if(newScore >18){
-                newScore = 18;
-            }
-            getCurrentPlayer().score().setPurpleScore(newScore);
-        }
-        //repaint score
-        return score;
+        return false;
     }
 
-    public Score calculate_score(BoardNode boardNode_1, BoardNode boardNode_2, Board board, Score oldScore)
-    {
-        int x = boardNode_1.getX();
-        int y = boardNode_1.getY();
-        int l = 1;
-        int addedScore = 0;
-        Tile tile = boardNode_1.getTile();
 
-        while(board.getNode(x,y-l)!= null && board.getNode(x,y-l) != boardNode_2 && tile.equals(board.getNode(x,y-l).getTile())){
-            addedScore++;
-            l++;
-        }
-        l = 1;
-        while(board.getNode(x,y+l)!= null && board.getNode(x,y+l) != boardNode_2 && tile.equals(board.getNode(x,y+l).getTile())){
-            addedScore++;
-            l++;
-        }
-        l = 1;
-        while(board.getNode(x+l,y)!= null && board.getNode(x + l,y) != boardNode_2 && tile.equals(board.getNode(x + l,y).getTile())){
-            addedScore++;
-            l++;
-        }
-        l = 1;
-        while(board.getNode(x-l,y)!= null && board.getNode(x - l,y)  != boardNode_2 && tile.equals(board.getNode(x - l,y).getTile())){
-            addedScore++;
-            l++;
-        }
-        l = 1;
-        while(board.getNode(x+l,y-l)!= null && board.getNode(x+l,y-l)  != boardNode_2 && tile.equals(board.getNode(x+l,y-l).getTile())){
-            addedScore++;
-            l++;
-        }
-        l = 1;
-        while(board.getNode(x-l,y+l)!= null && board.getNode(x-l,y+l) != boardNode_2 &&  tile.equals(board.getNode(x-l,y+l).getTile())){
-            addedScore++;
-            l++;
-        }
-        int newScore = 0;
-        if(tile.equals(Tile.green)){
-            newScore = addedScore+oldScore.getGreenScore();
-            if(newScore >18){
-                newScore = 18;
-            }
-            oldScore.setGreenScore(newScore);
-        }
-        else if (tile.equals(Tile.blue)){
-            newScore = addedScore+oldScore.getBlueScore();
-            if(newScore >18){
-                newScore = 18;
-            }
-            oldScore.setBlueScore(newScore);
-        }
-        else if(tile.equals(Tile.red)){
-            newScore = addedScore+oldScore.getRedScore();
-            if(newScore >18){
-                newScore = 18;
-            }
-            oldScore.setRedScore(newScore);
-        }
-        else if(tile.equals(Tile.yellow)){
-            newScore = addedScore+oldScore.getYellowScore();
-            if(newScore >18){
-                newScore = 18;
-            }
-            oldScore.setYellowScore(newScore);
-        }
-        else if(tile.equals(Tile.orange)){
-            newScore = addedScore+oldScore.getOrangeScore();
-            if(newScore >18){
-                newScore = 18;
-            }
-            oldScore.setOrangeScore(newScore);
-        }
-        else{
-            newScore = addedScore+oldScore.getPurpleScore();
-            if(newScore >18){
-                newScore = 18;
-            }
-            oldScore.setPurpleScore(newScore);
-        }
-        //repaint score
-        return oldScore;
+    public Score calculate_score(BoardNode boardNode_1, BoardNode boardNode_2) {
+        return ScoreCalculator.calculate(boardNode_1, boardNode_2, this.board, this.getCurrentPlayer().score);
     }
 
     public boolean bonus_play(int newScore) {
@@ -299,20 +181,20 @@ public class Game {
     }
 
     public void setNextPlayerAsCurrent() {
-            if (this.current_player_index == 1) {
-                this.current_player_index = 0;
-            } else {
-                this.current_player_index++;
+        if (this.current_player_index == 1) {
+            this.current_player_index = 0;
+        } else {
+            this.current_player_index++;
         }
     }
 
     public boolean valid_placement(Piece piece, BoardNode boardNode_1, BoardNode boardNode_2) {
-        if(boardNode_1.isOccupied() || boardNode_2.isOccupied()){
+        if (boardNode_1.isOccupied() || boardNode_2.isOccupied()) {
             return false;
         }
         ArrayList<BoardNode> neighbours_1 = board.getNeighboursOfNode(boardNode_1);
         ArrayList<BoardNode> neighbours_2 = board.getNeighboursOfNode(boardNode_2);
-        if(!neighbours_1.contains(boardNode_2)){
+        if (!neighbours_1.contains(boardNode_2)) {
             return false;
         }/*
             for (int i = 0; i < neighbours_1.size(); i++) {

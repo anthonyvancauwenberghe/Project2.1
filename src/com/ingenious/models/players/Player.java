@@ -15,9 +15,10 @@ public class Player {
         this.score = new Score();
     }
 
-    public Player(String name, Score score) {
+    public Player(String name, Score score, Rack rack) {
         this.name = name;
         this.score = score;
+        this.rack = rack;
     }
 
     public String getName() {
@@ -37,6 +38,6 @@ public class Player {
     }
 
     public Player getClone() {
-        return new Player(this.name, this.score);
+        return new Player(this.name, this.score.getClone(), this.rack.getClone());
     }
 }

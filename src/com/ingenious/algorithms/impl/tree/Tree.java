@@ -1,43 +1,42 @@
 package com.ingenious.algorithms.impl.tree;
 
 import com.ingenious.algorithms.impl.State;
+import com.ingenious.engine.Game;
 import com.ingenious.models.move.Move;
 
 import java.util.ArrayList;
 
 public class Tree {
-    private State root;
+    private Game root;
     private ArrayList<Node> nodes;
 
-    public Tree(State root, ArrayList<Node> nodes)
-    {
+    public Tree(Game root, ArrayList<Node> nodes) {
         this.root = root;
         this.nodes = nodes;
     }
 
-    public State getNodeState(Node node) {
-        State state = this.root.getClone();
+    public Game getNodeState(Node node) {
+        Game state = this.root.getClone();
 
         for (Move move : node.parentMoves) {
-            state.board.doMove(move);
+            state.getBoard().doMove(move);
         }
-        state.board.doMove(node.move);
+        state.getBoard().doMove(node.move);
 
         return state;
     }
 
-    public State getParentState(Node node)
-    {
-        State state = this.root.getClone();
+    public Game getParentState(Node node) {
+        Game state = this.root.getClone();
 
         for (Move move : node.parentMoves) {
-            state.board.doMove(move);
+            state.getBoard().doMove(move);
         }
 
         return state;
     }
 
-    public State getRootState() {
+    public Game getRootState() {
         return root;
     }
 

@@ -1,36 +1,73 @@
 package com.ingenious.algorithms.impl.tree;
 
-import com.ingenious.algorithms.impl.State;
-import com.ingenious.algorithms.impl.movegenerator.BaseMoveGenerator;
-import com.ingenious.models.move.Move;
+import com.ingenious.engine.Game;
 
 import java.util.ArrayList;
 
 public class TreeFactory {
 
-    public static ArrayList<Node> generateNodes(int layerLimit, State currentState)
-    {
-        ArrayList<Move> moves = (new BaseMoveGenerator(currentState.board, currentState.game.getCurrentPlayer().rack)).generate();
-        ArrayList<Node> nodes = new ArrayList<>();
+    private Game state;
+    private int layerLimit;
 
-        int counter;
-        for (Move move : moves) {
-            counter = 0;
-            Node node = new Node(move, new ArrayList<Move>());
-            while (counter < layerLimit) {
-                State state = currentState.getClone();
-                state.board.doMove(move);
-                counter++;
-                ArrayList<Node> generateNodes = generateNodes(counter, state);
-                for (Node aGeneratedNode : generateNodes) {
-                    node.addChildNode(aGeneratedNode);
-                    //System.out.println("added childnode");
-                }
+    public TreeFactory(Game state) {
+        this.state = state;
+        this.layerLimit = 0;
+    }
 
-            }
-            nodes.add(node);
+    public TreeFactory(Game game, int layerLimit) {
+        this.state = game;
+        this.layerLimit = layerLimit;
+    }
+
+    public ArrayList<Node> generateRootNodes(Game state) {
+        RootNodeChildrenFactory factory = new RootNodeChildrenFactory(state);
+        return factory.generate();
+    }
+
+
+    public ArrayList<Node> generateNodeChildren(Node node, Game state) {
+        state.getBoard().getClone().doMove(node.move);
+        ArrayList<Node> childrenNodes = generateRootNodes(state);
+        node.setChildNodes(childrenNodes);
+        return node.children;
+    }
+
+    public ArrayList<Node> generateAllNodesChildren(ArrayList<Node> baseNodes, int layer) {
+        ArrayList<Node> children = new ArrayList<>();
+
+        long startTime = System.nanoTime();
+
+        for (Node node : baseNodes) {
+            children = this.generateNodeChildren(node, this.state);
         }
-        System.out.println("Generated " + nodes.size() + " nodes");
-        return nodes;
+
+        long endTime = System.nanoTime();
+        System.out.println("Creating basenodes took " + (endTime - startTime) / 1000000 + " ms");
+
+        while (layer < layerLimit) {
+            long startTime2 = System.nanoTime();
+            for (Node childNode : children) {
+                Game state = this.state.getClone();
+                state.getBoard().doMove(childNode.move);
+                this.generateNodeChildren(childNode, state);
+            }
+            long endTime2 = System.nanoTime();
+            System.out.println("Creating basenodes at layer " + layer + " took " + (endTime2 - startTime2) / 1000000 + " ms");
+            layer++;
+        }
+        return baseNodes;
+    }
+
+    public void run() {
+
+        ArrayList<Node> baseNodes = generateRootNodes(this.state);
+        ArrayList<Node> nodes = generateAllNodesChildren(baseNodes,0);
+
+    }
+
+    public Tree generate() {
+        ArrayList<Node> baseNodes = generateRootNodes(this.state);
+
+        return new Tree(this.state, baseNodes);
     }
 }

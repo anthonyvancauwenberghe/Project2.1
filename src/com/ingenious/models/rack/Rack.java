@@ -32,7 +32,7 @@ public class Rack implements Cloneable {
         for (Piece piece : this.pieces) {
             pieces.add(piece.getClone());
         }
-        return new Rack(pieces, this.bag.getClone(), this.indexSelected);
+        return new Rack(pieces, this.bag, this.indexSelected);
     }
 
     public void initRack() {

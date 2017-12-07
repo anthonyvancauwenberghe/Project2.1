@@ -57,10 +57,10 @@ public class Bag {
     }
 
     public Piece getAndRemoveRandomPiece() {
-            int randomIndex = ThreadLocalRandom.current().nextInt(0, this.pieces.size());
-            Piece piece = this.pieces.get(randomIndex);
-            this.pieces.remove(randomIndex);
-            return piece;
+        int randomIndex = ThreadLocalRandom.current().nextInt(0, this.pieces.size());
+        Piece piece = this.pieces.get(randomIndex);
+        this.pieces.remove(randomIndex);
+        return piece;
     }
 
     public void removePiece(Piece piece) {
@@ -116,5 +116,9 @@ public class Bag {
     public void refillBag() {
         this.pieces.clear();
         this.fillBag();
+    }
+
+    public boolean isEmpty() {
+        return this.pieces.isEmpty();
     }
 }
