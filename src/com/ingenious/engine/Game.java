@@ -1,7 +1,6 @@
 package com.ingenious.engine;
 
 import com.ingenious.algorithms.impl.scorecalculator.ScoreCalculator;
-import com.ingenious.events.impl.BoardIsUpdatedEvent;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.move.Move;
@@ -10,6 +9,7 @@ import com.ingenious.models.bag.Bag;
 import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.players.impl.Bot;
 import com.ingenious.models.score.Score;
+import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
 
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class Game {
         }
     }
 
-    public void drawRandomPieceFromBag(Player player) {
+    public void draw(Player player) {
         for (int i = 0; i < 6; i++) {
             Piece piece = bag.getAndRemoveRandomPiece();
             player.getRack().getContents().set(i, piece);
@@ -78,7 +78,7 @@ public class Game {
         for (int i = 0; i < 6; i++) {
             bag.addPiece(getCurrentPlayer().getRack().getContents().get(i));
         }
-        drawRandomPieceFromBag(getCurrentPlayer());
+        draw(getCurrentPlayer());
     }
 
 
@@ -87,54 +87,9 @@ public class Game {
         getCurrentPlayer().getRack().getContents().add(bag.getAndRemoveRandomPiece());
     }
 
-    public boolean doBotMove(Move move) {
-        Piece piece = move.getPiece();
-        BoardNode boardNode_1, boardNode_2;
-        if (!move.isInverted()) {
-            boardNode_1 = this.board.getNode(move.getBoardNode().x, move.getBoardNode().y);
-            boardNode_2 = this.board.getNode(move.getBoardNode2().x, move.getBoardNode2().y);
-        } else {
-            boardNode_2 = this.board.getNode(move.getBoardNode().x, move.getBoardNode().y);
-            boardNode_1 = this.board.getNode(move.getBoardNode2().x, move.getBoardNode2().y);
-        }
 
-        if (bonus_play != 0) {
-            bonus_play--;
-        }
-        getCurrentPlayer().getRack().removePiece(piece);
-        board.addTile(piece.getHead(), boardNode_1);
-        board.addTile(piece.getTail(), boardNode_2);
-        new BoardIsUpdatedEvent();
-
-
-        this.calculate_score(boardNode_1, boardNode_2);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if (getCurrentPlayer().getRack().isEmpty()) {
-            drawRandomPieceFromBag(getCurrentPlayer());
-            turn();
-        } else {
-            if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_1, boardNode_2))) {
-                bonus_play++;
-            }
-            if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_2, boardNode_1))) {
-                bonus_play++;
-            }
-            if (bonus_play == 0) {
-                turn();
-            }
-        }
-        return true;
-
-    }
-
-
-    public boolean place_piece(Piece piece, BoardNode boardNode_1, BoardNode boardNode_2) {
+    public void place_piece(Piece piece, BoardNode boardNode_1, BoardNode boardNode_2) {
         if (valid_placement(piece, boardNode_1, boardNode_2)) {
-            System.out.println("VALID MOVE");
             getCurrentPlayer().getRack().setPieceSelected(-1);
             if (bonus_play != 0) {
                 bonus_play--;
@@ -144,7 +99,38 @@ public class Game {
             board.addTile(piece.getTail(), boardNode_2);
             this.calculate_score(boardNode_1, boardNode_2);
             if (getCurrentPlayer().getRack().getContents().isEmpty()) {
-                drawRandomPieceFromBag(getCurrentPlayer());
+                draw(getCurrentPlayer());
+                turn();
+            } else {
+                if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_1, boardNode_2))) {
+                    bonus_play++;
+                }
+                if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_2, boardNode_1))) {
+                    bonus_play++;
+                }
+                if (bonus_play == 0) {
+                    turn();
+                }
+            }
+        }
+    }
+
+    public boolean doMove(Move move) {
+        Piece piece = move.getPiece();
+        BoardNode boardNode_1 = move.getBoardNode();
+        BoardNode boardNode_2 = move.getBoardNode2();
+        System.out.println(boardNode_1.getX()+" "+boardNode_1.getY()+" "+boardNode_2.getX()+" "+boardNode_2.getY());
+        if (valid_placement(piece, boardNode_1, boardNode_2)) {
+            getCurrentPlayer().getRack().setPieceSelected(-1);
+            if (bonus_play != 0) {
+                bonus_play--;
+            }
+            getCurrentPlayer().getRack().getContents().remove(piece);
+            board.addTile(piece.getHead(), boardNode_1);
+            board.addTile(piece.getTail(), boardNode_2);
+            this.calculate_score(boardNode_1, boardNode_2);
+            if (getCurrentPlayer().getRack().getContents().isEmpty()) {
+                draw(getCurrentPlayer());
                 turn();
             } else {
                 if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_1, boardNode_2))) {
@@ -158,24 +144,8 @@ public class Game {
                 }
             }
             return true;
-        } else {
-            System.out.println("INVALID MOVE");
         }
         return false;
-    }
-
-    public boolean doMove(Move move) {
-        Piece piece = move.getPiece();
-        BoardNode boardNode_1, boardNode_2;
-        if (!move.isInverted()) {
-            boardNode_1 = move.getBoardNode();
-            boardNode_2 = move.getBoardNode2();
-        } else {
-            boardNode_2 = move.getBoardNode();
-            boardNode_1 = move.getBoardNode2();
-        }
-
-        return this.place_piece(piece, boardNode_1, boardNode_2);
     }
 
 
@@ -217,7 +187,7 @@ public class Game {
         if (this.getCurrentPlayer().isBot()) {
             System.out.println("is bot!");
             Bot bot = (Bot) this.getCurrentPlayer();
-            this.doBotMove(bot.getMove());
+            bot.executeMove();
         }
     }
 
@@ -237,15 +207,19 @@ public class Game {
         ArrayList<BoardNode> neighbours_2 = board.getNeighboursOfNode(boardNode_2);
         if (!neighbours_1.contains(boardNode_2)) {
             return false;
-        }
+        }/*
+            for (int i = 0; i < neighbours_1.size(); i++) {
+                if (neighbours_1.get(i).getTile().equals(piece.getHead())){
+                        return true;
+                }
+            }
+            for(int i=0; i<neighbours_2.size(); i++){
+                if(neighbours_2.get(i).getTile().equals(piece.getTail())){
+                    return true;
+                }
+            }*/
 
         return true;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-        GameServiceProvider.getInstance().board = board;
-        new BoardIsUpdatedEvent();
     }
 
 }
