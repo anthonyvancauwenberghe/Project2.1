@@ -20,6 +20,11 @@ public class MCTSAlgorithm extends Algorithm {
         System.out.println("initialized");
     }
 
+    @Override
+    public Move generate() {
+        return null;
+    }
+
     private void initialize() {
         this.board = GameServiceProvider.board().getClone();
         this.rack = GameServiceProvider.game().getCurrentPlayer().getRack().getClone();

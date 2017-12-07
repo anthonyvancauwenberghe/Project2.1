@@ -1,14 +1,11 @@
 package com.ingenious.providers.impl;
 
-import com.ingenious.algorithms.impl.ExampleAlgorithm;
-import com.ingenious.algorithms.impl.Greedy.GreedyAlgorithm;
-import com.ingenious.algorithms.impl.State;
+import com.ingenious.algorithms.impl.Random.Random;
 import com.ingenious.containers.PlayerContainer;
 import com.ingenious.engine.Game;
 import com.ingenious.gui.MainFrame;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.bag.Bag;
-import com.ingenious.models.players.Player;
 import com.ingenious.models.players.impl.Bot;
 import com.ingenious.models.players.impl.Human;
 import com.ingenious.providers.Provider;
@@ -33,7 +30,7 @@ public class GameServiceProvider extends Provider {
     /* ADD PLAYERS OR BOTS HERE */
     protected void initPlayers() {
         players.addPlayer(new Human("human player"));
-        players.addPlayer(new Bot(new GreedyAlgorithm()));
+        players.addPlayer(new Bot(new Random()));
     }
 
     public static MainFrame gui() {
@@ -65,7 +62,7 @@ public class GameServiceProvider extends Provider {
         long startTime = System.nanoTime();
         Game game = game().getClone();
         long endTime = System.nanoTime();
-        System.out.println("Creating basenodes took " + (endTime - startTime) / 1000 + " ns");
+        System.out.println("clone gamestate took " + (endTime - startTime) / 1000 + " ns");
 
         return game;
     }

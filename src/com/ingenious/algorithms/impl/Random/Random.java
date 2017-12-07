@@ -1,5 +1,6 @@
 package com.ingenious.algorithms.impl.Random;
 
+import com.ingenious.algorithms.Algorithm;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.move.Move;
@@ -12,18 +13,25 @@ import java.util.ArrayList;
 /**
  * Created by carolley on 03-Dec-17.
  */
-public class Random {
-
+public class Random extends Algorithm {
 
     private Board board;
     private Rack rack;
 
-    public Random(){
-        board = GameServiceProvider.board();
-        rack = GameServiceProvider.players().getPlayer(1).getRack();
+    public Board getBoard() {
+        if (this.board == null)
+            this.board = GameServiceProvider.board().getClone();
+        return board;
     }
 
-    public Move randomPlay() {
+    public Rack getRack() {
+        if (this.rack == null)
+            this.rack = GameServiceProvider.players().getPlayer(1).getRack().getClone();
+        return rack;
+    }
+
+    public Move generate() {
+        System.out.println("generating random move");
         Piece piece = getRandomPiece();
         BoardNode[] place = getRandomPlace();
         return new Move(place[0], place[1], piece, false);
@@ -41,10 +49,10 @@ public class Random {
 
     public ArrayList<BoardNode> emptyNodes() {
         ArrayList<BoardNode> emptyNodes = new ArrayList<>();
-        ArrayList<BoardNode> nodes = board.getBoardNodes();
+        ArrayList<BoardNode> nodes = getBoard().getBoardNodes();
         for (int i = 0; i < nodes.size(); i++) {
             if (nodes.get(i).isEmpty() && hasEmptyNeighbours(nodes.get(i))) {
-                emptyNodes.add(board.getBoardNodes().get(i));
+                emptyNodes.add(getBoard().getBoardNodes().get(i));
             }
         }
         return emptyNodes;
@@ -70,10 +78,10 @@ public class Random {
     }
 
     public Piece getRandomPiece() {
-        this.rack.setPieceSelected((int) (Math.random() * rack.getContents().size()));
-        while (this.rack.getPieceSelected().equals(null)) {
+        this.getRack().setPieceSelected((int) (Math.random() * getRack().getContents().size()));
+        while (this.getRack().getPieceSelected().equals(null)) {
             getRandomPiece();
         }
-        return this.rack.getPieceSelected();
+        return this.getRack().getPieceSelected();
     }
 }

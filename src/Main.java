@@ -18,8 +18,8 @@ public class Main {
 
         Game state = GameServiceProvider.toState();
 
-        TreeFactory treeFactory = new TreeFactory(state, 0);
-        treeFactory.run();
+        //TreeFactory treeFactory = new TreeFactory(state, 0);
+        //treeFactory.run();
 
         //ArrayList<Node> children = TreeFactory.generateNodes(1, GameServiceProvider.toState());
         //Tree tree = new Tree(state, children);

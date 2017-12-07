@@ -7,6 +7,7 @@ import com.ingenious.models.move.Move;
 import com.ingenious.models.players.Player;
 import com.ingenious.models.bag.Bag;
 import com.ingenious.models.pieces.Piece;
+import com.ingenious.models.players.impl.Bot;
 import com.ingenious.models.score.Score;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
@@ -178,6 +179,15 @@ public class Game {
 
         setNextPlayerAsCurrent();
         bonus_play = 0;
+
+        System.out.println("switching to next player");
+
+        System.out.println(this.getCurrentPlayer().getName());
+        if (this.getCurrentPlayer().isBot()) {
+            System.out.println("is bot!");
+            Bot bot = (Bot) this.getCurrentPlayer();
+            bot.executeMove();
+        }
     }
 
     public void setNextPlayerAsCurrent() {

@@ -1,5 +1,6 @@
 package com.ingenious.models.players;
 
+import com.ingenious.algorithms.GeneratesMove;
 import com.ingenious.models.rack.Rack;
 import com.ingenious.models.score.Score;
 
@@ -39,5 +40,13 @@ public class Player {
 
     public Player getClone() {
         return new Player(this.name, this.score.getClone(), this.rack.getClone());
+    }
+
+    public boolean isBot() {
+        return this.name.equals("BOT");
+    }
+
+    public boolean isHuman() {
+        return !isBot();
     }
 }

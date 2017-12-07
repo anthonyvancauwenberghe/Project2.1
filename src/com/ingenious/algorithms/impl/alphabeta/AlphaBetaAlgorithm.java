@@ -2,8 +2,15 @@ package com.ingenious.algorithms.impl.alphabeta;
 
 import com.ingenious.algorithms.Algorithm;
 import com.ingenious.algorithms.impl.TreeNode;
+import com.ingenious.models.move.Move;
 
 public class AlphaBetaAlgorithm extends Algorithm{
+
+    @Override
+    public Move generate() {
+        return null;
+    }
+
     public int run(TreeNode node, int depth, int alpha, int beta, Boolean maximizing) {
         if (depth == 0 || node.hasChildren()) {
             return node.getData();
