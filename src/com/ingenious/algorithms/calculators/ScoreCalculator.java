@@ -1,4 +1,4 @@
-package com.ingenious.algorithms.impl.scorecalculator;
+package com.ingenious.algorithms.calculators;
 
 import com.ingenious.events.impl.ScoreIsUpdatedEvent;
 import com.ingenious.models.board.Board;

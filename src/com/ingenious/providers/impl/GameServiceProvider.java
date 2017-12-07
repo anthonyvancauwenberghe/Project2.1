@@ -1,7 +1,6 @@
 package com.ingenious.providers.impl;
 
-import com.ingenious.algorithms.impl.Random.Random;
-import com.ingenious.algorithms.impl.Random.RandomTonyAlgorithm;
+import com.ingenious.algorithms.bots.algorithms.Random.RandomTonyAlgorithm;
 import com.ingenious.containers.PlayerContainer;
 import com.ingenious.engine.Game;
 import com.ingenious.gui.MainFrame;
@@ -63,7 +62,8 @@ public class GameServiceProvider extends Provider {
         long startTime = System.nanoTime();
         Game game = game().getClone();
         long endTime = System.nanoTime();
-        System.out.println("clone gamestate took " + (endTime - startTime) / 1000 + " ns");
+        System.out.println("cloning gamestate took " + (endTime - startTime) / 1000 + " ns");
+        System.out.println("");
 
         return game;
     }

@@ -1,13 +1,5 @@
-import com.ingenious.algorithms.impl.GenericTree;
-import com.ingenious.algorithms.impl.State;
-import com.ingenious.algorithms.impl.tree.Node;
-import com.ingenious.algorithms.impl.tree.Tree;
-import com.ingenious.algorithms.impl.tree.TreeFactory;
 import com.ingenious.engine.Game;
 import com.ingenious.providers.impl.GameServiceProvider;
-import tests.Tests;
-
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {

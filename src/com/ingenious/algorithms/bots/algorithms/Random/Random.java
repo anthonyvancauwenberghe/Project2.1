@@ -1,6 +1,6 @@
-package com.ingenious.algorithms.impl.Random;
+package com.ingenious.algorithms.bots.algorithms.Random;
 
-import com.ingenious.algorithms.Algorithm;
+import com.ingenious.algorithms.bots.BotAlgorithm;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.move.Move;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by carolley on 03-Dec-17.
  */
-public class Random extends Algorithm {
+public class Random extends BotAlgorithm {
 
     private Board board;
     private Rack rack;
@@ -30,7 +30,7 @@ public class Random extends Algorithm {
         return rack;
     }
 
-    public Move generate() {
+    public Move generateMove() {
         System.out.println("generating random move");
         Piece piece = getRandomPiece();
         BoardNode[] place = getRandomPlace();

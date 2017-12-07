@@ -1,5 +1,7 @@
-package com.ingenious.algorithms.impl.tree;
+package com.ingenious.algorithms.generators;
 
+import com.ingenious.algorithms.validators.BoardMoveValidator;
+import com.ingenious.algorithms.validators.ValidateAble;
 import com.ingenious.engine.Game;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
@@ -10,15 +12,25 @@ import com.ingenious.models.tiles.Tile;
 
 import java.util.ArrayList;
 
-public class AvailableMovesFactory {
+public class AvailableMovesGenerator {
 
     private Board board;
     private ArrayList<Piece> rack;
 
-    public AvailableMovesFactory(Game state) {
+    public AvailableMovesGenerator(Game state) {
         this.board = state.getBoard().getClone();
-        this.fillWorthlessNodes();
         this.rack = this.getNonDuplicateRackPieces(state.getCurrentPlayer().getRack());
+    }
+
+    public AvailableMovesGenerator(Game state, boolean applyHeuristics) {
+        this.board = state.getBoard().getClone();
+        if (applyHeuristics)
+            this.applyHeuristics();
+        this.rack = this.getNonDuplicateRackPieces(state.getCurrentPlayer().getRack());
+    }
+
+    public void applyHeuristics() {
+        this.fillWorthlessNodes();
     }
 
     private void fillWorthlessNodes() {
@@ -60,11 +72,15 @@ public class AvailableMovesFactory {
                 for (BoardNode neighbour : boardNode.getNeighbours()) {
                     if (neighbour.isEmpty()) {
                         for (Piece piece : this.rack) {
-                            if (piece.hasEqualTiles()) {
-                                moves.add(new Move(boardNode, neighbour, piece, false));
-                            } else {
-                                moves.add(new Move(boardNode, neighbour, piece, false));
-                                moves.add(new Move(boardNode, neighbour, piece, true));
+                            Move move = new Move(boardNode, neighbour, piece, false);
+                            if (BoardMoveValidator.validateMove(this.board, move)) {
+                                moves.add(move);
+                            }
+                            if (!piece.hasEqualTiles()) {
+                                Move aMove = new Move(boardNode, neighbour, piece, false);
+                                if (BoardMoveValidator.validateMove(this.board, aMove)) {
+                                    moves.add(aMove);
+                                }
                             }
                         }
                     }

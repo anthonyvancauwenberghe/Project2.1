@@ -1,8 +1,7 @@
-package com.ingenious.algorithms.impl.evalutation;
-import com.ingenious.algorithms.impl.State;
-import com.ingenious.algorithms.impl.ModifiedBubblesort;
-import com.ingenious.algorithms.impl.tree.Node;
-import com.ingenious.algorithms.impl.tree.Tree;
+package com.ingenious.algorithms.bots.evalutation;
+import com.ingenious.algorithms.bots.algorithms.bubblesort.ModifiedBubblesort;
+import com.ingenious.algorithms.bots.tree.Node;
+import com.ingenious.algorithms.bots.tree.Tree;
 import com.ingenious.engine.Game;
 
 

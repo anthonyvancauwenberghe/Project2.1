@@ -1,6 +1,8 @@
 package com.ingenious.engine;
 
-import com.ingenious.algorithms.impl.scorecalculator.ScoreCalculator;
+import com.ingenious.algorithms.calculators.ScoreCalculator;
+import com.ingenious.algorithms.validators.BoardMoveValidator;
+import com.ingenious.algorithms.validators.ValidateAble;
 import com.ingenious.events.impl.BoardIsUpdatedEvent;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
@@ -88,6 +90,10 @@ public class Game {
     }
 
     public boolean doBotMove(Move move) {
+
+        if (!this.validMove(move))
+            System.out.println("ERROR BOT INVALID MOVE!!!!");
+
         Piece piece = move.getPiece();
         BoardNode boardNode_1, boardNode_2;
         if (!move.isInverted()) {
@@ -108,11 +114,6 @@ public class Game {
 
 
         this.calculate_score(boardNode_1, boardNode_2);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         if (getCurrentPlayer().getRack().isEmpty()) {
             drawRandomPieceFromBag(getCurrentPlayer());
             turn();
@@ -133,8 +134,7 @@ public class Game {
 
 
     public boolean place_piece(Piece piece, BoardNode boardNode_1, BoardNode boardNode_2) {
-        if (valid_placement(piece, boardNode_1, boardNode_2)) {
-            System.out.println("VALID MOVE");
+        if (validPlacement(piece, boardNode_1, boardNode_2)) {
             getCurrentPlayer().getRack().setPieceSelected(-1);
             if (bonus_play != 0) {
                 bonus_play--;
@@ -211,11 +211,7 @@ public class Game {
         setNextPlayerAsCurrent();
         bonus_play = 0;
 
-        System.out.println("switching to next player");
-
-        System.out.println(this.getCurrentPlayer().getName());
         if (this.getCurrentPlayer().isBot()) {
-            System.out.println("is bot!");
             Bot bot = (Bot) this.getCurrentPlayer();
             this.doBotMove(bot.getMove());
         }
@@ -229,7 +225,7 @@ public class Game {
         }
     }
 
-    public boolean valid_placement(Piece piece, BoardNode boardNode_1, BoardNode boardNode_2) {
+    public boolean validPlacement(Piece piece, BoardNode boardNode_1, BoardNode boardNode_2) {
         if (boardNode_1.isOccupied() || boardNode_2.isOccupied()) {
             return false;
         }
@@ -240,6 +236,11 @@ public class Game {
         }
 
         return true;
+    }
+
+    public boolean validMove(Move move) {
+        ValidateAble moveValidator = new BoardMoveValidator(this.board, move);
+        return moveValidator.validate();
     }
 
     public void setBoard(Board board) {

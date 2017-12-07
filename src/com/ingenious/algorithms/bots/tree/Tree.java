@@ -1,6 +1,5 @@
-package com.ingenious.algorithms.impl.tree;
+package com.ingenious.algorithms.bots.tree;
 
-import com.ingenious.algorithms.impl.State;
 import com.ingenious.engine.Game;
 import com.ingenious.models.move.Move;
 

@@ -167,12 +167,7 @@ public class Board {
     }
 
     public void addTile(Tile tile, BoardNode boardNode) {
-        if (boardNode.getTile().isAvailable()) {
-            System.out.println("Placing tile with color" + tile.toString() + "on board at coordinate " + boardNode.getX() + " " + boardNode.getY());
             boardNode.setTile(tile);
-        } else {
-            System.out.println("could not place tile since it's not available");
-        }
     }
 
     public Board getClone() {

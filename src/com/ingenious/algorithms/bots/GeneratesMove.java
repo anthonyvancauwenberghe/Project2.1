@@ -1,4 +1,4 @@
-package com.ingenious.algorithms;
+package com.ingenious.algorithms.bots;
 
 import com.ingenious.models.move.Move;
 
