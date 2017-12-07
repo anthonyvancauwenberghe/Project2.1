@@ -44,7 +44,7 @@ public class BoardNode {
     }
 
     public boolean hasEmptyTile() {
-        return this.tile.isEmpty();
+        return this.tile.isAvailable();
     }
 
     public boolean isFixed() {
@@ -52,11 +52,11 @@ public class BoardNode {
     }
 
     public boolean isOccupied() {
-        return !tile.isEmpty();
+        return tile.isOccupied();
     }
 
     public boolean isEmpty() {
-        return tile.isEmpty();
+        return tile.isAvailable();
     }
 
     public Tile getTile() {
@@ -65,7 +65,6 @@ public class BoardNode {
 
     public void setTile(Tile tile) {
         this.tile = tile;
-        new BoardIsUpdatedEvent();
     }
 
     public void setFixed(boolean fixed) {

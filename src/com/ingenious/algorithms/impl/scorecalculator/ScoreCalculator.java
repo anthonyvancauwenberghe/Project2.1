@@ -1,5 +1,6 @@
 package com.ingenious.algorithms.impl.scorecalculator;
 
+import com.ingenious.events.impl.ScoreIsUpdatedEvent;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.score.Score;
@@ -85,6 +86,8 @@ public class ScoreCalculator {
             }
             oldScore.setPurpleScore(newScore);
         }
+
+        new ScoreIsUpdatedEvent();
         return oldScore;
     }
 

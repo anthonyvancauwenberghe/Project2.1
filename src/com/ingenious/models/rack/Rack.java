@@ -67,6 +67,22 @@ public class Rack implements Cloneable {
         return this.pieces;
     }
 
+    public boolean isEmpty(){
+        return this.getContents().isEmpty();
+    }
+
+    public boolean removePiece(Piece piece) {
+        int i = 0;
+        for (Piece aPiece : this.pieces) {
+            if (aPiece.isSamePieceAs(piece)) {
+                this.pieces.remove(i);
+                return true;
+            }
+            i++;
+        }
+        return false;
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();

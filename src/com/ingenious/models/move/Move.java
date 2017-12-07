@@ -32,4 +32,11 @@ public class Move {
     public boolean isInverted() {
         return inverted;
     }
+
+    public String toString(){
+        return this.piece.getHead().toString() + " " + this.piece.getTail().toString()
+                + " " + this.boardNode.getX() + this.boardNode.getY() + " "
+                + this.boardNode2.getX() + this.boardNode2.getY() + " "
+                + this.inverted;
+    }
 }

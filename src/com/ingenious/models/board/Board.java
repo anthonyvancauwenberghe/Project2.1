@@ -167,18 +167,11 @@ public class Board {
     }
 
     public void addTile(Tile tile, BoardNode boardNode) {
-        if (boardNode.getTile().isEmpty()) {
+        if (boardNode.getTile().isAvailable()) {
+            System.out.println("Placing tile with color" + tile.toString() + "on board at coordinate " + boardNode.getX() + " " + boardNode.getY());
             boardNode.setTile(tile);
-            //System.out.println("BoardNode was set correctly");
-            new BoardIsUpdatedEvent();
-        }
-    }
-
-    public void addTile(Tile tile, BoardNode boardNode, boolean update) {
-        if (boardNode.getTile().isEmpty()) {
-            boardNode.setTile(tile);
-            if (update)
-                new BoardIsUpdatedEvent();
+        } else {
+            System.out.println("could not place tile since it's not available");
         }
     }
 

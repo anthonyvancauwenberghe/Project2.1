@@ -35,7 +35,7 @@ abstract public class Provider {
         }
     }
 
-    protected static GameServiceProvider getInstance(){
+    public static GameServiceProvider getInstance(){
         verifyInitialization();
         return instance;
     }

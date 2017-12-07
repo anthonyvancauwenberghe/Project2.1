@@ -2,6 +2,7 @@ package com.ingenious.models.players.impl;
 
 import com.ingenious.algorithms.Algorithm;
 import com.ingenious.algorithms.GeneratesMove;
+import com.ingenious.models.move.Move;
 import com.ingenious.models.players.Player;
 import com.ingenious.providers.impl.GameServiceProvider;
 
@@ -13,8 +14,8 @@ public class Bot extends Player {
         this.algorithm = algorithm;
     }
 
-    public void executeMove() {
-        GameServiceProvider.game().doMove(this.algorithm.generate());
+    public Move getMove() {
+        return this.algorithm.generate();
     }
 
 }

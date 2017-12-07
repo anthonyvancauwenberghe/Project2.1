@@ -1,6 +1,7 @@
 package com.ingenious.providers.impl;
 
 import com.ingenious.algorithms.impl.Random.Random;
+import com.ingenious.algorithms.impl.Random.RandomTonyAlgorithm;
 import com.ingenious.containers.PlayerContainer;
 import com.ingenious.engine.Game;
 import com.ingenious.gui.MainFrame;
@@ -12,11 +13,11 @@ import com.ingenious.providers.Provider;
 
 public class GameServiceProvider extends Provider {
 
-    private Board board;
-    private PlayerContainer players;
-    private Bag bag;
-    private Game game;
-    private MainFrame gui;
+    public Board board;
+    public PlayerContainer players;
+    public Bag bag;
+    public Game game;
+    public MainFrame gui;
 
     protected void initialize() {
         this.board = new Board();
@@ -30,7 +31,7 @@ public class GameServiceProvider extends Provider {
     /* ADD PLAYERS OR BOTS HERE */
     protected void initPlayers() {
         players.addPlayer(new Human("human player"));
-        players.addPlayer(new Bot(new Random()));
+        players.addPlayer(new Bot(new RandomTonyAlgorithm()));
     }
 
     public static MainFrame gui() {
