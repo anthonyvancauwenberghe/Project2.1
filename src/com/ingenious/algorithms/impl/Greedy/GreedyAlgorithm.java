@@ -1,7 +1,9 @@
 package com.ingenious.algorithms.impl.Greedy;
 
+import com.ingenious.algorithms.Algorithm;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
+import com.ingenious.models.move.Move;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
 
@@ -11,12 +13,17 @@ import java.util.ArrayList;
 /**
  * Created by danig on 12/3/2017.
  */
-public class GreedyAlgorithm {
+public class GreedyAlgorithm extends Algorithm {
 
     public Board board;
 
     public GreedyAlgorithm() {
         this.board = GameServiceProvider.board().getClone();
+    }
+
+    public Move generate(){
+        //TODO RETURN GENERATED MOVE HERE!!
+        return null;
     }
 
     public BoardNode[] longestLines() {

@@ -1,14 +1,20 @@
 package com.ingenious.models.players.impl;
 
 import com.ingenious.algorithms.Algorithm;
+import com.ingenious.algorithms.GeneratesMove;
 import com.ingenious.models.players.Player;
+import com.ingenious.providers.impl.GameServiceProvider;
 
 public class Bot extends Player {
-    protected Algorithm algorithm;
+    private GeneratesMove algorithm;
 
-    public Bot(String name, Algorithm algorithm) {
-        super(name);
+    public Bot(GeneratesMove algorithm) {
+        super("BOT");
         this.algorithm = algorithm;
+    }
+
+    public void executeMove() {
+        GameServiceProvider.game().doMove(this.algorithm.generate());
     }
 
 }
