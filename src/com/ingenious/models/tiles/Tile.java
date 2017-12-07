@@ -26,7 +26,33 @@ public class Tile extends Color {
         return redCode + blueCode + greenCode;
     }
 
+    public boolean isRed() {
+        return this.equals(Tile.red);
+    }
 
+    public boolean isBlue() {
+        return this.equals(Tile.blue);
+    }
+
+    public boolean isGreen() {
+        return this.equals(Tile.green);
+    }
+
+    public boolean isOrange() {
+        return this.equals(Tile.orange);
+    }
+
+    public boolean isYellow() {
+        return this.equals(Tile.yellow);
+    }
+
+    public boolean isPurple() {
+        return this.equals(Tile.purple);
+    }
+
+    public boolean isOccupied() {
+        return !this.equals(Tile.empty);
+    }
 
     public boolean isEmpty() {
         return this.equals(Tile.empty);
