@@ -20,7 +20,7 @@ public class Random {
 
     public Random(){
         board = GameServiceProvider.board();
-        rack = GameServiceProvider.players().getPlayer(0).getRack();
+        rack = GameServiceProvider.players().getPlayer(1).getRack();
     }
 
     public Move randomPlay() {
