@@ -16,21 +16,27 @@ public class GreedyAlgorithm
 
     public Board board;
 
-    public GreedyAlgorithm(Board board)
+    /*public GreedyAlgorithm(Board board)
     {
         this.board = board.getClone();
-    }
-
-
-    public void greedyPlay(){
-        int heeeychanges = 5;
-    }
+    }*/
 
     /**
      *
      * @return an array of where to expand for greater score on each color
      */
-    public BoardNode[] expandOn(){
+
+    public void place()
+    {
+        //when score is 17
+        //lowest score
+        //longest path
+
+        //double colour
+        //single colour
+
+    }
+    public BoardNode[] longestLineToPlace(){
 
         ArrayList<BoardNode> nodes = board.getBoardNodes();
         BoardNode [] placements = new BoardNode[6];
@@ -57,12 +63,11 @@ public class GreedyAlgorithm
         int line_NorthSouth = 0;
         int line_nEastWest = 0;
         int line_nWestEast = 0;
-        BoardNode NorthSouth1;
-        BoardNode NorthSouth2;
-        BoardNode EastWest1;
-        BoardNode EastWest2;
-        BoardNode WestEast1;
-        BoardNode WestEast2;
+
+        BoardNode [] direction = new BoardNode[6];
+
+
+        int[] a = new int[3];
 
         int[] line_size = {line_NorthSouth,line_nEastWest,line_nWestEast};
 
@@ -75,49 +80,141 @@ public class GreedyAlgorithm
                 line_NorthSouth++;
             }
             else{
-                if(board.getNode(x,y-l).isEmpty()){
-                    isExpandable(board.getNode(x,y-l));
-                    NorthSouth1 = board.getNode(x,y-l);
+                if(board.getNode(x,y-l).isEmpty() && isExpandable(board.getNode(x,y-l))){
+
+                    BoardNode NorthSouth1 = board.getNode(x,y-l);
+                    direction[0] = NorthSouth1;
+                    break;
                 }
             }
             l++;
         }
         l = 1;
-        while(GameServiceProvider.board().getNode(x,y+l)!= null && currentTile.equals(GameServiceProvider.board().getNode(x,y+l).getTile())){
-            line_NorthSouth++;
-            l++;
-        }
-        l = 1;
-        while(GameServiceProvider.board().getNode(x+l,y)!= null && currentTile.equals(GameServiceProvider.board().getNode(x + l,y).getTile())){
-            line_nEastWest++;
-            l++;
-        }
-        l = 1;
-        while(GameServiceProvider.board().getNode(x-l,y)!= null && currentTile.equals(GameServiceProvider.board().getNode(x - l,y).getTile())){
-            line_nEastWest++;
-            l++;
-        }
-        l = 1;
-        while(GameServiceProvider.board().getNode(x+l,y-l)!= null && currentTile.equals(GameServiceProvider.board().getNode(x+l,y-l).getTile())){
-            line_nWestEast++;
-            l++;
-        }
-        l = 1;
-        while(GameServiceProvider.board().getNode(x-l,y+l)!= null &&  currentTile.equals(GameServiceProvider.board().getNode(x-l,y+l).getTile())){
-            line_nWestEast++;
-            l++;
-        }
-        int [] a = {0,0,0};
-        return a;
+        while(GameServiceProvider.board().getNode(x,y+l)!= null){
+            if(board.getNode(x,y+l).getTile().equals(currentTile)){
+                line_NorthSouth++;
+            }
+            else{
+                if(board.getNode(x,y+l).isEmpty() && isExpandable(board.getNode(x,y+l))){
 
+                   BoardNode NorthSouth2 = board.getNode(x,y+l);
+                   direction[1] = NorthSouth2;
+                   break;
+                }
+            }
+            l++;
+        }
+        l = 1;
+        while(GameServiceProvider.board().getNode(x+l,y)!= null){
+            if(board.getNode(x+l,y).getTile().equals(currentTile)){
+                line_nEastWest++;
+            }
+            else{
+                if(board.getNode(x+l,y).isEmpty() && isExpandable(board.getNode(x+l,y))){
+
+                    BoardNode EastWest1 = board.getNode(x+l,y);
+                    direction[2] = EastWest1;
+                    break;
+                }
+            }
+            l++;
+        }
+        l = 1;
+        while(GameServiceProvider.board().getNode(x-l,y)!= null){
+            if(board.getNode(x-l,y).getTile().equals(currentTile)){
+                line_nEastWest++;
+            }
+            else{
+                if(board.getNode(x-l,y).isEmpty() && isExpandable(board.getNode(x-l,y))){
+
+                    BoardNode EastWest2 = board.getNode(x-l,y);
+                    direction[3] = EastWest2;
+                    break;
+                }
+            }
+            l++;
+        }
+        l = 1;
+        while(GameServiceProvider.board().getNode(x+l,y-l)!= null){
+            if(board.getNode(x+l,y-l).getTile().equals(currentTile)){
+                line_nWestEast++;
+            }
+            else{
+                if(board.getNode(x+l,y-l).isEmpty() && isExpandable(board.getNode(x+l,y-l))){
+
+                    BoardNode WestEast1 = board.getNode(x+l,y-l);
+                    direction[4] = WestEast1;
+                    break;
+                }
+            }
+            l++;
+        }
+        l = 1;
+        while(GameServiceProvider.board().getNode(x-l,y+l)!= null){
+            if(board.getNode(x-l,y+l).getTile().equals(currentTile)){
+                line_nWestEast++;
+            }
+            else{
+                if(board.getNode(x+l,y-l).isEmpty() && isExpandable(board.getNode(x-l,y+l))){
+
+                    BoardNode WestEast2 = board.getNode(x-l,y+l);
+                    direction[5] = WestEast2;
+                    break;
+                }
+            }
+            l++;
+        }
+
+        int[] lines = {line_NorthSouth, line_nEastWest, line_nWestEast};
+        int[] sortedIndex = returnLongestLine(lines);
+        for(int i=0; i<sortedIndex.length; i++)
+        {
+            for(int j=0; j<2; j++)
+            {
+                if(!direction[sortedIndex[i+j]].equals(null))
+                {
+                    a[0] = lines[sortedIndex[i]];
+                    a[1] = direction[sortedIndex[i+j]].getX();
+                    a[2] = direction[sortedIndex[i+j]].getY();
+                    return a;
+                }
+            }
+        }
+            a[0] = -1;
+            return a;
     }
 
-    public int getLargestLine(int a, int b, int c)
+    public int[] returnLongestLine(int[] lines)
     {
-        int max = Math.max(a,b);
-        max = Math.max(max,c);
-        return max;
+        int [] indexes = new int[3];
+        int max = lines[0];
+        int maxIndex = 0;
+        for(int i=0; i<lines.length; i++){
+            if(max<lines[i]){
+                maxIndex = i;
+                max = lines[i];
+            }
+        }
+        max = lines[0];
+        int secondIndex = 0;
+        for(int i=0; i<lines.length; i++){
+            if(max<lines[i] && i!=maxIndex){
+                secondIndex = i;
+                max = lines[i];
+            }
+        }
+        int thirdIndex = 0;
+        for(int i=0; i<indexes.length; i++){
+            if(i!= maxIndex && i!= secondIndex){
+                thirdIndex = i;
+            }
+        }
+        indexes[0] = maxIndex;
+        indexes[1] = secondIndex;
+        indexes[2] = thirdIndex;
+        return indexes;
     }
+
 
     public boolean isExpandable(BoardNode node)
     {
