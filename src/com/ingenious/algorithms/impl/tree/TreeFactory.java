@@ -1,6 +1,7 @@
 package com.ingenious.algorithms.impl.tree;
 
 import com.ingenious.engine.Game;
+import com.ingenious.models.move.Move;
 
 import java.util.ArrayList;
 
@@ -19,11 +20,15 @@ public class TreeFactory {
         this.layerLimit = layerLimit;
     }
 
-    public ArrayList<Node> generateRootNodes(Game state) {
-        RootNodeChildrenFactory factory = new RootNodeChildrenFactory(state);
+    public ArrayList<Move> generateRootNodes(Game state) {
+        AvailableMovesFactory factory = new AvailableMovesFactory(state);
         return factory.generate();
     }
 
+
+
+
+    /*
 
     public ArrayList<Node> generateNodeChildren(Node node, Game state) {
         state.getBoard().getClone().doMove(node.move);
@@ -70,4 +75,5 @@ public class TreeFactory {
 
         return new Tree(this.state, baseNodes);
     }
+    */
 }
