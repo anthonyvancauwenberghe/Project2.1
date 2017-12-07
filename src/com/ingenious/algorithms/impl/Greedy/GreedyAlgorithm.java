@@ -36,7 +36,7 @@ public class GreedyAlgorithm
         //single colour
 
     }
-    public BoardNode[] longestLineToPlace(){
+    public BoardNode[] longestLines(){
 
         ArrayList<BoardNode> nodes = board.getBoardNodes();
         BoardNode [] placements = new BoardNode[6];
@@ -45,7 +45,7 @@ public class GreedyAlgorithm
         for(int i=0; i<nodes.size(); i++){
             if(nodes.get(i).isOccupied()){
                 int color_index = indexColor( nodes.get(i).getTile());
-                int[] l = calcLine(nodes.get(i));
+                int[] l = calculate_line(nodes.get(i));
                 if(lengths[color_index]< l[0]){
                     lengths[color_index] = l[0];
                     placements[color_index] = board.getNode(l[1],l[2]);
@@ -57,18 +57,15 @@ public class GreedyAlgorithm
     }
 
 
-    public int[] calcLine(BoardNode node)
+    public int[] calculate_line(BoardNode node)
     {
         Tile currentTile = node.getTile();
         int line_NorthSouth = 0;
         int line_nEastWest = 0;
         int line_nWestEast = 0;
-
-        BoardNode [] direction = new BoardNode[6];
-
-
+        int[] lines = {line_NorthSouth, line_nEastWest, line_nWestEast};
+        BoardNode [] placement = new BoardNode[6];
         int[] a = new int[3];
-
         int[] line_size = {line_NorthSouth,line_nEastWest,line_nWestEast};
 
         int x = node.getX();
@@ -83,7 +80,7 @@ public class GreedyAlgorithm
                 if(board.getNode(x,y-l).isEmpty() && isExpandable(board.getNode(x,y-l))){
 
                     BoardNode NorthSouth1 = board.getNode(x,y-l);
-                    direction[0] = NorthSouth1;
+                    placement[0] = NorthSouth1;
                     break;
                 }
             }
@@ -98,7 +95,7 @@ public class GreedyAlgorithm
                 if(board.getNode(x,y+l).isEmpty() && isExpandable(board.getNode(x,y+l))){
 
                    BoardNode NorthSouth2 = board.getNode(x,y+l);
-                   direction[1] = NorthSouth2;
+                   placement[1] = NorthSouth2;
                    break;
                 }
             }
@@ -113,7 +110,7 @@ public class GreedyAlgorithm
                 if(board.getNode(x+l,y).isEmpty() && isExpandable(board.getNode(x+l,y))){
 
                     BoardNode EastWest1 = board.getNode(x+l,y);
-                    direction[2] = EastWest1;
+                    placement[2] = EastWest1;
                     break;
                 }
             }
@@ -128,7 +125,7 @@ public class GreedyAlgorithm
                 if(board.getNode(x-l,y).isEmpty() && isExpandable(board.getNode(x-l,y))){
 
                     BoardNode EastWest2 = board.getNode(x-l,y);
-                    direction[3] = EastWest2;
+                    placement[3] = EastWest2;
                     break;
                 }
             }
@@ -143,7 +140,7 @@ public class GreedyAlgorithm
                 if(board.getNode(x+l,y-l).isEmpty() && isExpandable(board.getNode(x+l,y-l))){
 
                     BoardNode WestEast1 = board.getNode(x+l,y-l);
-                    direction[4] = WestEast1;
+                    placement[4] = WestEast1;
                     break;
                 }
             }
@@ -158,24 +155,22 @@ public class GreedyAlgorithm
                 if(board.getNode(x+l,y-l).isEmpty() && isExpandable(board.getNode(x-l,y+l))){
 
                     BoardNode WestEast2 = board.getNode(x-l,y+l);
-                    direction[5] = WestEast2;
+                    placement[5] = WestEast2;
                     break;
                 }
             }
             l++;
         }
-
-        int[] lines = {line_NorthSouth, line_nEastWest, line_nWestEast};
         int[] sortedIndex = returnLongestLine(lines);
         for(int i=0; i<sortedIndex.length; i++)
         {
             for(int j=0; j<2; j++)
             {
-                if(!direction[sortedIndex[i+j]].equals(null))
+                if(!placement[sortedIndex[i+j]].equals(null))
                 {
                     a[0] = lines[sortedIndex[i]];
-                    a[1] = direction[sortedIndex[i+j]].getX();
-                    a[2] = direction[sortedIndex[i+j]].getY();
+                    a[1] = placement[sortedIndex[i+j]].getX();
+                    a[2] = placement[sortedIndex[i+j]].getY();
                     return a;
                 }
             }

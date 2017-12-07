@@ -2,6 +2,7 @@ package com.ingenious.algorithms.impl.Random;
 
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
+import com.ingenious.models.move.Move;
 import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.rack.Rack;
 import com.ingenious.providers.impl.GameServiceProvider;
@@ -17,22 +18,15 @@ public class Random {
     private Board board;
     private Rack rack;
 
-    public Random()
-    {
-        this.initialize();
-        System.out.print("initialized");
+    public Random(){
+        board = GameServiceProvider.board();
+        rack = GameServiceProvider.players().getPlayer(0).getRack();
     }
 
-    private void initialize()
-    {
-        this.board = GameServiceProvider.board().getClone();
-        this.rack = GameServiceProvider.game().getCurrentPlayer().getRack().getClone();
-    }
-
-    public void randomPlay() {
+    public Move randomPlay() {
         Piece piece = getRandomPiece();
         BoardNode[] place = getRandomPlace();
-        GameServiceProvider.game().place_piece(piece, place[0], place[1]);
+        return new Move(place[0], place[1], piece, false);
     }
 
 
