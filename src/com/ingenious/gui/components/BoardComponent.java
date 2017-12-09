@@ -2,6 +2,7 @@ package com.ingenious.gui.components;
 
 import com.ingenious.models.board.BoardNode;
 import com.ingenious.config.Configuration;
+import com.ingenious.models.move.Move;
 import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;

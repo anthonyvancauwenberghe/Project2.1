@@ -3,6 +3,7 @@ package com.ingenious.algorithms.calculators;
 import com.ingenious.events.impl.ScoreIsUpdatedEvent;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
+import com.ingenious.models.pieces.Piece;
 import com.ingenious.models.score.Score;
 import com.ingenious.models.tiles.Tile;
 
@@ -14,6 +15,44 @@ public class ScoreCalculator {
         int l = 1;
         int addedScore = 0;
         Tile tile = boardNode_1.getTile();
+
+        while (board.getNode(x, y - l) != null && board.getNode(x, y - l) != boardNode_2 && tile.equals(board.getNode(x, y - l).getTile())) {
+            addedScore++;
+            l++;
+        }
+        l = 1;
+        while (board.getNode(x, y + l) != null && board.getNode(x, y + l) != boardNode_2 && tile.equals(board.getNode(x, y + l).getTile())) {
+            addedScore++;
+            l++;
+        }
+        l = 1;
+        while (board.getNode(x + l, y) != null && board.getNode(x + l, y) != boardNode_2 && tile.equals(board.getNode(x + l, y).getTile())) {
+            addedScore++;
+            l++;
+        }
+        l = 1;
+        while (board.getNode(x - l, y) != null && board.getNode(x - l, y) != boardNode_2 && tile.equals(board.getNode(x - l, y).getTile())) {
+            addedScore++;
+            l++;
+        }
+        l = 1;
+        while (board.getNode(x + l, y - l) != null && board.getNode(x + l, y - l) != boardNode_2 && tile.equals(board.getNode(x + l, y - l).getTile())) {
+            addedScore++;
+            l++;
+        }
+        l = 1;
+        while (board.getNode(x - l, y + l) != null && board.getNode(x - l, y + l) != boardNode_2 && tile.equals(board.getNode(x - l, y + l).getTile())) {
+            addedScore++;
+            l++;
+        }
+        return addedScore;
+    }
+
+    public static int getScoreStreak(Tile tile, Board board, BoardNode boardNode_1, BoardNode boardNode_2) {
+        int x = boardNode_1.getX();
+        int y = boardNode_1.getY();
+        int l = 1;
+        int addedScore = 0;
 
         while (board.getNode(x, y - l) != null && board.getNode(x, y - l) != boardNode_2 && tile.equals(board.getNode(x, y - l).getTile())) {
             addedScore++;

@@ -22,9 +22,9 @@ public class RandomTonyAlgorithm extends BotAlgorithm {
     public Move generateMove() {
         AvailableMovesGenerator movesFactory = new AvailableMovesGenerator(this.getGame());
         ArrayList<Move> moves = movesFactory.generate();
-        int i = ThreadLocalRandom.current().nextInt(0, moves.size());
-        if (moves.size() == 0)
-            System.out.println("NO VALID MOVES LEFT");
-        return moves.get(i);
+            int i = ThreadLocalRandom.current().nextInt(0, moves.size());
+            if (moves.size() == 0)
+                System.out.println("NO VALID MOVES LEFT");
+            return moves.get(i);
     }
 }

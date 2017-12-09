@@ -1,15 +1,11 @@
 package com.ingenious.algorithms.bots.algorithms.Greedy;
-
 import com.ingenious.algorithms.bots.BotAlgorithm;
 import com.ingenious.algorithms.calculators.ScoreCalculator;
 import com.ingenious.algorithms.generators.AvailableMovesGenerator;
 import com.ingenious.engine.Game;
-import com.ingenious.models.board.Board;
-import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.move.Move;
 import com.ingenious.models.tiles.Tile;
 import com.ingenious.providers.impl.GameServiceProvider;
-
 import java.util.ArrayList;
 
 /**
@@ -25,48 +21,31 @@ public class GreedyAlgorithm extends BotAlgorithm {
 
     public Game getGame(){
         if (this.game == null)
-            this.game = GameServiceProvider.game();
+            this.game = GameServiceProvider.game().getClone();
         return this.game;
     }
 
+    @Override
     public Move generateMove(){
-        //TODO RETURN GENERATED MOVE HERE!!
         AvailableMovesGenerator factory = new AvailableMovesGenerator(this.getGame());
+        ArrayList<Move> moves_available = factory.generate();
         ScoreCalculator calculator = new ScoreCalculator();
-        ArrayList<Move>  moves  = factory.generate();
-        Board board = GameServiceProvider.board();
-        int [] score = {0,0,0,0,0,0};
-        Move [] move_c = new Move[6];
-        for(int i =0; i<moves.size(); i++){
-            Move move = moves.get(i);
-            int indexHead = indexColor(move.getPiece().getHead());
-            int indexTail = indexColor(move.getPiece().getTail());
-            if(indexHead == indexTail){
-                int scoreHead = calculator.getScoreStreak(board, move.getBoardNode(), move.getBoardNode2());
-                int scoreTail = calculator.getScoreStreak(board, move.getBoardNode2(), move.getBoardNode());
-                int sumScore = scoreHead+scoreTail;
-                if(score[indexHead]<sumScore){
-                    score[indexHead] = sumScore;
-                    move_c[indexHead] = move;
-                }
-
-            }
-            else{
-                int scoreHead = calculator.getScoreStreak(board, move.getBoardNode(), move.getBoardNode2());
-                int scoreTail = calculator.getScoreStreak(board, move.getBoardNode2(), move.getBoardNode());
-                if(score[indexHead]<scoreHead){
-                    score[indexHead] = scoreHead;
-                    move_c[indexHead] = move;
-                }
-                if(score[indexTail]<scoreTail){
-                    score[indexTail] = scoreTail;
-                    move_c[indexTail] = move;
-                }
+        Move move = moves_available.get(0);
+        Tile head = move.getPiece().getHead();
+        Tile tail = move.getPiece().getTail();
+        int high = calculator.getScoreStreak(head, game.getBoard(), move.getBoardNode(), move.getBoardNode2()) + calculator.getScoreStreak(tail, game.getBoard(), move.getBoardNode2(), move.getBoardNode());
+        for(int i=0; i<moves_available.size(); i++){
+            Move current = moves_available.get(i);
+            Tile headC = current.getPiece().getHead();
+            Tile tailC = current.getPiece().getTail();
+            int score = calculator.getScoreStreak(head, game.getBoard(), current.getBoardNode(),current.getBoardNode2())+ calculator.getScoreStreak(head, game.getBoard(), current.getBoardNode2(),current.getBoardNode());
+            if(score>high){
+                high = score;
+                move = moves_available.get(i);
             }
         }
-        GameServiceProvider.players().getPlayer(1).getScoreArray();
+        return move;
 
-        return move_c[0];
     }
 
     public int indexColor(Tile tile) {

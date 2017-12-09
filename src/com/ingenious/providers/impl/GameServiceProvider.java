@@ -30,8 +30,8 @@ public class GameServiceProvider extends Provider {
 
     /* ADD PLAYERS OR BOTS HERE */
     protected void initPlayers() {
-        players.addPlayer(new Human("human player"));
-        players.addPlayer(new Bot( new RandomTonyAlgorithm()));
+        players.addPlayer(new Human("Human"));
+        players.addPlayer(new Bot( new GreedyAlgorithm()));
     }
 
     public static MainFrame gui() {
