@@ -17,19 +17,21 @@ public class AvailableMovesGenerator {
     private ArrayList<Piece> rack;
 
     public AvailableMovesGenerator(Game state) {
-        this.board = state.getBoard().getClone();
-        this.rack = this.getNonDuplicateRackPieces(state.getCurrentPlayer().getRack());
+        Game game = state.getClone();
+        this.board = game.getBoard();
+        this.rack = this.getNonDuplicateRackPieces(game.getCurrentPlayer().getRack());
         this.applyHeuristics();
     }
 
     public AvailableMovesGenerator(Game state, boolean applyHeuristics) {
-        this.board = state.getBoard().getClone();
+        Game game = state.getClone();
+        this.board = game.getBoard();
+        this.rack = this.getNonDuplicateRackPieces(game.getCurrentPlayer().getRack());
         if (applyHeuristics)
             this.applyHeuristics();
-        this.rack = this.getNonDuplicateRackPieces(state.getCurrentPlayer().getRack());
     }
 
-    public void applyHeuristics() {
+    private void applyHeuristics() {
         long startTime = System.nanoTime();
         this.fillLonelyNodes();
         long endTime = System.nanoTime();

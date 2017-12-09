@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by danig on 12/3/2017.
  */
-public class GreedyAlgorithm extends BotAlgorithm {
+public class GreedyAlgorithm {
 
     private Game game;
 

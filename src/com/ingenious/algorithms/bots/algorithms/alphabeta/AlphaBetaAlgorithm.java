@@ -3,13 +3,9 @@ package com.ingenious.algorithms.bots.algorithms.alphabeta;
 import com.ingenious.algorithms.bots.BotAlgorithm;
 import com.ingenious.models.move.Move;
 
-public class AlphaBetaAlgorithm extends BotAlgorithm {
+public class AlphaBetaAlgorithm {
 
 
-    @Override
-    public Move generateMove() {
-        return null;
-    }
 
 /*
     public int run(TreeNode node, int depth, int alpha, int beta, Boolean maximizing) {

@@ -1,15 +1,17 @@
 package com.ingenious.engine;
 
+import com.ingenious.algorithms.bots.GeneratesMove;
 import com.ingenious.algorithms.calculators.ScoreCalculator;
 import com.ingenious.algorithms.validators.BoardMoveValidator;
 import com.ingenious.algorithms.validators.ValidateAble;
+import com.ingenious.engine.logic.impl.GameOverLogic;
 import com.ingenious.events.impl.BoardIsUpdatedEvent;
+import com.ingenious.models.bag.Bag;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.move.Move;
-import com.ingenious.models.players.Player;
-import com.ingenious.models.bag.Bag;
 import com.ingenious.models.pieces.Piece;
+import com.ingenious.models.players.Player;
 import com.ingenious.models.players.impl.Bot;
 import com.ingenious.models.score.Score;
 import com.ingenious.providers.impl.GameServiceProvider;
@@ -89,6 +91,48 @@ public class Game {
         getCurrentPlayer().getRack().getContents().add(bag.getAndRemoveRandomPiece());
     }
 
+    public boolean doSimulationMove(Move move) {
+
+        if (!this.validMove(move))
+            System.out.println("ERROR BOT INVALID MOVE!!!!");
+
+        Piece piece = move.getPiece();
+        BoardNode boardNode_1, boardNode_2;
+        if (!move.isInverted()) {
+            boardNode_1 = this.board.getNode(move.getBoardNode().x, move.getBoardNode().y);
+            boardNode_2 = this.board.getNode(move.getBoardNode2().x, move.getBoardNode2().y);
+        } else {
+            boardNode_2 = this.board.getNode(move.getBoardNode().x, move.getBoardNode().y);
+            boardNode_1 = this.board.getNode(move.getBoardNode2().x, move.getBoardNode2().y);
+        }
+
+        if (bonus_play != 0) {
+            bonus_play--;
+        }
+        getCurrentPlayer().getRack().removePiece(piece);
+        board.addTile(piece.getHead(), boardNode_1);
+        board.addTile(piece.getTail(), boardNode_2);
+
+
+        this.calculate_score(boardNode_1, boardNode_2);
+        
+        if (getCurrentPlayer().getRack().isEmpty()) {
+            drawRandomPieceFromBag(getCurrentPlayer());
+            turn();
+        } else {
+            if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_1, boardNode_2))) {
+                bonus_play++;
+            }
+            if (bonus_play(ScoreCalculator.getScoreStreak(this.board, boardNode_2, boardNode_1))) {
+                bonus_play++;
+            }
+            if (bonus_play == 0) {
+                turn();
+            }
+        }
+        return true;
+    }
+
     public boolean doBotMove(Move move) {
 
         if (!this.validMove(move))
@@ -130,7 +174,6 @@ public class Game {
             }
         }
         return true;
-
     }
 
 
@@ -192,6 +235,12 @@ public class Game {
         return false;
     }
 
+
+    public boolean isOver() {
+        GameOverLogic logic = new GameOverLogic(this);
+        return logic.calculate();
+    }
+
     public boolean won() {
         for (int i = 0; i < 6; i++) {
             if (getCurrentPlayer().getScoreArray()[i] >= 18) {
@@ -201,21 +250,30 @@ public class Game {
         return false;
     }
 
+    public boolean isWinner(Player player) {
+        return isOver() && this.getCurrentPlayer().getName().equals(player.getName());
+    }
+
     public void turn() {
-        while (getCurrentPlayer().getRack().getContents().size() < 6) {
-            refresh();
-        }
+        if (!this.isOver()) {
+            while (getCurrentPlayer().getRack().getContents().size() < 6) {
+                refresh();
+            }
 
-        if (won()) {
+            if (won()) {
+                System.out.println(getCurrentPlayer().getName() + " has won the game");
+            }
+
+            setNextPlayerAsCurrent();
+            bonus_play = 0;
+
+            if (this.getCurrentPlayer() instanceof GeneratesMove) {
+                Bot bot = (Bot) this.getCurrentPlayer();
+                this.doBotMove(bot.generate());
+            }
+        } else {
+            System.out.println("game is over");
             System.out.println(getCurrentPlayer().getName() + " has won the game");
-        }
-
-        setNextPlayerAsCurrent();
-        bonus_play = 0;
-
-        if (this.getCurrentPlayer().isBot()) {
-            Bot bot = (Bot) this.getCurrentPlayer();
-            this.doBotMove(bot.getMove());
         }
     }
 

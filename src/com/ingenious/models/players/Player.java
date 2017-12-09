@@ -42,6 +42,7 @@ public class Player {
         return new Player(this.name, this.score.getClone(), this.rack.getClone());
     }
 
+
     public boolean isBot() {
         return this.name.equals("BOT");
     }

@@ -1,12 +1,11 @@
 package com.ingenious.providers.impl;
 
-import com.ingenious.algorithms.bots.algorithms.Greedy.GreedyAlgorithm;
-import com.ingenious.algorithms.bots.algorithms.Random.RandomTonyAlgorithm;
+import com.ingenious.algorithms.bots.algorithms.mcts.MCTSAlgorithm;
 import com.ingenious.containers.PlayerContainer;
 import com.ingenious.engine.Game;
 import com.ingenious.gui.MainFrame;
-import com.ingenious.models.board.Board;
 import com.ingenious.models.bag.Bag;
+import com.ingenious.models.board.Board;
 import com.ingenious.models.players.impl.Bot;
 import com.ingenious.models.players.impl.Human;
 import com.ingenious.providers.Provider;
@@ -23,15 +22,15 @@ public class GameServiceProvider extends Provider {
         this.board = new Board();
         this.bag = new Bag();
         this.players = new PlayerContainer(bag);
-        this.initPlayers();
         this.game = new Game(board, players.getPlayers(), bag);
+        this.initPlayers(game);
         this.gui = new MainFrame();
     }
 
     /* ADD PLAYERS OR BOTS HERE */
-    protected void initPlayers() {
-        players.addPlayer(new Human("Human"));
-        players.addPlayer(new Bot( new GreedyAlgorithm()));
+    protected void initPlayers(Game game) {
+        players.addPlayer(new Human("human player"));
+        players.addPlayer(new Bot(new MCTSAlgorithm(game)));
     }
 
     public static MainFrame gui() {

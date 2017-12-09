@@ -4,18 +4,14 @@ import com.ingenious.algorithms.bots.BotAlgorithm;
 import com.ingenious.algorithms.generators.AvailableMovesGenerator;
 import com.ingenious.engine.Game;
 import com.ingenious.models.move.Move;
-import com.ingenious.providers.impl.GameServiceProvider;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class RandomTonyAlgorithm extends BotAlgorithm {
-    private Game game;
+public class RandomAlgorithm extends BotAlgorithm {
 
-    public Game getGame() {
-        if (this.game == null)
-            this.game = GameServiceProvider.game().getClone();
-        return this.game;
+    public RandomAlgorithm(Game game) {
+        super(game);
     }
 
     @Override
