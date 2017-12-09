@@ -1,7 +1,7 @@
-package com.ingenious.algorithms.impl.Random;
+package com.ingenious.algorithms.bots.algorithms.Random;
 
-import com.ingenious.algorithms.Algorithm;
-import com.ingenious.algorithms.impl.tree.AvailableMovesFactory;
+import com.ingenious.algorithms.bots.BotAlgorithm;
+import com.ingenious.algorithms.generators.AvailableMovesGenerator;
 import com.ingenious.engine.Game;
 import com.ingenious.models.move.Move;
 import com.ingenious.providers.impl.GameServiceProvider;
@@ -9,7 +9,7 @@ import com.ingenious.providers.impl.GameServiceProvider;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class RandomTonyAlgorithm extends Algorithm {
+public class RandomTonyAlgorithm extends BotAlgorithm {
     private Game game;
 
     public Game getGame() {
@@ -19,14 +19,12 @@ public class RandomTonyAlgorithm extends Algorithm {
     }
 
     @Override
-    public Move generate() {
-        System.out.println("executing tony random algorithm");
-        AvailableMovesFactory movesFactory = new AvailableMovesFactory(this.getGame());
+    public Move generateMove() {
+        AvailableMovesGenerator movesFactory = new AvailableMovesGenerator(this.getGame());
         ArrayList<Move> moves = movesFactory.generate();
         int i = ThreadLocalRandom.current().nextInt(0, moves.size());
-        Move move = moves.get(i);
-
-        System.out.println("doing move" + move.toString());
+        if (moves.size() == 0)
+            System.out.println("NO VALID MOVES LEFT");
         return moves.get(i);
     }
 }

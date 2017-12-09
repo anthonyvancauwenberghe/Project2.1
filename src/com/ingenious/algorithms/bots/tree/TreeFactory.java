@@ -1,5 +1,6 @@
-package com.ingenious.algorithms.impl.tree;
+package com.ingenious.algorithms.bots.tree;
 
+import com.ingenious.algorithms.generators.AvailableMovesGenerator;
 import com.ingenious.engine.Game;
 import com.ingenious.models.move.Move;
 
@@ -21,7 +22,7 @@ public class TreeFactory {
     }
 
     public ArrayList<Move> generateRootNodes(Game state) {
-        AvailableMovesFactory factory = new AvailableMovesFactory(state);
+        AvailableMovesGenerator factory = new AvailableMovesGenerator(state);
         return factory.generate();
     }
 

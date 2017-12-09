@@ -119,6 +119,14 @@ public class Board {
         this.getBoardNodes().get(90).setTile(Tile.purple);
     }
 
+    public boolean nodeHasAllEmptyNeighbours(BoardNode boardNode) {
+        for (BoardNode node : boardNode.getNeighbours()) {
+            if (!node.isEmpty())
+                return false;
+        }
+        return true;
+    }
+
     public ArrayList<BoardNode> getNeighboursOfNode(BoardNode boardNode) {
         ArrayList<BoardNode> neighbours = new ArrayList<BoardNode>();
         int x = boardNode.getX();
@@ -167,12 +175,7 @@ public class Board {
     }
 
     public void addTile(Tile tile, BoardNode boardNode) {
-        if (boardNode.getTile().isAvailable()) {
-            System.out.println("Placing tile with color" + tile.toString() + "on board at coordinate " + boardNode.getX() + " " + boardNode.getY());
-            boardNode.setTile(tile);
-        } else {
-            System.out.println("could not place tile since it's not available");
-        }
+        boardNode.setTile(tile);
     }
 
     public Board getClone() {

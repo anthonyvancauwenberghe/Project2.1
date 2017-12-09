@@ -1,4 +1,4 @@
-package com.ingenious.algorithms.impl;
+package com.ingenious.algorithms.bots.algorithms.bubblesort;
 public class ModifiedBubblesort {
 
     // logic to sort the elements

@@ -1,6 +1,6 @@
 package com.ingenious.models.players;
 
-import com.ingenious.algorithms.GeneratesMove;
+import com.ingenious.algorithms.bots.GeneratesMove;
 import com.ingenious.models.rack.Rack;
 import com.ingenious.models.score.Score;
 
