@@ -1,5 +1,6 @@
 package com.ingenious.providers.impl;
 
+import com.ingenious.algorithms.bots.algorithms.Greedy.GreedyAlgorithm;
 import com.ingenious.algorithms.bots.algorithms.Random.RandomTonyAlgorithm;
 import com.ingenious.containers.PlayerContainer;
 import com.ingenious.engine.Game;
@@ -30,7 +31,7 @@ public class GameServiceProvider extends Provider {
     /* ADD PLAYERS OR BOTS HERE */
     protected void initPlayers() {
         players.addPlayer(new Human("human player"));
-        players.addPlayer(new Bot(new RandomTonyAlgorithm()));
+        players.addPlayer(new Human("hey"));
     }
 
     public static MainFrame gui() {

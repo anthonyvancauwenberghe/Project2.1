@@ -12,8 +12,13 @@ public class BoardMoveValidator implements ValidateAble {
         this.move = move;
     }
 
+
     public boolean validate() {
-        return this.board.getNode(this.move.getBoardNode().x, this.move.getBoardNode().y).isEmpty();
+        if(this.board.getNode(this.move.getBoardNode().x, this.move.getBoardNode().y).isEmpty() && this.board.getNode(this.move.getBoardNode().x, this.move.getBoardNode().y).isEmpty()
+                && this.move.getBoardNode().getNeighbours().contains(this.move.getBoardNode2())){
+            return true;
+        }
+        return false;
     }
 
     public static boolean validateMove(Board board, Move move) {

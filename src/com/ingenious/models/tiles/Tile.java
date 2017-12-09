@@ -59,6 +59,6 @@ public class Tile extends Color {
     }
 
     public boolean isAvailable() {
-        return this.equals(Tile.empty) || this.equals(Tile.occupied);
+        return this.equals(Tile.empty);
     }
 }

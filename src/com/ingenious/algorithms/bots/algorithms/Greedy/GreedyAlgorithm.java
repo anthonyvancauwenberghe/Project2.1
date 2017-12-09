@@ -1,6 +1,9 @@
 package com.ingenious.algorithms.bots.algorithms.Greedy;
 
 import com.ingenious.algorithms.bots.BotAlgorithm;
+import com.ingenious.algorithms.calculators.ScoreCalculator;
+import com.ingenious.algorithms.generators.AvailableMovesGenerator;
+import com.ingenious.engine.Game;
 import com.ingenious.models.board.Board;
 import com.ingenious.models.board.BoardNode;
 import com.ingenious.models.move.Move;
@@ -14,186 +17,56 @@ import java.util.ArrayList;
  */
 public class GreedyAlgorithm extends BotAlgorithm {
 
-    public Board board;
+    private Game game;
 
     public GreedyAlgorithm() {
-        this.board = GameServiceProvider.board().getClone();
+
+    }
+
+    public Game getGame(){
+        if (this.game == null)
+            this.game = GameServiceProvider.game();
+        return this.game;
     }
 
     public Move generateMove(){
         //TODO RETURN GENERATED MOVE HERE!!
-        return null;
-    }
-
-    public BoardNode[] longestLines() {
-
-        ArrayList<BoardNode> nodes = board.getBoardNodes();
-        BoardNode[] placements = new BoardNode[6];
-        int[] lengths = {0, 0, 0, 0, 0, 0};
-
-        for (int i = 0; i < nodes.size(); i++) {
-            if (nodes.get(i).isOccupied()) {
-                int color_index = indexColor(nodes.get(i).getTile());
-                int[] l = calculate_line(nodes.get(i));
-                if (lengths[color_index] < l[0]) {
-                    lengths[color_index] = l[0];
-                    placements[color_index] = board.getNode(l[1], l[2]);
+        AvailableMovesGenerator factory = new AvailableMovesGenerator(this.getGame());
+        ScoreCalculator calculator = new ScoreCalculator();
+        ArrayList<Move>  moves  = factory.generate();
+        Board board = GameServiceProvider.board();
+        int [] score = {0,0,0,0,0,0};
+        Move [] move_c = new Move[6];
+        for(int i =0; i<moves.size(); i++){
+            Move move = moves.get(i);
+            int indexHead = indexColor(move.getPiece().getHead());
+            int indexTail = indexColor(move.getPiece().getTail());
+            if(indexHead == indexTail){
+                int scoreHead = calculator.getScoreStreak(board, move.getBoardNode(), move.getBoardNode2());
+                int scoreTail = calculator.getScoreStreak(board, move.getBoardNode2(), move.getBoardNode());
+                int sumScore = scoreHead+scoreTail;
+                if(score[indexHead]<sumScore){
+                    score[indexHead] = sumScore;
+                    move_c[indexHead] = move;
                 }
 
             }
-        }
-        return placements;
-    }
-
-    public int[] calculate_line(BoardNode node) {
-        Tile currentTile = node.getTile();
-        int line_NorthSouth = 0;
-        int line_nEastWest = 0;
-        int line_nWestEast = 0;
-        int[] lines = {line_NorthSouth, line_nEastWest, line_nWestEast};
-        BoardNode[] placement = new BoardNode[6];
-        int[] a = new int[3];
-        int[] line_size = {line_NorthSouth, line_nEastWest, line_nWestEast};
-
-        int x = node.getX();
-        int y = node.getY();
-        int l = 1;
-
-        while (this.board.getNode(x, y - l) != null) {
-            if (board.getNode(x, y - l).getTile().equals(currentTile)) {
-                line_NorthSouth++;
-            } else {
-                if (board.getNode(x, y - l).isEmpty() && isExpandable(board.getNode(x, y - l))) {
-
-                    BoardNode NorthSouth1 = board.getNode(x, y - l);
-                    placement[0] = NorthSouth1;
-                    break;
+            else{
+                int scoreHead = calculator.getScoreStreak(board, move.getBoardNode(), move.getBoardNode2());
+                int scoreTail = calculator.getScoreStreak(board, move.getBoardNode2(), move.getBoardNode());
+                if(score[indexHead]<scoreHead){
+                    score[indexHead] = scoreHead;
+                    move_c[indexHead] = move;
                 }
-            }
-            l++;
-        }
-        l = 1;
-        while (this.board.getNode(x, y + l) != null) {
-            if (board.getNode(x, y + l).getTile().equals(currentTile)) {
-                line_NorthSouth++;
-            } else {
-                if (board.getNode(x, y + l).isEmpty() && isExpandable(board.getNode(x, y + l))) {
-
-                    BoardNode NorthSouth2 = board.getNode(x, y + l);
-                    placement[1] = NorthSouth2;
-                    break;
-                }
-            }
-            l++;
-        }
-        l = 1;
-        while (this.board.getNode(x + l, y) != null) {
-            if (board.getNode(x + l, y).getTile().equals(currentTile)) {
-                line_nEastWest++;
-            } else {
-                if (board.getNode(x + l, y).isEmpty() && isExpandable(board.getNode(x + l, y))) {
-
-                    BoardNode EastWest1 = board.getNode(x + l, y);
-                    placement[2] = EastWest1;
-                    break;
-                }
-            }
-            l++;
-        }
-        l = 1;
-        while (this.board.getNode(x - l, y) != null) {
-            if (board.getNode(x - l, y).getTile().equals(currentTile)) {
-                line_nEastWest++;
-            } else {
-                if (board.getNode(x - l, y).isEmpty() && isExpandable(board.getNode(x - l, y))) {
-
-                    BoardNode EastWest2 = board.getNode(x - l, y);
-                    placement[3] = EastWest2;
-                    break;
-                }
-            }
-            l++;
-        }
-        l = 1;
-        while (this.board.getNode(x + l, y - l) != null) {
-            if (board.getNode(x + l, y - l).getTile().equals(currentTile)) {
-                line_nWestEast++;
-            } else {
-                if (board.getNode(x + l, y - l).isEmpty() && isExpandable(board.getNode(x + l, y - l))) {
-
-                    BoardNode WestEast1 = board.getNode(x + l, y - l);
-                    placement[4] = WestEast1;
-                    break;
-                }
-            }
-            l++;
-        }
-        l = 1;
-        while (this.board.getNode(x - l, y + l) != null) {
-            if (board.getNode(x - l, y + l).getTile().equals(currentTile)) {
-                line_nWestEast++;
-            } else {
-                if (board.getNode(x + l, y - l).isEmpty() && isExpandable(board.getNode(x - l, y + l))) {
-
-                    BoardNode WestEast2 = board.getNode(x - l, y + l);
-                    placement[5] = WestEast2;
-                    break;
-                }
-            }
-            l++;
-        }
-        int[] sortedIndex = returnLongestLine(lines);
-        for (int i = 0; i < sortedIndex.length; i++) {
-            for (int j = 0; j < 2; j++) {
-                if (!placement[sortedIndex[i + j]].equals(null)) {
-                    a[0] = lines[sortedIndex[i]];
-                    a[1] = placement[sortedIndex[i + j]].getX();
-                    a[2] = placement[sortedIndex[i + j]].getY();
-                    return a;
+                if(score[indexTail]<scoreTail){
+                    score[indexTail] = scoreTail;
+                    move_c[indexTail] = move;
                 }
             }
         }
-        a[0] = -1;
-        return a;
-    }
+        GameServiceProvider.players().getPlayer(1).getScoreArray();
 
-    public int[] returnLongestLine(int[] lines) {
-        int[] indexes = new int[3];
-        int max = lines[0];
-        int maxIndex = 0;
-        for (int i = 0; i < lines.length; i++) {
-            if (max < lines[i]) {
-                maxIndex = i;
-                max = lines[i];
-            }
-        }
-        max = lines[0];
-        int secondIndex = 0;
-        for (int i = 0; i < lines.length; i++) {
-            if (max < lines[i] && i != maxIndex) {
-                secondIndex = i;
-                max = lines[i];
-            }
-        }
-        int thirdIndex = 0;
-        for (int i = 0; i < indexes.length; i++) {
-            if (i != maxIndex && i != secondIndex) {
-                thirdIndex = i;
-            }
-        }
-        indexes[0] = maxIndex;
-        indexes[1] = secondIndex;
-        indexes[2] = thirdIndex;
-        return indexes;
-    }
-
-    public boolean isExpandable(BoardNode node) {
-        for (int i = 0; i < node.getNeighbours().size(); i++) {
-            if (node.getNeighbours().get(i).isEmpty()) {
-                return true;
-            }
-        }
-        return false;
+        return move_c[0];
     }
 
     public int indexColor(Tile tile) {
