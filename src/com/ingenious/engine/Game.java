@@ -114,6 +114,7 @@ public class Game {
 
 
         this.calculate_score(boardNode_1, boardNode_2);
+        this.calculate_score(boardNode_2,boardNode_1);
         if (getCurrentPlayer().getRack().isEmpty()) {
             drawRandomPieceFromBag(getCurrentPlayer());
             turn();
@@ -143,6 +144,7 @@ public class Game {
             board.addTile(piece.getHead(), boardNode_1);
             board.addTile(piece.getTail(), boardNode_2);
             this.calculate_score(boardNode_1, boardNode_2);
+            this.calculate_score(boardNode_2, boardNode_1);
             if (getCurrentPlayer().getRack().getContents().isEmpty()) {
                 drawRandomPieceFromBag(getCurrentPlayer());
                 turn();
